@@ -22,7 +22,9 @@
       "reset",
       "site",
       "container",
-      "header"
+      "header",
+      "button",
+      "icon"
     ],
   "version": "2.2.10"
 }

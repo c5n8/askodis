@@ -2,8 +2,9 @@
 
 namespace App;
 
-use App\Slug;
+use App\AnswerRequest;
 use App\Detail;
+use App\Slug;
 use App\Translation;
 
 class Question extends Model
@@ -36,5 +37,10 @@ class Question extends Model
     function translations()
     {
         return $this->morphMany(Translation::class, 'translatable');
+    }
+
+    function answerRequests()
+    {
+        return $this->hasMany(AnswerRequest::class);
     }
 }

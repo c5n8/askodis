@@ -10,6 +10,17 @@ class Slug extends Model
 {
     use ActAsQuestion;
 
+    protected $visible = [
+        'id',
+        'answerRequestsCount',
+        'hasAnswerRequestFromCurrentUser',
+    ];
+
+    protected $appends = [
+        'answerRequestsCount',
+        'hasAnswerRequestFromCurrentUser',
+    ];
+
     function question()
     {
         return $this->belongsTo(Question::class);
@@ -25,10 +36,5 @@ class Slug extends Model
         return $query->whereHas('language', function ($query) use ($language) {
             $query->where('id', $language->id);
         });
-    }
-
-    function getRouteKeyName()
-    {
-        return 'text';
     }
 }

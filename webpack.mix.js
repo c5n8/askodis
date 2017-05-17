@@ -8,6 +8,7 @@ mix
     'axios',
     'jquery',
     'vue',
+    'vuex',
   ])
   .sourceMaps()
   .disableNotifications()
