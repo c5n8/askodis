@@ -8,6 +8,21 @@ use App\Translation;
 
 class Question extends Model
 {
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($question) {
+            if ($question->isforceDeleting()) {
+                $question->translations()->forceDelete();
+
+                return;
+            }
+
+            $question->translations()->delete();
+        });
+    }
+
     function slugs()
     {
         return $this->hasMany(Slug::class);
