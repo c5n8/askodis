@@ -8,15 +8,19 @@
     <title>
       {{ $question->body }} – {{ config('app.name') }}
     </title>
+
+    <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
   </head>
   <body>
-    <h3>
-      {{ $question->body }}
-    </h3>
-    <p>
+    <div class="ui main text container">
+      <h3 class="ui header">
+        {{ $question->body }}
+      </h3>
       @if ($question->hasDetail)
-        {{ $question->detail }}
+        <p>
+          {{ $question->detail }}
+        </p>
       @endif
-    </p>
+    </div>
   </body>
 </html>

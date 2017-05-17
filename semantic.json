@@ -18,5 +18,11 @@
   "permission": false,
   "autoInstall": false,
   "rtl": false,
+  "components": [
+      "reset",
+      "site",
+      "container",
+      "header"
+    ],
   "version": "2.2.10"
 }
