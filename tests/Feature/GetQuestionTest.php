@@ -22,4 +22,16 @@ class GetQuestionTest extends TestCase
             ->assertStatus(200)
             ->assertJson($question->toArray());
     }
+
+    function test_get_question_with_answer()
+    {
+        factory(Edition::class)->states('answer')->create();
+        $question = Question::first();
+
+        $response = $this->json('GET', '/api/questions/' . $question->id);
+
+        $response
+            ->assertStatus(200)
+            ->assertJson(['answers' => $question->answers->toArray()]);
+    }
 }

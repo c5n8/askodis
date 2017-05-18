@@ -2,13 +2,16 @@
 
 namespace App;
 
+use App\Answer;
 use App\AnswerRequest;
 use App\Detail;
 use App\Slug;
-use App\Translation;
+use App\Traits\Translatable;
 
 class Question extends Model
 {
+    use Translatable;
+
     protected static function boot()
     {
         parent::boot();
@@ -34,13 +37,56 @@ class Question extends Model
         return $this->hasOne(Detail::class);
     }
 
-    function translations()
-    {
-        return $this->morphMany(Translation::class, 'translatable');
-    }
-
     function answerRequests()
     {
         return $this->hasMany(AnswerRequest::class);
+    }
+
+    function answers()
+    {
+        return $this->hasMany(Answer::class);
+    }
+
+    function getHasDetailAttribute()
+    {
+        return $this->detail()->exists();
+    }
+
+    function getAnswerRequestsCountAttribute()
+    {
+        return $this->answerRequests()->count();
+    }
+
+    function getHasAnswerRequestFromCurrentUserAttribute()
+    {
+        if (auth('api')->guest()) {
+            return false;
+        }
+
+        return $this->answerRequests()->from(auth('api')->user())->exists();
+    }
+
+    function getAnswersCountAttribute()
+    {
+        return $this->answers()->count();
+    }
+
+    function startRequestingAnswer()
+    {
+        if ($this->hasAnswerRequestFromCurrentUser) {
+            return;
+        }
+
+        $answerRequest = $this->answerRequests()->make();
+        $answerRequest->question()->associate($this);
+        $answerRequest->user()->associate(auth()->user());
+        $answerRequest->save();
+    }
+
+    function stopRequestingAnswer()
+    {
+        if ($this->hasAnswerRequestFromCurrentUser) {
+            $this->answerRequests()->from(auth()->user())->delete();
+        }
     }
 }

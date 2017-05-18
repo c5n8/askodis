@@ -11,66 +11,58 @@ trait ActAsQuestion
 
     function getBodyAttribute()
     {
-        return $this
-            ->question
-            ->translations()
-            ->inLanguage($this->language)
-            ->first()
-            ->editions()
-            ->latest()
-            ->first()
-            ->text;
+        return $this->question->translationInLanguage($this->language)->body;
     }
 
     function getHasDetailAttribute()
     {
-        return $this->question->detail()->exists();
+        return $this->question->hasDetail;
     }
 
     function getDetailAttribute()
     {
-        return $this
-            ->question
-            ->detail
-            ->translations()
-            ->inLanguage($this->language)
-            ->first()
-            ->editions()
-            ->latest()
-            ->first()
-            ->text;
+        return $this->question->detail->translationInLanguage($this->language)->body;
     }
 
     function getAnswerRequestsCountAttribute()
     {
-        return $this->question->answerRequests()->count();
+        return $this->question->answerRequestsCount;
     }
 
     function getHasAnswerRequestFromCurrentUserAttribute()
     {
-        if (auth('api')->guest()) {
-            return false;
-        }
+        return $this->question->hasAnswerRequestFromCurrentUser;
+    }
 
-        return $this->question->answerRequests()->from(auth('api')->user())->exists();
+    function getAnswersCountAttribute()
+    {
+        return $this->question->answersCount;
+    }
+
+    function getAnswersAttribute()
+    {
+        return $this
+            ->question
+            ->answers()
+            ->hasTranslationInLanguage($this->language)
+            ->get()
+            ->transform(function ($answer) {
+                return collect([
+                    'id'        => $answer->id,
+                    'body'      => $answer->translationInLanguage($this->language)->body,
+                    'updatedAt' => $answer->updated_at->toDateTimeString(),
+                    'user'      => $answer->user,
+                ]);
+            });
     }
 
     function startRequestingAnswer()
     {
-        if ($this->hasAnswerRequestFromCurrentUser) {
-            return;
-        }
-
-        $answerRequest = $this->question->answerRequests()->make();
-        $answerRequest->question()->associate($this->question);
-        $answerRequest->user()->associate(auth()->user());
-        $answerRequest->save();
+        $this->question->startRequestingAnswer();
     }
 
     function stopRequestingAnswer()
     {
-        if ($this->hasAnswerRequestFromCurrentUser) {
-            $this->question->answerRequests()->from(auth()->user())->delete();
-        }
+        $this->question->stopRequestingAnswer();
     }
 }

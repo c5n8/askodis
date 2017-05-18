@@ -24,7 +24,10 @@
       "container",
       "header",
       "button",
-      "icon"
+      "icon",
+      "divider",
+      "card",
+      "grid"
     ],
   "version": "2.2.10"
 }

@@ -11,7 +11,7 @@ class QuestionPageTest extends TestCase
 {
     use DatabaseMigrations;
 
-    function test_get_question_page()
+    fTranslatableunction test_get_question_page()
     {
         factory(Edition::class)->states('question')->create();
         $question = Question::first();

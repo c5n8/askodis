@@ -33,4 +33,9 @@ class Translation extends Model
     {
         return $this->translatable_type == $type;
     }
+
+    function getBodyAttribute()
+    {
+        return $this->editions()->latest()->first()->text;
+    }
 }

@@ -13,6 +13,7 @@ class AppServiceProvider extends ServiceProvider
         Relation::morphMap([
             'question' => \App\Question::class,
             'detail' => \App\Detail::class,
+            'answer' => \App\Answer::class,
         ]);
     }
 

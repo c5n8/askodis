@@ -10,7 +10,7 @@ class QuestionsTableSeeder extends Seeder
     {
         Question::all()->each->forceDelete();
 
-        factory(Edition::class)->states('detail')->create();
+        factory(Edition::class)->states('answer')->create();
         dump(Question::first()->slug);
     }
 }

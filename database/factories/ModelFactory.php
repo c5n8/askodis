@@ -6,6 +6,7 @@ use App\Language;
 use App\Question;
 use App\Slug;
 use App\Translation;
+use App\Answer;
 use App\User;
 use Faker\Generator;
 
@@ -61,6 +62,20 @@ $factory->state(Translation::class, 'detail', function (Generator $faker) {
     ];
 });
 
+$factory->state(Translation::class, 'answer', function (Generator $faker) {
+    $answer = factory(Answer::class)->create();
+
+    return [
+        'translatable_type' => 'answer',
+        'translatable_id'   => function () use ($answer) {
+            return $answer->id;
+        },
+        'language_id' => function () {
+            return Language::first()->id;
+        },
+    ];
+});
+
 $factory->define(Edition::class, function (Generator $faker) {
     return [
         'text' => $faker->sentence,
@@ -83,10 +98,29 @@ $factory->state(Edition::class, 'detail', function (Generator $faker) {
     ];
 });
 
+$factory->state(Edition::class, 'answer', function (Generator $faker) {
+    return [
+        'translation_id' => function () {
+            return factory(Translation::class)->states('answer')->create()->id;
+        },
+    ];
+});
+
 $factory->define(Detail::class, function (Generator $faker) {
     return [
         'question_id' => function () {
             return factory(Edition::class)->states('question')->create()->translation->translatable->id;
+        },
+    ];
+});
+
+$factory->define(Answer::class, function (Generator $faker) {
+    return [
+        'question_id' => function () {
+            return factory(Edition::class)->states('question')->create()->translation->translatable->id;
+        },
+        'user_id' => function () {
+            return factory(User::class)->create()->id;
         },
     ];
 });

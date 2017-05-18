@@ -23,8 +23,9 @@
             {{ $question->detail }}
           </p>
         @endif
-        <question :id={{ $question->id }}></question>
       </div>
+      <div class="ui hidden divider"></div>
+      <question :id={{ $question->id }}></question>
     </div>
 
     <script src="{{ mix('/js/manifest.js') }}"></script>

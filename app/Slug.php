@@ -14,11 +14,15 @@ class Slug extends Model
         'id',
         'answerRequestsCount',
         'hasAnswerRequestFromCurrentUser',
+        'answersCount',
+        'answers',
     ];
 
     protected $appends = [
         'answerRequestsCount',
         'hasAnswerRequestFromCurrentUser',
+        'answersCount',
+        'answers',
     ];
 
     function question()

@@ -7,6 +7,7 @@ mix
   .extract([
     'axios',
     'jquery',
+    'moment',
     'vue',
     'vuex',
   ])

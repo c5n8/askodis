@@ -1,6 +1,6 @@
-<template lang="jade">
+<template lang='jade'>
   #requestAnswerButton.ui.tiny.button(
-    :class="requestAnswerButtonClass"
+    :class='requestAnswerButtonClass'
     @click='requestAnswerButtonClick'
   )
     strong {{ requestAnswerButtonText }}
