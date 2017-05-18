@@ -3,6 +3,7 @@
     :class='voteAnswerButtonClass'
     @click='voteAnswerButtonClick'
   )
+    i.check.icon
     strong {{ voteAnswerButtonText }}
 </template>
 
