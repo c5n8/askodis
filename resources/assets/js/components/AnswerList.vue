@@ -8,8 +8,7 @@
     .content
       strong {{ answer.user.name }}
       .meta
-        span.date(:title='formatDateTime(answer.updatedAt)')
-          {{ humanizeDateTime(answer.updatedAt) }}
+        span.date(:title='formatDateTime(answer.updatedAt)') {{ humanizeDateTime(answer.updatedAt) }}
       .description {{ answer.body }}
     .extra.content
       .stat {{ answer.votesCount }} Votes
