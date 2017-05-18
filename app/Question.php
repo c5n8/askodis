@@ -6,6 +6,7 @@ use App\Answer;
 use App\AnswerRequest;
 use App\Detail;
 use App\Slug;
+use App\Tag;
 use App\Traits\Translatable;
 
 class Question extends Model
@@ -45,6 +46,11 @@ class Question extends Model
     function answers()
     {
         return $this->hasMany(Answer::class);
+    }
+
+    function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     function getHasDetailAttribute()

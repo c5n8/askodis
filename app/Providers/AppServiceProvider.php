@@ -14,6 +14,7 @@ class AppServiceProvider extends ServiceProvider
             'question' => \App\Question::class,
             'detail' => \App\Detail::class,
             'answer' => \App\Answer::class,
+            'tag' => \App\Tag::class,
         ]);
     }
 

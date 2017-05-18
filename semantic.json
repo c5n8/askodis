@@ -27,7 +27,8 @@
       "icon",
       "divider",
       "card",
-      "grid"
+      "grid",
+      "label"
     ],
   "version": "2.2.10"
 }

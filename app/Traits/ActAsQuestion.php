@@ -4,6 +4,11 @@ namespace App\Traits;
 
 trait ActAsQuestion
 {
+    function tags()
+    {
+        return $this->question->tags();
+    }
+
     function getSlugAttribute()
     {
         return $this->text;
@@ -54,6 +59,21 @@ trait ActAsQuestion
                     'votesCount'             => $answer->votesCount,
                     'hasVoteFromCurrentUser' => $answer->hasVoteFromCurrentUser,
                     'user'                   => $answer->user,
+                ]);
+            });
+    }
+
+    function getTagsAttribute()
+    {
+        return $this
+            ->question
+            ->tags()
+            ->hasTranslationInLanguage($this->language)
+            ->get()
+            ->transform(function ($tag) {
+                return collect([
+                    'id'   => $tag->id,
+                    'body' => $tag->translationInLanguage($this->language)->body,
                 ]);
             });
     }

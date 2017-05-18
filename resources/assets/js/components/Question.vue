@@ -1,7 +1,7 @@
 <template lang='jade'>
   .ui.main.container(v-show='isReady')
     .ui.centered.grid
-      .ten.wide.column
+      .ten.wide.computer.sixteen.wide.mobile.column
         p
           .stat {{ question.answerRequestsCount }} Answer requests
         request-answer-button
