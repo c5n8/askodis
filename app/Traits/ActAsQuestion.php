@@ -78,6 +78,47 @@ trait ActAsQuestion
             });
     }
 
+    function getHasAnswerFromCurrentUserAttribute()
+    {
+        if (auth('api')->guest()) {
+            return false;
+        }
+
+        return $this
+            ->question
+            ->answers()
+            ->from(auth('api')->user())
+            ->hasTranslationInLanguage($this->language)
+            ->exists();
+    }
+
+    function getAnswerFromCurrentUserAttribute()
+    {
+        if (auth('api')->guest()) {
+            return;
+        }
+
+        if (! $this->hasAnswerFromCurrentUser) {
+            return;
+        }
+
+        $answer = $this
+            ->question
+            ->answers()
+            ->from(auth('api')->user())
+            ->hasTranslationInLanguage($this->language)
+            ->first();
+
+        return collect([
+            'id'                     => $answer->id,
+            'body'                   => $answer->translationInLanguage($this->language)->body,
+            'updatedAt'              => $answer->updated_at->toDateTimeString(),
+            'votesCount'             => $answer->votesCount,
+            'hasVoteFromCurrentUser' => $answer->hasVoteFromCurrentUser,
+            'user'                   => $answer->user,
+        ]);
+    }
+
     function startRequestingAnswer()
     {
         $this->question->startRequestingAnswer();
@@ -86,5 +127,23 @@ trait ActAsQuestion
     function stopRequestingAnswer()
     {
         $this->question->stopRequestingAnswer();
+    }
+
+    function saveAnswer(array $data)
+    {
+        $answer = $this->question->answers()->make();
+        $answer->question()->associate($this->question);
+        $answer->user()->associate(auth()->user());
+        $answer->save();
+
+        $translation = $answer->translations()->make();
+        $translation->translatable()->associate($answer);
+        $translation->language()->associate($this->language);
+        $translation->save();
+
+        $edition       = $translation->editions()->make();
+        $edition->text = $data['body'];
+        $edition->translation()->associate($translation);
+        $edition->save();
     }
 }

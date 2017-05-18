@@ -8,23 +8,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import { mapActions } from 'vuex'
 
 export default {
-  props: ['id'],
+  props: ['answer'],
   data() {
     return {
       isDisabled: false
     }
   },
   computed: {
-    ...mapGetters([
-      'getAnswerById',
-    ]),
-    answer() {
-      return this.getAnswerById(this.id)
-    },
     voteAnswerButtonClass() {
       return {
         basic: ! this.answer.hasVoteFromCurrentUser,
@@ -50,14 +43,14 @@ export default {
 
       if (this.answer.hasVoteFromCurrentUser) {
         this
-          .deleteAnswerVote(this.id)
+          .deleteAnswerVote(this.answer)
           .then(() => this.isDisabled = false)
 
         return
       }
 
       this
-        .postAnswerVote(this.id)
+        .postAnswerVote(this.answer)
         .then(() => this.isDisabled = false)
     }
   }

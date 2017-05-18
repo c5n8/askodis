@@ -6,4 +6,5 @@ Route::group(['namespace' => 'API'], function () {
     Route::delete('questions/{question}/answer_requests', 'AnswerRequestController@destroy');
     Route::post('answers/{answer}/votes', 'AnswerVoteController@store');
     Route::delete('answers/{answer}/votes', 'AnswerVoteController@destroy');
+    Route::post('questions/{question}/answers', 'AnswerController@store');
 });

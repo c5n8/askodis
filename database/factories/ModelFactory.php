@@ -96,7 +96,9 @@ $factory->state(Translation::class, 'tag', function (Generator $faker) {
 });
 
 $factory->define(Edition::class, function (Generator $faker) {
-    return [];
+    return [
+        'text' => $faker->paragraph,
+    ];
 });
 
 $factory->state(Edition::class, 'question', function (Generator $faker) {

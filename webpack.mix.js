@@ -11,6 +11,13 @@ mix
     'vue',
     'vuex',
   ])
+  // .webpackConfig({
+  //   resolve: {
+  //     alias: {
+  //       jquery: "jquery/src/jquery"
+  //     }
+  //   }
+  // })
   .sourceMaps()
   .disableNotifications()
   // .browserSync(process.env.MIX_APP_URL)

@@ -5,14 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    question: {
-      answerRequestsCount: 0
-    }
-  },
-  getters: {
-    getAnswerById: (state, getters) => (id) => {
-      return state.question.answers.find(answer => answer.id === id)
-    }
+    question: {},
   },
   mutations: {
     setQuestion(state, payload) {
@@ -33,6 +26,19 @@ export default new Vuex.Store({
     unvoteAnswer(state, { answer }) {
       answer.votesCount--
       answer.hasVoteFromCurrentUser = false
+    },
+    setAnswerFromCurrentUserBody(state, payload) {
+      if (! state.question.hasAnswerFromCurrentUser) {
+        state.question.answerFromCurrentUser = {}
+      }
+
+      state.question.answerFromCurrentUser.body = payload
+    },
+    addAnswerFromCurrentUser(state, payload) {
+      state.question.hasAnswerFromCurrentUser = true
+      state.question.answerFromCurrentUser = payload
+      state.question.answers.push(payload)
+      state.question.answersCount++
     },
   },
   actions: {
@@ -66,22 +72,32 @@ export default new Vuex.Store({
           })
       })
     },
-    postAnswerVote({ commit, getters }, id) {
+    postAnswerVote({ commit, getters }, answer) {
       return new Promise((resolve, reject) => {
         axios
-          .post('/api/answers/' + id + '/votes')
+          .post('/api/answers/' + answer.id + '/votes')
           .then(response => {
-            commit('voteAnswer', { answer: getters.getAnswerById(id)  })
+            commit('voteAnswer', { answer: answer })
             resolve()
           })
       })
     },
-    deleteAnswerVote({ commit, getters }, id) {
+    deleteAnswerVote({ commit, getters }, answer) {
       return new Promise((resolve, reject) => {
         axios
-          .delete('/api/answers/' + id + '/votes')
+          .delete('/api/answers/' + answer.id + '/votes')
           .then(response => {
-            commit('unvoteAnswer', { answer: getters.getAnswerById(id)  })
+            commit('unvoteAnswer', { answer: answer  })
+            resolve()
+          })
+      })
+    },
+    postAnswer({ commit, state }) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post('/api/questions/' + state.question.id + '/answers', state.question.answerFromCurrentUser)
+          .then(response => {
+            commit('addAnswerFromCurrentUser', response.data)
             resolve()
           })
       })

@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Traits\Translatable;
+use App\Question;
 use App\User;
 use App\Vote;
 
@@ -21,6 +22,11 @@ class Answer extends Model
         'hasVoteFromCurrentUser',
     ];
 
+    function question()
+    {
+        return $this->belongsTo(Question::class);
+    }
+
     function user()
     {
         return $this->belongsTo(User::class);
@@ -29,6 +35,13 @@ class Answer extends Model
     function votes()
     {
         return $this->morphMany(Vote::class, 'votable');
+    }
+
+    function scopeFrom($query, $user)
+    {
+        return $query->whereHas('user', function ($query) use ($user) {
+            return $query->where('id', $user->id);
+        });
     }
 
     function getVotesCountAttribute()

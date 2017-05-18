@@ -1,7 +1,9 @@
 <?php
 
+use App\Answer;
 use App\Edition;
-use App\Slug as Question;
+use App\Question;
+use App\Slug;
 use App\Tag;
 use Illuminate\Database\Seeder;
 
@@ -10,10 +12,22 @@ class QuestionsTableSeeder extends Seeder
     function run()
     {
         Question::all()->each->forceDelete();
-        factory(Edition::class)->states('answer')->create();
-        $question = Question::first();
+
+        factory(Edition::class)->states('detail')->create();
+        factory(Edition::class, 3)->states('answer')->create();
         factory(Edition::class, 3)->states('tag')->create();
+
+        $slug = Slug::first();
+        $slug->text = 'slug';
+        $slug->save();
+
+        $question = $slug->question;
+
         $question->tags()->sync(Tag::all());
-        dump($question->slug);
+
+        foreach (Answer::all() as $answer) {
+            $answer->question()->associate($question);
+            $answer->save();
+        }
     }
 }

@@ -28,7 +28,8 @@
       "divider",
       "card",
       "grid",
-      "label"
+      "label",
+      "form"
     ],
   "version": "2.2.10"
 }

@@ -14,6 +14,8 @@ class Slug extends Model
         'id',
         'answerRequestsCount',
         'hasAnswerRequestFromCurrentUser',
+        'hasAnswerFromCurrentUser',
+        'answerFromCurrentUser',
         'answersCount',
         'answers',
     ];
@@ -21,6 +23,8 @@ class Slug extends Model
     protected $appends = [
         'answerRequestsCount',
         'hasAnswerRequestFromCurrentUser',
+        'hasAnswerFromCurrentUser',
+        'answerFromCurrentUser',
         'answersCount',
         'answers',
     ];
