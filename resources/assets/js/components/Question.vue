@@ -2,9 +2,9 @@
   .ui.main.container(v-show='isReady')
     .ui.centered.grid
       .ten.wide.column
-        request-answer-button
         p
           .stat {{ question.answerRequestsCount }} Answer requests
+        request-answer-button
         .ui.divider
         h4 {{ question.answersCount }} Answers
         answer-list
@@ -19,15 +19,15 @@ import AnswerList from './AnswerList.vue'
 
 export default {
   store,
-  data() {
-    return {
-      isReady: false
-    }
-  },
   props: ['id'],
   components: {
     RequestAnswerButton,
     AnswerList
+  },
+  data() {
+    return {
+      isReady: false
+    }
   },
   computed: {
     ...mapState([

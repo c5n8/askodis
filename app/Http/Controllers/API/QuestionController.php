@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Slug as Question;
-use App\Http\Controllers\Controller;
 
-class QuestionController extends Controller
+class QuestionController
 {
     function show(Question $question)
     {

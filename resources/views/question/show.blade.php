@@ -24,7 +24,7 @@
           </p>
         @endif
       </div>
-      <div class="ui hidden divider"></div>
+
       <question :id={{ $question->id }}></question>
     </div>
 

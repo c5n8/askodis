@@ -9,6 +9,11 @@ export default new Vuex.Store({
       answerRequestsCount: 0
     }
   },
+  getters: {
+    getAnswerById: (state, getters) => (id) => {
+      return state.question.answers.find(answer => answer.id === id)
+    }
+  },
   mutations: {
     setQuestion(state, payload) {
       state.question = payload
@@ -20,6 +25,14 @@ export default new Vuex.Store({
     stopRequestingAnswer(state) {
       state.question.answerRequestsCount--
       state.question.hasAnswerRequestFromCurrentUser = false
+    },
+    voteAnswer(state, { answer }) {
+      answer.votesCount++
+      answer.hasVoteFromCurrentUser = true
+    },
+    unvoteAnswer(state, { answer }) {
+      answer.votesCount--
+      answer.hasVoteFromCurrentUser = false
     },
   },
   actions: {
@@ -52,6 +65,26 @@ export default new Vuex.Store({
             resolve()
           })
       })
-    }
+    },
+    postAnswerVote({ commit, getters }, id) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post('/api/answers/' + id + '/votes')
+          .then(response => {
+            commit('voteAnswer', { answer: getters.getAnswerById(id)  })
+            resolve()
+          })
+      })
+    },
+    deleteAnswerVote({ commit, getters }, id) {
+      return new Promise((resolve, reject) => {
+        axios
+          .delete('/api/answers/' + id + '/votes')
+          .then(response => {
+            commit('unvoteAnswer', { answer: getters.getAnswerById(id)  })
+            resolve()
+          })
+      })
+    },
   }
 })

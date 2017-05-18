@@ -77,13 +77,12 @@ $factory->state(Translation::class, 'answer', function (Generator $faker) {
 });
 
 $factory->define(Edition::class, function (Generator $faker) {
-    return [
-        'text' => $faker->sentence,
-    ];
+    return [];
 });
 
 $factory->state(Edition::class, 'question', function (Generator $faker) {
     return [
+        'text' => str_replace('.', '?', $faker->sentence),
         'translation_id' => function () {
             return factory(Translation::class)->states('question')->create()->id;
         },
@@ -92,6 +91,7 @@ $factory->state(Edition::class, 'question', function (Generator $faker) {
 
 $factory->state(Edition::class, 'detail', function (Generator $faker) {
     return [
+        'text'           => $faker->paragraph,
         'translation_id' => function () {
             return factory(Translation::class)->states('detail')->create()->id;
         },
@@ -100,6 +100,7 @@ $factory->state(Edition::class, 'detail', function (Generator $faker) {
 
 $factory->state(Edition::class, 'answer', function (Generator $faker) {
     return [
+        'text'           => $faker->paragraph(10),
         'translation_id' => function () {
             return factory(Translation::class)->states('answer')->create()->id;
         },

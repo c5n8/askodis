@@ -48,10 +48,12 @@ trait ActAsQuestion
             ->get()
             ->transform(function ($answer) {
                 return collect([
-                    'id'        => $answer->id,
-                    'body'      => $answer->translationInLanguage($this->language)->body,
-                    'updatedAt' => $answer->updated_at->toDateTimeString(),
-                    'user'      => $answer->user,
+                    'id'                     => $answer->id,
+                    'body'                   => $answer->translationInLanguage($this->language)->body,
+                    'updatedAt'              => $answer->updated_at->toDateTimeString(),
+                    'votesCount'             => $answer->votesCount,
+                    'hasVoteFromCurrentUser' => $answer->hasVoteFromCurrentUser,
+                    'user'                   => $answer->user,
                 ]);
             });
     }
