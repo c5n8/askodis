@@ -9,7 +9,7 @@
       strong {{ answer.user.name }}
       .meta
         span.date(:title='formatDateTime(answer.updatedAt)')
-        | {{ humanizeDateTime(answer.updatedAt) }}
+          {{ humanizeDateTime(answer.updatedAt) }}
       .description {{ answer.body }}
     .extra.content
       .stat {{ answer.votesCount }} Votes
