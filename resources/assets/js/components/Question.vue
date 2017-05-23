@@ -11,7 +11,12 @@
           v-if="! question.hasAnswerFromCurrentUser"
         )
           i.edit.icon
-          strong Write Answer
+          strong Answer
+        //- .ui.tiny.basic.button
+        //-   i.share.icon
+        //-   strong Share
+        //- .ui.tiny.basic.icon.button.right.floated
+        //-   i.ellipsis.vertical.icon
 
         template(v-if='question.hasAnswerFromCurrentUser && ! isWritingAnswer')
           h4 Your Answer

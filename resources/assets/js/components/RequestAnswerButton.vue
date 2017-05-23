@@ -3,6 +3,7 @@
     :class='requestAnswerButtonClass'
     @click='requestAnswerButtonClick'
   )
+    i.help.circle.icon
     strong {{ requestAnswerButtonText }}
 </template>
 

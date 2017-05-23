@@ -14,6 +14,41 @@
   </head>
   <body>
     <div id="app">
+      <div class="ui fixed menu">
+        <div class="ui container">
+          <a href="/" class="header item">
+            {{ config('app.name') }}
+          </a>
+
+          <search-bar></search-bar>
+
+          @unless (auth()->guest())
+            <div class="right menu">
+              {{-- <a href="#" class="ui item">
+                <i class="bell icon"></i>
+                Notifications
+              </a> --}}
+              <div id="accountMenu" class="ui pointing dropdown link item">
+                <span class="text">Account</span>
+                <i class="angle down icon"></i>
+                <div class="menu">
+                  <div class="item">
+                    <div
+                        onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                        Logout
+                    </div>
+                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          @endunless
+        </div>
+      </div>
+
       <div class="ui main text container">
         <h3 class="ui header">
           {{ $question->body }}
@@ -28,9 +63,11 @@
         <div class="ui grid">
           <div class="sixteen wide column">
             <div class="ui small tag labels">
+
               @foreach ($question->tags as $tag)
                 <a href="#" class="ui label">{{ $tag['body'] }}</a>
               @endforeach
+
             </div>
           </div>
         </div>

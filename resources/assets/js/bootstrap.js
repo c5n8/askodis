@@ -2,6 +2,8 @@ try {
   window.$ = window.jQuery = require('jquery')
 } catch (e) {}
 
+import '../lib/semantic/dist/semantic.js'
+
 window.moment = require('moment')
 
 window.axios = require('axios')

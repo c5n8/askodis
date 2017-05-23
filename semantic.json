@@ -29,7 +29,13 @@
       "card",
       "grid",
       "label",
-      "form"
+      "form",
+      "menu",
+      "input",
+      "search",
+      "api",
+      "transition",
+      "dropdown"
     ],
   "version": "2.2.10"
 }

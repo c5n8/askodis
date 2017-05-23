@@ -5,10 +5,11 @@ namespace App;
 use App\Language;
 use App\Question;
 use App\Traits\ActAsQuestion;
+use Laravel\Scout\Searchable;
 
 class Slug extends Model
 {
-    use ActAsQuestion;
+    use ActAsQuestion, Searchable;
 
     protected $visible = [
         'id',
@@ -44,5 +45,19 @@ class Slug extends Model
         return $query->whereHas('language', function ($query) use ($language) {
             $query->where('id', $language->id);
         });
+    }
+
+    function searchableAs()
+    {
+        return 'questions';
+    }
+
+    function toSearchableArray()
+    {
+        return [
+            'slug'     => $this->text,
+            'body'     => $this->body,
+            'language' => $this->language->code,
+        ];
     }
 }

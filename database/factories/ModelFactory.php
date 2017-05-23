@@ -29,6 +29,7 @@ $factory->define(Question::class, function (Generator $faker) {
 $factory->define(Language::class, function (Generator $faker) {
     return [
         'name' => $faker->country,
+        'code' => $faker->languageCode,
     ];
 });
 
