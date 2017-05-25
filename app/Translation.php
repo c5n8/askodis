@@ -7,6 +7,8 @@ use App\Language;
 
 class Translation extends Model
 {
+    protected $touches = ['translatable'];
+
     function translatable()
     {
         return $this->morphTo();
@@ -36,6 +38,6 @@ class Translation extends Model
 
     function getBodyAttribute()
     {
-        return $this->editions()->latest()->first()->text;
+        return $this->editions()->latest('id')->first()->text;
     }
 }

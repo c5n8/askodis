@@ -95,4 +95,9 @@ class Question extends Model
             $this->answerRequests()->from(auth()->user())->delete();
         }
     }
+
+    function answerFrom($user)
+    {
+        return $this->answers()->from($user)->first();
+    }
 }

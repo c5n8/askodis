@@ -8,10 +8,9 @@
         request-answer-button
         #answerButton.ui.tiny.basic.button(
           @click='openAnswerForm'
-          v-if="! question.hasAnswerFromCurrentUser"
         )
           i.edit.icon
-          strong Answer
+          strong {{ answerButtonText }}
         //- .ui.tiny.basic.button
         //-   i.share.icon
         //-   strong Share
@@ -75,6 +74,13 @@ export default {
       }
 
       return message
+    },
+    answerButtonText() {
+      if (this.question.hasAnswerFromCurrentUser) {
+        return 'Edit Your Answer'
+      }
+
+      return 'Answer'
     }
   },
   methods: {

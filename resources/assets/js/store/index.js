@@ -45,6 +45,12 @@ export default new Vuex.Store({
       state.question.answers.push(payload)
       state.question.answersCount++
     },
+    setAnswerFromCurrentUser(state, payload) {
+      state.question.answerFromCurrentUser = payload
+
+      var currentUserAnswerIndex = _.findIndex(state.question.answers, answer => answer.id == payload.id)
+      state.question.answers[currentUserAnswerIndex] = payload
+    },
     setUnreadNotificationsCount(state, payload) {
       state.user.unreadNotificationsCount = payload
     },
@@ -119,6 +125,16 @@ export default new Vuex.Store({
           .post('/api/questions/' + state.question.id + '/answers', state.question.answerFromCurrentUser)
           .then(response => {
             commit('addAnswerFromCurrentUser', response.data)
+            resolve()
+          })
+      })
+    },
+    patchAnswer({ commit, state }) {
+      return new Promise((resolve, reject) => {
+        axios
+          .patch('/api/questions/' + state.question.id + '/answers', state.question.answerFromCurrentUser)
+          .then(response => {
+            commit('setAnswerFromCurrentUser', response.data)
             resolve()
           })
       })

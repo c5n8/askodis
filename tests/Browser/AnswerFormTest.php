@@ -29,7 +29,19 @@ class AnswerFormTest extends DuskTestCase
                 ->waitFor('#answerForm')
                 ->keys('#answerForm textarea', $input->text)
                 ->press('#answerForm .button')
-                ->waitUntilMissing('#answerForm');
+                ->waitUntilMissing('#answerForm')
+                ->assertSee('Your Answer')
+                ->assertSee($input->text);
+
+            $input = factory(Edition::class)->make();
+
+            $browser
+                ->press('#answerButton')
+                ->waitFor('#answerForm')
+                ->keys('#answerForm textarea', $input->text)
+                ->press('#answerForm .button')
+                ->waitUntilMissing('#answerForm')
+                ->assertSee($input->text);
         });
     }
 }

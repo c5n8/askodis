@@ -7,6 +7,8 @@ use App\Translation;
 
 class Edition extends Model
 {
+    protected $touches = ['translation'];
+
     protected static function boot()
     {
         parent::boot();

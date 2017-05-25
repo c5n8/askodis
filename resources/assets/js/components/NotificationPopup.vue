@@ -11,7 +11,7 @@
       .item(style='text-align: center')
         .content
           .description
-            span.stat End
+            span.stat {{ endText }}
 
     .ui.mini.centered.inline.loader(:class='{ active: ! user.hasReadAllNotifications }')
 </template>
@@ -35,7 +35,14 @@ export default {
   computed: {
     ...mapState([
       'user'
-    ])
+    ]),
+    endText() {
+      if (this.user.notifications.length == 0) {
+        return 'No notification yet'
+      }
+
+      return 'That\'s all'
+    }
   },
   methods: {
     ...mapActions([

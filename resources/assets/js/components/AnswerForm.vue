@@ -8,7 +8,7 @@
     )
   .ui.tiny.green.button(:class='{ disabled: this.isDisabled }' @click='submit')
     i.send.icon
-    | Post Answer
+    | Post
 </template>
 
 <script>
@@ -41,13 +41,23 @@ export default {
   },
   methods: {
     ...mapActions([
-      'postAnswer'
+      'postAnswer',
+      'patchAnswer'
     ]),
     submit() {
       this.isDisabled = true
 
+      if (! this.question.hasAnswerFromCurrentUser) {
+        this
+          .postAnswer()
+          .then(() => {
+            this.isDisabled = false
+            this.$emit('finishWritingAnswer')
+          })
+      }
+
       this
-        .postAnswer()
+        .patchAnswer()
         .then(() => {
           this.isDisabled = false
           this.$emit('finishWritingAnswer')

@@ -11,4 +11,9 @@ class AnswerPolicy extends Policy
     {
         return ! $question->hasAnswerFromCurrentUser;
     }
+
+    function update(User $user, Question $question)
+    {
+        return $question->hasAnswerFromCurrentUser;
+    }
 }

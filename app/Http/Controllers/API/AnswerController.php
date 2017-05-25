@@ -26,4 +26,17 @@ class AnswerController extends Controller
 
         return $question->answerFromCurrentUser;
     }
+
+    function update(Question $question, Request $request)
+    {
+        $this->authorize('update', [Answer::class, $question]);
+
+        $this->validate($request, [
+            'body' => 'required',
+        ]);
+
+        $question->updateAnswer($request->all());
+
+        return $question->answerFromCurrentUser;
+    }
 }
