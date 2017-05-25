@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\API\Question\AnswerRequest;
 
 use App\Edition;
 use App\Slug as Question;

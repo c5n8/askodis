@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\CamelCaseJsonAttribute;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -9,7 +10,7 @@ use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable, SoftDeletes;
+    use CamelCaseJsonAttribute, HasApiTokens, Notifiable, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -20,4 +21,11 @@ class User extends Authenticatable
     protected $visible = [
         'name',
     ];
+
+    function notifications()
+    {
+        return $this
+            ->morphMany(Notification::class, 'notifiable')
+            ->orderBy('created_at', 'desc');
+    }
 }

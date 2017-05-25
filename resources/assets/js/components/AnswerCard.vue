@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import VoteAnswerButton from './VoteAnswerButton.vue'
 
 export default {
@@ -34,16 +33,13 @@ export default {
     VoteAnswerButton
   },
   computed: {
-    ...mapState([
-      'question'
-    ]),
     humanizedDateTime() {
       return moment
       .utc(this.answer.updatedAt)
       .utcOffset(moment().utcOffset())
       .fromNow()
     },
-    formattedDateTime(dateTime) {
+    formattedDateTime() {
       return moment
       .utc(this.answer.updatedAt)
       .utcOffset(moment().utcOffset())

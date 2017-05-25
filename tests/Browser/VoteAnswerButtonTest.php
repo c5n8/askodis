@@ -2,6 +2,7 @@
 
 namespace Tests\Browser;
 
+use App\Answer;
 use App\Edition;
 use App\Slug as Question;
 use App\User;
@@ -18,8 +19,8 @@ class VoteAnswerButtonTest extends DuskTestCase
         factory(Edition::class)->states('answer')->create();
         $question = Question::first();
 
-        $this->browse(function (Browser $browser) use ($question) {
-            $browser
+        $this->browse(function ($first, $second) use ($question) {
+            $first
                 ->loginAs(factory(User::class)->create())
                 ->visit($question->slug)
                 ->assertSee('0 Votes')
@@ -31,6 +32,11 @@ class VoteAnswerButtonTest extends DuskTestCase
                 ->press('#answer-1 .vote.button')
                 ->waitForText('0 Votes')
                 ->assertSee('0 Votes');
+
+            $second
+                ->loginAs(Answer::first()->user)
+                ->visit('/')
+                ->assertSeeIn('#notificationMenu', '1');
         });
     }
 }

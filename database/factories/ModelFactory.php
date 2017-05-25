@@ -9,6 +9,7 @@ use App\Slug;
 use App\Tag;
 use App\Translation;
 use App\User;
+use App\Vote;
 use Faker\Generator;
 
 $factory->define(User::class, function (Generator $faker) {
@@ -159,4 +160,21 @@ $factory->define(Answer::class, function (Generator $faker) {
 
 $factory->define(Tag::class, function (Generator $faker) {
     return [];
+});
+
+$factory->define(Vote::class, function (Generator $faker) {
+    return [
+        'user_id' => function () {
+            return factory(User::class)->create()->id;
+        },
+    ];
+});
+
+$factory->state(Vote::class, 'answer', function (Generator $faker) {
+    return [
+        'votable_type' => 'answer',
+        'votable_id' => function () {
+            return factory(Answer::class)->create()->id;
+        },
+    ];
 });
