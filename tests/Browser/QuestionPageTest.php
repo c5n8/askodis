@@ -2,11 +2,10 @@
 
 namespace Tests\Browser;
 
-use App\Edition;
-use App\Slug as Question;
-use App\Tag;
+use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
+use Tests\Browser\Pages\QuestionPage;
 use Tests\DuskTestCase;
 
 class QuestionPageTest extends DuskTestCase
@@ -15,36 +14,18 @@ class QuestionPageTest extends DuskTestCase
 
     function test_visit_question_page()
     {
-        factory(Edition::class)->states('question')->create();
-        $question = Question::first();
-        factory(Edition::class, 3)->states('tag')->create();
-        $question->tags()->sync(Tag::all());
-
-        $this->browse(function (Browser $browser) use ($question) {
+        $this->browse(function (Browser $browser) {
             $browser
-                ->visit($question->slug)
-                ->assertPathIs('/' . $question->slug)
-                ->assertTitleContains($question->body)
-                ->assertSee($question->body);
-
-            foreach ($question->tags as $tag) {
-                $browser->assertSee($tag['body']);
-            }
-        });
-    }
-
-    function test_visit_question_page_with_detail()
-    {
-        factory(Edition::class)->states('detail')->create();
-        $question = Question::first();
-
-        $this->browse(function (Browser $browser) use ($question) {
-            $browser
-                ->visit($question->slug)
-                ->assertPathIs('/' . $question->slug)
-                ->assertTitleContains($question->body)
-                ->assertSee($question->body)
-                ->assertSee($question->detail);
+                ->loginAs(factory(User::class)->create())
+                ->visit(new QuestionPage)
+                ->assertPathIs('/is-this-an-example-of-question')
+                ->assertTitleContains('Is this an example of question?')
+                ->assertSee('Is this an example of question?')
+                ->assertSee('Here is the detail of the question')
+                ->assertSee('tag')
+                ->assertSee('1 Answers')
+                ->assertSee('John Doe')
+                ->assertSee('Here is my answer');
         });
     }
 }

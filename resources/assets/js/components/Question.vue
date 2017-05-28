@@ -1,21 +1,14 @@
 <template lang='jade'>
-  .ui.main.container(v-show='isReady')
+  .ui.main.container(v-if='isReady')
     .ui.centered.grid
       .ten.wide.computer.sixteen.wide.mobile.column
         p
-          .stat {{ question.answerRequestsCount }} Answer requests
+          .stat {{ question.answerRequestsCount }} People ask
 
         request-answer-button
-        #answerButton.ui.tiny.basic.button(
-          @click='openAnswerForm'
-        )
+        button.ui.tiny.basic.button(@click='onAnswerButtonClick')
           i.edit.icon
           strong {{ answerButtonText }}
-        //- .ui.tiny.basic.button
-        //-   i.share.icon
-        //-   strong Share
-        //- .ui.tiny.basic.icon.button.right.floated
-        //-   i.ellipsis.vertical.icon
 
         template(v-if='question.hasAnswerFromCurrentUser && ! isWritingAnswer')
           h4 Your Answer
@@ -41,12 +34,11 @@
 </template>
 
 <script>
-import store from './../store'
-import { mapState } from 'vuex'
-import { mapActions } from 'vuex'
-import RequestAnswerButton from './RequestAnswerButton.vue'
-import AnswerCard from './AnswerCard.vue'
-import AnswerForm from './AnswerForm.vue'
+import { mapState, mapActions } from 'vuex'
+import store from 'store'
+import RequestAnswerButton from 'components/RequestAnswerButton'
+import AnswerCard from 'components/AnswerCard'
+import AnswerForm from 'components/AnswerForm'
 
 export default {
   store,
@@ -77,19 +69,19 @@ export default {
     },
     answerButtonText() {
       if (this.question.hasAnswerFromCurrentUser) {
-        return 'Edit Your Answer'
+        return 'Edit Answer'
       }
 
       return 'Answer'
-    }
+    },
   },
   methods: {
     ...mapActions([
       'getQuestion'
     ]),
-    openAnswerForm() {
+    onAnswerButtonClick() {
       this.isWritingAnswer = true
-    }
+    },
   },
   mounted() {
     this

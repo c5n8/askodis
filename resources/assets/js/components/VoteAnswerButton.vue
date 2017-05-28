@@ -1,7 +1,7 @@
 <template lang='jade'>
-  .vote.ui.tiny.button(
+  button.ui.tiny.button(
     :class='voteAnswerButtonClass'
-    @click='voteAnswerButtonClick'
+    @click='onVoteAnswerButtonClick'
   )
     i.check.icon
     strong {{ voteAnswerButtonText }}
@@ -38,7 +38,7 @@ export default {
       'postAnswerVote',
       'deleteAnswerVote'
     ]),
-    voteAnswerButtonClick() {
+    onVoteAnswerButtonClick() {
       this.isDisabled = true
 
       if (this.answer.hasVoteFromCurrentUser) {

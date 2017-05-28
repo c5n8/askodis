@@ -2,15 +2,14 @@
 a#notificationMenu.item
   i.bell.outline.icon
   span.text Notifications
-  .ui.tiny.top.right.attached.red.label(v-show="user.unreadNotificationsCount > 0")
+  .ui.tiny.top.right.attached.red.label(v-show='user.unreadNotificationsCount > 0')
     | {{ user.unreadNotificationsCount }}
 </template>
 
 <script>
-import store from './../store'
-import { mapState } from 'vuex'
-import { mapMutations } from 'vuex'
-import { mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
+import store from 'store'
+import socket from 'lib/socket'
 
 export default {
   store,
@@ -22,15 +21,29 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'setUnreadNotificationsCount'
+      'setUnreadNotificationsCount',
+      'incrementUnreadNotificationsCount'
     ]),
     ...mapActions([
       'getNotifications',
+      'getNotification',
       'readNotifications'
     ]),
   },
   mounted() {
     this.setUnreadNotificationsCount(this.count)
+
+    let userId = document.head.querySelector('meta[name="user-id"]')
+
+    socket
+      .private('App.User.' + userId.content)
+      .notification(notification => {
+        this.incrementUnreadNotificationsCount()
+
+        if (this.user.notifications.length > 0) {
+          this.getNotification(notification.id)
+        }
+      })
 
     var vm = this
 
@@ -46,7 +59,7 @@ export default {
 
         if (vm.user.unreadNotificationsCount > 0) {
           vm.setUnreadNotificationsCount(0)
-          vm.readNotifications();
+          vm.readNotifications()
         }
       }
     })

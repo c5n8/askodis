@@ -12,7 +12,7 @@ class SearchBarTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
-    function test_search_questions()
+    function test_search_bar()
     {
         config(['scout.driver' => 'algolia']);
 
@@ -20,7 +20,7 @@ class SearchBarTest extends DuskTestCase
         $question = Question::first();
 
         $this->browse(function (Browser $browser) use ($question) {
-            $browser->visit($question->slug)
+            $browser->visit('/')
                 ->type('search', $question->body)
                 ->whenAvailable('.results', function ($results) use ($question) {
                     $results->assertSee($question->body)

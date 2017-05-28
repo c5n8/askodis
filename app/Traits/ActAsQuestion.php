@@ -49,6 +49,8 @@ trait ActAsQuestion
         return $this
             ->question
             ->answers()
+            ->withCount('votes')
+            ->orderBy('votes_count', 'desc')
             ->hasTranslationInLanguage($this->language)
             ->get()
             ->transform(function ($answer) {
@@ -76,6 +78,11 @@ trait ActAsQuestion
                     'body' => $tag->translationInLanguage($this->language)->body,
                 ]);
             });
+    }
+
+    function getHasTagsAttribute()
+    {
+        return $this->question->tags()->exists();
     }
 
     function getHasAnswerFromCurrentUserAttribute()

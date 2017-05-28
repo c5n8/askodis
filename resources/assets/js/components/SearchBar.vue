@@ -1,29 +1,45 @@
-<template lang="jade">
+<template lang='jade'>
   #searchBar.ui.category.search.item
     .ui.icon.input
-      input.prompt(name="search" type="text" placeholder="Search questions")
+      input.prompt(name='search' type='text' placeholder='Search questions' v-model='query')
       i.search.link.icon
     .results
+    #noResultMessage(style='display: none')
+      .message.empty
+        .header No Results
+        .description Your search returned no results
+        .ui.hidden.divider
+        .ui.tiny.basic.button(onclick='$("#questionForm").modal({blurring: true}).modal("show")')
+          i.edit.icon
+          | Write New Question
+
+    question-form(:body='query')
 </template>
 
 <script>
+import _ from 'lodash'
+import QuestionForm from 'components/QuestionForm'
+
 export default {
-  // data() {
-  //   return {
-  //     hasEmptyResult: false
-  //   }
-  // },
+  components: {
+    QuestionForm,
+  },
+  data() {
+    return {
+      query: ''
+    }
+  },
   mounted() {
     var algolia = {
-      id: "P4U9L9Y88Q",
-      key: "dee73656ad7ee84bf96bc603738611bc",
-      index: "questions"
+      id: 'P4U9L9Y88Q',
+      key: 'dee73656ad7ee84bf96bc603738611bc',
+      index: 'questions'
     }
 
     var vm = this
 
     $('#searchBar').search({
-      minCharacters: 10,
+      minCharacters: 7,
       apiSettings: {
         method: 'post',
         url: 'https://' + algolia.id + '-dsn.algolia.net/1/indexes/' + algolia.index + '/query',
@@ -34,34 +50,27 @@ export default {
           return xhr
         },
         beforeSend (settings) {
-          // if (settings.urlData.query.length > 10 && ! vm.hasEmptyResult) {
-          //   return false
-          // }
-
           settings.data = JSON.stringify({
-            "params" : "query=" + encodeURIComponent(settings.urlData.query) + "&hitsPerPage=5"
+            'params' : 'query=' + encodeURIComponent(settings.urlData.query) + '&hitsPerPage=5'
           })
 
           return settings
         },
-        onResponse (algoliaResponse) {
-          var response = { results : [] }
+        onResponse (response) {
+          var results = _.map(response.hits, hit => {
+            return {
+              title: hit.body,
+              url: '/' + hit.slug
+            }
+          })
 
-          // if (algoliaResponse.nbHits == 0) {
-          //   vm.hasEmptyResult = false
-          //
-          //   return response
-          // }
-
-          // vm.hasEmptyResult = true
-
-          $.each(algoliaResponse.hits, (index, item) => response.results.push({
-              title: item.body,
-              url: "/" + item.slug
-          }))
-
-          return response
+          return { results : results }
         },
+      },
+      templates: {
+        message(type, message) {
+          return $('#noResultMessage').html()
+        }
       }
     })
   }

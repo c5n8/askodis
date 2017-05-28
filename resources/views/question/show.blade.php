@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $question->body)
+@section('title', $question->body . ' – ' . config('app.name'))
 
 @section('content')
   <div class="ui main text container">
@@ -10,17 +10,20 @@
       <p>{{ $question->detail }}</p>
     @endif
 
-    <div class="ui grid">
-      <div class="sixteen wide column">
-        <div class="ui small tag labels">
+    @if ($question->hasTags)
+      <div class="ui grid">
+        <div class="sixteen wide column">
+          <div class="ui small tag labels">
 
-          @foreach ($question->tags as $tag)
-            <a href="#" class="ui label">{{ $tag['body'] }}</a>
-          @endforeach
+            @foreach ($question->tags as $tag)
+              <a href="#" class="ui label">{{ $tag['body'] }}</a>
+            @endforeach
 
+          </div>
         </div>
       </div>
-    </div>
+    @endif
+
   </div>
 
   <question :id={{ $question->id }}></question>

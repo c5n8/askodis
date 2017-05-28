@@ -1,13 +1,31 @@
-require('./bootstrap')
+import 'bootstrap'
+import vue from 'vue'
+import store from 'store'
+import { mapActions } from 'vuex'
+import SearchBar from 'components/SearchBar'
+import NotificationMenu from 'components/NotificationMenu'
+import NotificationPopup from 'components/NotificationPopup'
+import AccountMenu from 'components/AccountMenu'
 
-window.Vue = require('vue')
-
-Vue.component('search-bar', require('./components/SearchBar.vue'));
-Vue.component('notification-menu', require('./components/NotificationMenu.vue'));
-Vue.component('notification-popup', require('./components/NotificationPopup.vue'));
-Vue.component('account-menu', require('./components/AccountMenu.vue'));
-Vue.component('question', require('./components/Question.vue'));
-
-const app = new Vue({
+const app = new vue({
+  store,
   el: '#app',
+  components: {
+    SearchBar,
+    NotificationMenu,
+    NotificationPopup,
+    AccountMenu
+  },
+  methods: {
+    ...mapActions([
+      'startClock',
+      'stopClock'
+    ]),
+  },
+  mounted() {
+    this.startClock()
+  },
+  destroyed() {
+    this.stopClock()
+  }
 })

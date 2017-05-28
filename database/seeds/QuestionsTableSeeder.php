@@ -18,7 +18,7 @@ class QuestionsTableSeeder extends Seeder
         factory(Edition::class, 3)->states('tag')->create();
 
         $slug = Slug::first();
-        $slug->text = 'slug';
+        $slug->text = 'slug-example';
         $slug->save();
 
         $question = $slug->question;

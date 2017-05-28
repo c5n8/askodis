@@ -1,15 +1,14 @@
 <template lang='jade'>
-  #requestAnswerButton.ui.tiny.button(
+  button.ui.tiny.button(
     :class='requestAnswerButtonClass'
-    @click='requestAnswerButtonClick'
+    @click='onRequestAnswerButtonClick'
   )
     i.help.circle.icon
     strong {{ requestAnswerButtonText }}
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   data() {
@@ -30,18 +29,18 @@ export default {
     },
     requestAnswerButtonText() {
       if (this.question.hasAnswerRequestFromCurrentUser) {
-        return 'Requesting answer'
+        return 'Asked'
       }
 
-      return 'Request answer'
-    }
+      return 'Ask'
+    },
   },
   methods: {
     ...mapActions([
       'postAnswerRequest',
       'deleteAnswerRequest'
     ]),
-    requestAnswerButtonClick() {
+    onRequestAnswerButtonClick() {
       this.isDisabled = true
 
       if (this.question.hasAnswerRequestFromCurrentUser) {

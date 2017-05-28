@@ -10,7 +10,7 @@
     @endunless
 
     <title>
-      @yield('title') – {{ config('app.name') }}
+      @yield('title')
     </title>
 
     <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
@@ -25,18 +25,17 @@
 
           <search-bar></search-bar>
 
-          @unless (auth()->guest())
-            <div class="right menu">
+          <div class="right menu">
+            @unless (auth()->guest())
               <notification-menu
                 :count="{{ auth()->user()->unreadNotifications()->count() }}">
               </notification-menu>
               <notification-popup></notification-popup>
               <account-menu></account-menu>
-              <form id="logoutForm" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                {{ csrf_field() }}
-              </form>
-            </div>
-          @endunless
+            @else
+              <a class="item" href="{{ url('login') }}">Login</a>
+            @endunless
+          </div>
         </div>
       </div>
 

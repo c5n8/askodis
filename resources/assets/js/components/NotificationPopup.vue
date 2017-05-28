@@ -1,26 +1,24 @@
 <template lang='jade'>
 .ui.flowing.popup
-  #notificationList.ui.divided.relaxed.link.list(@scroll='handleNotificationListScroll')
+  #notificationList.ui.divided.relaxed.link.list(@scroll='onNotificationListScroll')
     notification-item(
       :notification='notification'
       v-for='notification in user.notifications'
       ':key'='notification.id'
     )
 
-    template(v-if='user.hasReadAllNotifications')
-      .item(style='text-align: center')
-        .content
-          .description
-            span.stat {{ endText }}
+    .item(v-if='user.hasReadAllNotifications' style='text-align: center')
+      .content
+        .description
+          span.stat {{ endText }}
 
     .ui.mini.centered.inline.loader(:class='{ active: ! user.hasReadAllNotifications }')
 </template>
 
 <script>
-import store from './../store'
-import { mapState } from 'vuex'
-import { mapActions } from 'vuex'
-import NotificationItem from './NotificationItem.vue'
+import { mapState, mapActions } from 'vuex'
+import store from 'store'
+import NotificationItem from 'components/NotificationItem'
 
 export default {
   store,
@@ -48,8 +46,8 @@ export default {
     ...mapActions([
       'getOlderNotifications'
     ]),
-    handleNotificationListScroll() {
-      var list = $("#notificationList")
+    onNotificationListScroll() {
+      var list = $('#notificationList')
 
       if(list.scrollTop() >= (list[0].scrollHeight - list.outerHeight()))
       {

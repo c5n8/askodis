@@ -3,14 +3,16 @@
   i.user.icon
   span.text Account
   .menu
-    .item(@click="accountMenuClick") Logout
+    .item(@click='onLogoutButtonClick') Logout
 </template>
 
 <script>
+import http from 'lib/http'
+
 export default {
   methods: {
-    accountMenuClick() {
-      $('#logoutForm').submit();
+    onLogoutButtonClick() {
+      http.post('/logout').then(() => window.location.replace('/'))
     }
   },
   mounted() {

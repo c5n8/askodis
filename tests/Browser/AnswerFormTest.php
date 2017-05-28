@@ -3,11 +3,11 @@
 namespace Tests\Browser;
 
 use App\Edition;
-use App\Slug as Question;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
+use Tests\Browser\Pages\QuestionPage;
 
 class AnswerFormTest extends DuskTestCase
 {
@@ -15,31 +15,28 @@ class AnswerFormTest extends DuskTestCase
 
     function test_answer_form()
     {
-        factory(Edition::class)->states('question')->create();
-        $question = Question::first();
-
-        $this->browse(function (Browser $browser) use ($question) {
+        $this->browse(function (Browser $browser) {
             $input = factory(Edition::class)->make();
 
             $browser
                 ->loginAs(factory(User::class)->create())
-                ->visit($question->slug)
-
-                ->press('#answerButton')
+                ->visit(new QuestionPage)
+                ->press('Answer')
                 ->waitFor('#answerForm')
-                ->keys('#answerForm textarea', $input->text)
-                ->press('#answerForm .button')
+                ->type('#answerForm textarea', $input->text)
+                ->press('Post')
                 ->waitUntilMissing('#answerForm')
                 ->assertSee('Your Answer')
-                ->assertSee($input->text);
+                ->assertSee($input->text)
+                ->assertSee('All 2 Answers');
 
             $input = factory(Edition::class)->make();
 
             $browser
-                ->press('#answerButton')
+                ->press('Edit Answer')
                 ->waitFor('#answerForm')
                 ->keys('#answerForm textarea', $input->text)
-                ->press('#answerForm .button')
+                ->press('Post')
                 ->waitUntilMissing('#answerForm')
                 ->assertSee($input->text);
         });

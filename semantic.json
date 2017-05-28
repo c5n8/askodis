@@ -39,7 +39,9 @@
       "popup",
       "list",
       "visibility",
-      "loader"
+      "loader",
+      "modal",
+      "dimmer"
     ],
   "version": "2.2.10"
 }

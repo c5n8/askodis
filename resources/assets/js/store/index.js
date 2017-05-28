@@ -1,16 +1,19 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import vue from 'vue'
+import vuex from 'vuex'
+import _ from 'lodash'
+import http from 'lib/http'
+import clock from 'store/modules/clock'
+import user from 'store/modules/user'
 
-Vue.use(Vuex)
+vue.use(vuex)
 
-export default new Vuex.Store({
+export default new vuex.Store({
+  modules: {
+    clock,
+    user
+  },
   state: {
-    question: {},
-    user: {
-      hasReadAllNotifications: false,
-      unreadNotificationsCount: 0,
-      notifications: []
-    }
+    question: {}
   },
   mutations: {
     setQuestion(state, payload) {
@@ -50,134 +53,42 @@ export default new Vuex.Store({
 
       var currentUserAnswerIndex = _.findIndex(state.question.answers, answer => answer.id == payload.id)
       state.question.answers[currentUserAnswerIndex] = payload
-    },
-    setUnreadNotificationsCount(state, payload) {
-      state.user.unreadNotificationsCount = payload
-    },
-    incrementUnreadNotificationsCount(state) {
-      state.user.unreadNotificationsCount++
-    },
-    concatNotifications(state, payload) {
-      state.user.notifications = state.user.notifications.concat(payload)
-
-      if (payload.length < 10) {
-        state.user.hasReadAllNotifications = true
-      }
-    },
-    unshiftNotifications(state, payload) {
-      state.user.notifications.unshift(payload)
     }
   },
   actions: {
-    getQuestion({ commit }, id) {
-      return new Promise((resolve, reject) => {
-        axios
-          .get('/api/questions/' + id)
-          .then(response => {
-            commit('setQuestion', response.data)
-            resolve()
-          })
-      })
+    async getQuestion({ commit }, id) {
+      var question = await http
+        .get('/api/questions/' + id)
+        .then(response => response.data)
+      commit('setQuestion', question)
     },
-    postAnswerRequest({ commit, state }) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post('/api/questions/' + state.question.id + '/answer_requests')
-          .then(response => {
-            commit('startRequestingAnswer')
-            resolve()
-          })
-      })
+    async postAnswerRequest({ commit, state }) {
+      await http.post('/api/questions/' + state.question.id + '/answer_requests')
+      commit('startRequestingAnswer')
     },
-    deleteAnswerRequest({ commit, state }) {
-      return new Promise((resolve, reject) => {
-        axios
-          .delete('/api/questions/' + state.question.id + '/answer_requests')
-          .then(response => {
-            commit('stopRequestingAnswer')
-            resolve()
-          })
-      })
+    async deleteAnswerRequest({ commit, state }) {
+      await http.delete('/api/questions/' + state.question.id + '/answer_requests')
+      commit('stopRequestingAnswer')
     },
-    postAnswerVote({ commit, getters }, answer) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post('/api/answers/' + answer.id + '/votes')
-          .then(response => {
-            commit('voteAnswer', { answer: answer })
-            resolve()
-          })
-      })
+    async postAnswerVote({ commit }, answer) {
+      await http.post('/api/answers/' + answer.id + '/votes')
+      commit('voteAnswer', { answer: answer })
     },
-    deleteAnswerVote({ commit, getters }, answer) {
-      return new Promise((resolve, reject) => {
-        axios
-          .delete('/api/answers/' + answer.id + '/votes')
-          .then(response => {
-            commit('unvoteAnswer', { answer: answer  })
-            resolve()
-          })
-      })
+    async deleteAnswerVote({ commit }, answer) {
+      await http.delete('/api/answers/' + answer.id + '/votes')
+      commit('unvoteAnswer', { answer: answer  })
     },
-    postAnswer({ commit, state }) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post('/api/questions/' + state.question.id + '/answers', state.question.answerFromCurrentUser)
-          .then(response => {
-            commit('addAnswerFromCurrentUser', response.data)
-            resolve()
-          })
-      })
+    async postAnswer({ commit, state }) {
+      var answer = await http
+        .post('/api/questions/' + state.question.id + '/answers', state.question.answerFromCurrentUser)
+        .then(response => response.data)
+      commit('addAnswerFromCurrentUser', answer)
     },
-    patchAnswer({ commit, state }) {
-      return new Promise((resolve, reject) => {
-        axios
-          .patch('/api/questions/' + state.question.id + '/answers', state.question.answerFromCurrentUser)
-          .then(response => {
-            commit('setAnswerFromCurrentUser', response.data)
-            resolve()
-          })
-      })
-    },
-    getNotifications({ commit }) {
-      return new Promise((resolve, reject) => {
-        axios
-          .get('/api/notifications')
-          .then(response => {
-            commit('concatNotifications', response.data)
-            commit('setUnreadNotificationsCount', 0)
-            resolve()
-          })
-      })
-    },
-    getOlderNotifications({ commit, state }) {
-      return new Promise((resolve, reject) => {
-        axios
-          .get('/api/notifications?before=' + _.last(state.user.notifications).id)
-          .then(response => {
-            commit('concatNotifications', response.data)
-            resolve()
-          })
-      })
-    },
-    getNotification({ commit }, id) {
-      return new Promise((resolve, reject) => {
-        axios
-          .get('/api/notifications/' + id)
-          .then(response => {
-            commit('unshiftNotifications', response.data)
-            resolve()
-          })
-      })
-    },
-    readNotifications({ commit }) {
-      return new Promise((resolve, reject) => {
-        axios
-          .patch('/api/unread_notifications')
-          .then(response => {
-            resolve()
-          })
-      })
-    },
+    async patchAnswer({ commit, state }) {
+      var answer = await http
+        .patch('/api/questions/' + state.question.id + '/answers', state.question.answerFromCurrentUser)
+        .then(response => response.data)
+      commit('setAnswerFromCurrentUser', answer)
+    }
   }
 })

@@ -1,19 +1,18 @@
 <template lang='jade'>
-#answerForm.ui.form
+form#answerForm.ui.form(@submit.prevent='onSubmit')
   .field(:class='{ disabled: this.isDisabled }')
     textarea(
       placeholder='Write your answer'
       ':autofocus'='isWritingAnswer'
       v-model='body'
     )
-  .ui.tiny.green.button(:class='{ disabled: this.isDisabled }' @click='submit')
+  button.ui.tiny.green.button(type='submit' ':class'='{ disabled: this.isDisabled }')
     i.send.icon
     | Post
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
   props: ['isWritingAnswer'],
@@ -35,33 +34,34 @@ export default {
         return this.question.answerFromCurrentUser.body
       },
       set (value) {
-        this.$store.commit('setAnswerFromCurrentUserBody', value)
+        this.setAnswerFromCurrentUserBody(value)
       }
     }
   },
   methods: {
+    ...mapMutations([
+      'setAnswerFromCurrentUserBody'
+    ]),
     ...mapActions([
       'postAnswer',
       'patchAnswer'
     ]),
-    submit() {
+    onSubmit() {
       this.isDisabled = true
 
       if (! this.question.hasAnswerFromCurrentUser) {
-        this
-          .postAnswer()
-          .then(() => {
-            this.isDisabled = false
-            this.$emit('finishWritingAnswer')
-          })
-      }
-
-      this
-        .patchAnswer()
-        .then(() => {
+        this.postAnswer().then(() => {
           this.isDisabled = false
           this.$emit('finishWritingAnswer')
         })
+
+        return
+      }
+
+      this.patchAnswer().then(() => {
+        this.isDisabled = false
+        this.$emit('finishWritingAnswer')
+      })
     }
   }
 }
