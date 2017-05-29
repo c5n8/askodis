@@ -60,7 +60,8 @@ class QuestionFormTest extends DuskTestCase
                     ->waitUntilMissing('#questionForm')
                     ->assertPathIs('/gibberish-question')
                     ->assertSee('Gibberish question?')
-                    ->assertSee('Here is the detail');
+                    ->assertSee('Here is the detail')
+                    ->assertSee('1 People ask');
 
                 foreach ($tags as $tag) {
                     $browser->assertSee('Here is the detail', $tag);

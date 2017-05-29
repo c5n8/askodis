@@ -3,6 +3,7 @@
 namespace Tests\Browser;
 
 use App\Edition;
+use App\Question;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
@@ -15,12 +16,20 @@ class AnswerFormTest extends DuskTestCase
 
     function test_answer_form()
     {
-        $this->browse(function (Browser $browser) {
+        $this->browse(function ($first, $second) {
             $input = factory(Edition::class)->make();
 
-            $browser
+            $page = new QuestionPage;
+
+            $second
                 ->loginAs(factory(User::class)->create())
-                ->visit(new QuestionPage)
+                ->visit($page)
+                ->assertDontSeeIn('#notificationMenu', '1')
+                ->press('Ask');
+
+            $first
+                ->loginAs(factory(User::class)->create())
+                ->visit($page)
                 ->press('Answer')
                 ->waitFor('#answerForm')
                 ->type('#answerForm textarea', $input->text)
@@ -30,9 +39,11 @@ class AnswerFormTest extends DuskTestCase
                 ->assertSee($input->text)
                 ->assertSee('All 2 Answers');
 
+            $second->assertSeeIn('#notificationMenu', '1');
+
             $input = factory(Edition::class)->make();
 
-            $browser
+            $first
                 ->press('Edit Answer')
                 ->waitFor('#answerForm')
                 ->keys('#answerForm textarea', $input->text)

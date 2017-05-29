@@ -6,6 +6,7 @@ use App\Traits\Translatable;
 use App\Question;
 use App\User;
 use App\Vote;
+use App\Notifications\AnswerWritten;
 
 class Answer extends Model
 {
@@ -21,6 +22,21 @@ class Answer extends Model
         'votesCount',
         'hasVoteFromCurrentUser',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($answer) {
+            foreach ($answer->question->answerRequests as $request) {
+                if ($request->user->id == $answer->user->id) {
+                    continue;
+                }
+
+                $request->user->notify(new AnswerWritten($answer));
+            }
+        });
+    }
 
     function question()
     {

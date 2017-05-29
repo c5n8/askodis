@@ -86,6 +86,8 @@ class QuestionController extends Controller
 
         $question->tags()->sync($tags->pluck('id'));
 
+        $question->startRequestingAnswer();
+
         return $question->slugs()->inLanguage($language)->first();
     }
 

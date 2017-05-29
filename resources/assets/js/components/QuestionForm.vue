@@ -61,7 +61,10 @@ export default {
   },
   mounted() {
     this.getUserLanguages().then(() => {
-      $('#questionForm [name=language]').dropdown('set selected', this.preferredLanguage.code)
+      // TODO: Remove if before production
+      if (this.preferredLanguage) {
+        $('#questionForm [name=language]').dropdown('set selected', this.preferredLanguage.code)
+      }
     })
 
     $('#questionForm [name="tags[]"]').dropdown({
