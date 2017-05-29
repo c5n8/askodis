@@ -4,7 +4,14 @@ import http from 'lib/http'
 const state = {
   hasReadAllNotifications: false,
   unreadNotificationsCount: 0,
-  notifications: []
+  notifications: [],
+  languages: []
+}
+
+const getters = {
+  preferredLanguage: state => {
+    return state.languages.find(language => language.isPreferred == true)
+  }
 }
 
 const mutations = {
@@ -23,6 +30,9 @@ const mutations = {
   },
   unshiftNotifications(state, payload) {
     state.notifications.unshift(payload)
+  },
+  setLanguages(state, payload) {
+    state.languages = payload
   }
 }
 
@@ -48,11 +58,16 @@ const actions = {
   },
   async readNotifications({ commit }) {
     await http.patch('/api/unread_notifications')
-  }
+  },
+  async getUserLanguages({ commit }) {
+    var languages = await http.get('/api/my/languages').then((response) => response.data)
+    commit('setLanguages', languages)
+  },
 }
 
 export default {
   state,
+  getters,
   mutations,
   actions
 }

@@ -1,6 +1,20 @@
 <template lang='jade'>
 .ui.flowing.popup
-  #notificationList.ui.divided.relaxed.link.list(@scroll='onNotificationListScroll')
+
+  .stat(
+    v-if='user.hasReadAllNotifications && user.notifications == 0'
+    style='text-align: center'
+  ) No notification yet
+
+  .ui.mini.centered.inline.loader(
+    v-else-if='user.notifications == 0'
+    ':class'='{ active: ! user.hasReadAllNotifications && user.notifications == 0}'
+  )
+
+  #notificationList.ui.divided.relaxed.link.list(
+    v-else
+    @scroll='onNotificationListScroll'
+  )
     notification-item(
       :notification='notification'
       v-for='notification in user.notifications'
@@ -10,7 +24,7 @@
     .item(v-if='user.hasReadAllNotifications' style='text-align: center')
       .content
         .description
-          span.stat {{ endText }}
+          span.stat That's all
 
     .ui.mini.centered.inline.loader(:class='{ active: ! user.hasReadAllNotifications }')
 </template>
@@ -33,14 +47,7 @@ export default {
   computed: {
     ...mapState([
       'user'
-    ]),
-    endText() {
-      if (this.user.notifications.length == 0) {
-        return 'No notification yet'
-      }
-
-      return 'That\'s all'
-    }
+    ])
   },
   methods: {
     ...mapActions([

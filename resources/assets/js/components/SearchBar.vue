@@ -9,14 +9,13 @@
         .header No Results
         .description Your search returned no results
         .ui.hidden.divider
-        .ui.tiny.basic.button(onclick='$("#questionForm").modal({blurring: true}).modal("show")')
+        button.ui.tiny.basic.button(onclick='$("#questionForm").modal({blurring: true}).modal("show")')
           i.edit.icon
           | Write New Question
-
-    question-form(:body='query')
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 import _ from 'lodash'
 import QuestionForm from 'components/QuestionForm'
 
@@ -24,10 +23,20 @@ export default {
   components: {
     QuestionForm,
   },
-  data() {
-    return {
-      query: ''
+  computed: {
+    query: {
+      get () {
+        return this.$store.state.query
+      },
+      set (value) {
+        this.setQuery(value)
+      }
     }
+  },
+  methods: {
+    ...mapMutations([
+      'setQuery'
+    ])
   },
   mounted() {
     var algolia = {
@@ -64,7 +73,7 @@ export default {
             }
           })
 
-          return { results : results }
+          return { results: results }
         },
       },
       templates: {

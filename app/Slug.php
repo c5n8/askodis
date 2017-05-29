@@ -19,6 +19,7 @@ class Slug extends Model
         'answerFromCurrentUser',
         'answersCount',
         'answers',
+        'slug',
     ];
 
     protected $appends = [
@@ -28,6 +29,7 @@ class Slug extends Model
         'answerFromCurrentUser',
         'answersCount',
         'answers',
+        'slug',
     ];
 
     function question()

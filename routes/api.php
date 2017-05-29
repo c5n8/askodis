@@ -1,6 +1,7 @@
 <?php
 
 Route::group(['namespace' => 'API'], function () {
+    Route::post('questions', 'QuestionController@store');
     Route::get('questions/{question}', 'QuestionController@show');
 
     Route::post('questions/{question}/answer_requests', 'AnswerRequestController@store');
@@ -16,4 +17,6 @@ Route::group(['namespace' => 'API'], function () {
     Route::get('notifications/{id}', 'NotificationController@show');
 
     Route::patch('unread_notifications', 'UnreadNotificationController@update');
+
+    Route::get('my/languages', 'MyLanguagesController@index');
 });

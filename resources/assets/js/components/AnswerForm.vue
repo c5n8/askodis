@@ -8,7 +8,7 @@ form#answerForm.ui.form(@submit.prevent='onSubmit')
     )
   button.ui.tiny.green.button(type='submit' ':class'='{ disabled: this.isDisabled }')
     i.send.icon
-    | Post
+    | Post Answer
 </template>
 
 <script>

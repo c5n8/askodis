@@ -41,6 +41,9 @@
 
       @yield('content')
 
+      @unless (auth()->guest())
+        <question-form></question-form>
+      @endunless
     </div>
 
     <script src="{{ mix('/js/manifest.js') }}"></script>

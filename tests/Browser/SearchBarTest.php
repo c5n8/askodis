@@ -20,10 +20,12 @@ class SearchBarTest extends DuskTestCase
         $question = Question::first();
 
         $this->browse(function (Browser $browser) use ($question) {
-            $browser->visit('/')
+            $browser
+                ->visit('/')
                 ->type('search', $question->body)
                 ->whenAvailable('.results', function ($results) use ($question) {
-                    $results->assertSee($question->body)
+                    $results
+                    ->assertSee($question->body)
                         ->clickLink($question->body)
                         ->assertPathIs('/'.$question->slug);
                 });

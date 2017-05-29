@@ -13,9 +13,13 @@ export default new vuex.Store({
     user
   },
   state: {
+    query: '',
     question: {}
   },
   mutations: {
+    setQuery(state, payload) {
+      state.query = payload
+    },
     setQuestion(state, payload) {
       state.question = payload
     },
