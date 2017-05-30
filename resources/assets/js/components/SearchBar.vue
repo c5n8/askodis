@@ -9,7 +9,7 @@
         .header No Results
         .description Your search returned no results
         .ui.hidden.divider
-        button.ui.tiny.basic.button(onclick='$("#questionForm").modal({blurring: true}).modal("show")')
+        button.ui.tiny.basic.button(onclick='$("#questionForm").modal("show")')
           i.edit.icon
           | Write New Question
 </template>

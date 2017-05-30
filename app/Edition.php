@@ -3,17 +3,37 @@
 namespace App;
 
 use App\Slug;
+use App\User;
 use App\Translation;
+use Illuminate\Database\Eloquent\Builder;
 
 class Edition extends Model
 {
     protected $touches = ['translation'];
 
+    protected $casts = [
+        'is_accepted' => 'boolean',
+    ];
+
     protected static function boot()
     {
         parent::boot();
 
+        static::addGlobalScope('accepted', function (Builder $builder) {
+            $builder->where('is_accepted', true);
+        });
+
         static::created(function ($edition) {
+            if ($edition->translation->hasType('answer')) {
+                $translation = $edition->translation;
+                $answer = $translation->translatable;
+
+                if ($edition->user->id == $answer->user->id) {
+                    $edition->is_accepted = true;
+                    $edition->save();
+                }
+            }
+
             if ($edition->translation->hasType('question')) {
                 $translation = $edition->translation;
                 $question    = $translation->translatable;
@@ -35,5 +55,10 @@ class Edition extends Model
     function translation()
     {
         return $this->belongsTo(Translation::class);
+    }
+
+    function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

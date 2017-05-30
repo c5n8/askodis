@@ -43,6 +43,13 @@
 
       @unless (auth()->guest())
         <question-form></question-form>
+        <div id="successModal" class="ui basic small modal">
+          <div class="ui positive message">
+            <div class="header">
+              Your edit suggestion is posted!
+            </div>
+          </div>
+        </div>
       @endunless
     </div>
 

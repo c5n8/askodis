@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\API\Question\Answer;
 
+use App\Answer;
 use App\Edition;
 use App\Slug as Question;
 use App\User;
@@ -15,7 +16,7 @@ class PatchAnswerTest extends TestCase
     function test_patch_answer()
     {
         factory(Edition::class)->states('answer')->create();
-        $user = User::first();
+        $user = Answer::first()->user;
         $question = Question::first();
 
         $input = factory(Edition::class)->states('answer')->make();

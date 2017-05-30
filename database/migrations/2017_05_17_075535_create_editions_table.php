@@ -11,6 +11,8 @@ class CreateEditionsTable extends Migration
         Schema::create('editions', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('translation_id');
+            $table->unsignedInteger('user_id');
+            $table->boolean('is_accepted')->default(false);
             $table->text('text');
             $table->timestamps();
             $table->softDeletes();
@@ -18,6 +20,11 @@ class CreateEditionsTable extends Migration
             $table->foreign('translation_id')
                   ->references('id')
                   ->on('translations')
+                  ->onDelete('cascade');
+
+            $table->foreign('user_id')
+                  ->references('id')
+                  ->on('users')
                   ->onDelete('cascade');
         });
     }

@@ -34,8 +34,10 @@ class QuestionController extends Controller
         $translation->save();
 
         $edition = $translation->editions()->make();
+        $edition->is_accepted = true;
         $edition->text = request('body');
         $edition->translation()->associate($translation);
+        $edition->user()->associate(auth()->user());
         $edition->save();
 
         if (request()->has('detail')) {
@@ -49,8 +51,10 @@ class QuestionController extends Controller
             $translation->save();
 
             $edition = $translation->editions()->make();
+            $edition->is_accepted = true;
             $edition->text = request('detail');
             $edition->translation()->associate($translation);
+            $edition->user()->associate(auth()->user());
             $edition->save();
         }
 
@@ -77,8 +81,10 @@ class QuestionController extends Controller
             $translation->save();
 
             $edition = $translation->editions()->make();
+            $edition->is_accepted = true;
             $edition->text = $tagText;
             $edition->translation()->associate($translation);
+            $edition->user()->associate(auth()->user());
             $edition->save();
 
             $tags->push($tag);

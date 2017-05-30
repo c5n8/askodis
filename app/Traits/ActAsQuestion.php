@@ -160,6 +160,7 @@ trait ActAsQuestion
         $edition       = $translation->editions()->make();
         $edition->text = $data['body'];
         $edition->translation()->associate($translation);
+        $edition->user()->associate(auth()->user());
         $edition->save();
     }
 
@@ -176,6 +177,7 @@ trait ActAsQuestion
         $edition       = $translation->editions()->make();
         $edition->text = $data['body'];
         $edition->translation()->associate($translation);
+        $edition->user()->associate(auth()->user());
         $edition->save();
     }
 }

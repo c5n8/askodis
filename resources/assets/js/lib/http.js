@@ -10,4 +10,12 @@ if (csrfToken) {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token')
 }
 
+axios.interceptors.response.use(null, error => {
+  if (error.response.status === 401) {
+
+  }
+
+  return Promise.reject(error);
+});
+
 export default axios

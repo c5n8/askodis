@@ -9,9 +9,11 @@ Route::group(['namespace' => 'API'], function () {
 
     Route::post('questions/{question}/answers', 'AnswerController@store');
     Route::patch('questions/{question}/answers', 'AnswerController@update');
+    Route::post('questions/{question}/answers/{answer}/edits', 'AnswerEditsController@store');
 
     Route::post('answers/{answer}/votes', 'AnswerVoteController@store');
     Route::delete('answers/{answer}/votes', 'AnswerVoteController@destroy');
+
 
     Route::get('notifications', 'NotificationController@index');
     Route::get('notifications/{id}', 'NotificationController@show');

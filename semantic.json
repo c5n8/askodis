@@ -41,7 +41,8 @@
       "visibility",
       "loader",
       "modal",
-      "dimmer"
+      "dimmer",
+      "message"
     ],
   "version": "2.2.10"
 }

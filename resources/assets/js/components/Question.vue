@@ -69,7 +69,7 @@ export default {
     },
     answerButtonText() {
       if (this.question.hasAnswerFromCurrentUser) {
-        return 'Edit Answer'
+        return 'Edit My Answer'
       }
 
       return 'Answer'

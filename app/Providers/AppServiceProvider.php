@@ -32,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
 
     function register()
     {
-        if ($this->app->environment('testing')) {
+        if ($this->app->environment('local', 'testing')) {
             $this->app->register(DuskServiceProvider::class);
         }
     }

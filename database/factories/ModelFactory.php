@@ -100,6 +100,10 @@ $factory->state(Translation::class, 'tag', function (Generator $faker) {
 $factory->define(Edition::class, function (Generator $faker) {
     return [
         'text' => $faker->paragraph,
+        'user_id' => function () {
+            return factory(User::class)->create()->id;
+        },
+        'is_accepted' => true
     ];
 });
 
@@ -109,6 +113,7 @@ $factory->state(Edition::class, 'question', function (Generator $faker) {
         'translation_id' => function () {
             return factory(Translation::class)->states('question')->create()->id;
         },
+        'is_accepted' => true
     ];
 });
 
@@ -118,6 +123,7 @@ $factory->state(Edition::class, 'detail', function (Generator $faker) {
         'translation_id' => function () {
             return factory(Translation::class)->states('detail')->create()->id;
         },
+        'is_accepted' => true
     ];
 });
 
@@ -127,6 +133,7 @@ $factory->state(Edition::class, 'answer', function (Generator $faker) {
         'translation_id' => function () {
             return factory(Translation::class)->states('answer')->create()->id;
         },
+        'is_accepted' => true
     ];
 });
 

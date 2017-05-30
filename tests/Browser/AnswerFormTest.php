@@ -44,7 +44,7 @@ class AnswerFormTest extends DuskTestCase
             $input = factory(Edition::class)->make();
 
             $first
-                ->press('Edit Answer')
+                ->press('Edit My Answer')
                 ->waitFor('#answerForm')
                 ->keys('#answerForm textarea', $input->text)
                 ->press('Post')

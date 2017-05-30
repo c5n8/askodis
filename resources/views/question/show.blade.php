@@ -1,4 +1,4 @@
-@extends('layouts.app')
+  @extends('layouts.app')
 
 @section('title', $question->body . ' – ' . config('app.name'))
 
