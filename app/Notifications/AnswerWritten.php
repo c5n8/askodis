@@ -24,9 +24,12 @@ class AnswerWritten extends Notification implements ShouldQueue
 
     function toArray($notifiable)
     {
+        $language = $this->answer->translations()->first()->language;
+        $slug = $this->answer->question->slugs()->InLanguage($language)->first();
+
         return ([
             'message' => $this->answer->user->name . ' answered your question',
-            'action'  => url('questions/' . $this->answer->question->id),
+            'action'  => url($slug->text),
         ]);
     }
 }

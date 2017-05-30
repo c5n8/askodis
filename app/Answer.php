@@ -27,15 +27,15 @@ class Answer extends Model
     {
         parent::boot();
 
-        static::created(function ($answer) {
-            foreach ($answer->question->answerRequests as $request) {
-                if ($request->user->id == $answer->user->id) {
-                    continue;
-                }
-
-                $request->user->notify(new AnswerWritten($answer));
-            }
-        });
+        // static::created(function ($answer) {
+        //     foreach ($answer->question->answerRequests as $request) {
+        //         if ($request->user->id == $answer->user->id) {
+        //             continue;
+        //         }
+        //
+        //         $request->user->notify(new AnswerWritten($answer));
+        //     }
+        // });
     }
 
     function question()

@@ -162,6 +162,8 @@ trait ActAsQuestion
         $edition->translation()->associate($translation);
         $edition->user()->associate(auth()->user());
         $edition->save();
+
+        return $answer;
     }
 
     function updateAnswer(array $data)

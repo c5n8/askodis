@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Answer;
 use App\Http\Controllers\Controller;
 use App\Slug as Question;
+use App\Notifications\AnswerWritten;
 use Illuminate\Http\Request;
 
 class AnswerController extends Controller
@@ -22,7 +23,15 @@ class AnswerController extends Controller
             'body' => 'required',
         ]);
 
-        $question->saveAnswer($request->all());
+        $answer = $question->saveAnswer($request->all());
+
+        foreach ($answer->question->answerRequests as $request) {
+            if ($request->user->id == $answer->user->id) {
+                continue;
+            }
+
+            $request->user->notify(new AnswerWritten($answer));
+        }
 
         return $question->answerFromCurrentUser;
     }

@@ -24,9 +24,13 @@ class AnswerVoted extends Notification implements ShouldQueue
 
     function toArray($notifiable)
     {
+        $answer = $this->vote->votable;
+        $language = $answer->translations()->first()->language;
+        $slug = $answer->question->slugs()->InLanguage($language)->first();
+
         return ([
             'message' => $this->vote->user->name . ' voted your answer',
-            'action'  => url('questions/' . $this->vote->votable->question->id),
+            'action'  => url($slug->text),
         ]);
     }
 }
