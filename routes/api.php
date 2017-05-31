@@ -21,4 +21,6 @@ Route::group(['namespace' => 'API'], function () {
     Route::patch('unread_notifications', 'UnreadNotificationController@update');
 
     Route::get('my/languages', 'MyLanguagesController@index');
+
+    Route::patch('edits/{cid}', 'EditionController@update');
 });

@@ -12,7 +12,7 @@ class CreateEditionsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('translation_id');
             $table->unsignedInteger('user_id');
-            $table->boolean('is_accepted')->default(false);
+            $table->string('status')->default('pending');
             $table->text('text');
             $table->timestamps();
             $table->softDeletes();

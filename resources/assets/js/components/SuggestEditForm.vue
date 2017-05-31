@@ -1,11 +1,10 @@
 <template lang='jade'>
 .suggestion.ui.small.modal
-  i.close.icon
   .content
     .ui.form
       .field
         label Suggest edit to {{ answer.user.name }}'s answer
-        textarea(name='body' rows='2' placeholder='Write detail if any' v-model='payload.body')
+        textarea(name='body' placeholder='Write detail if any' v-model='payload.body')
       button.ui.green.tiny.button(
         :class='{ disabled: this.isDisabled || answer.body == payload.body }'
         @click='onSubmit'

@@ -16,6 +16,7 @@
     "babili-webpack-plugin": "^0.1.1",
     "bootstrap-sass": "^3.3.7",
     "cross-env": "^3.2.3",
+    "diff": "^3.2.0",
     "eslint": "^3.19.0",
     "jade": "^1.11.0",
     "jquery": "^3.1.1",

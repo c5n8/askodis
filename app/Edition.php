@@ -20,7 +20,7 @@ class Edition extends Model
         parent::boot();
 
         static::addGlobalScope('accepted', function (Builder $builder) {
-            $builder->where('is_accepted', true);
+            $builder->where('status', 'accepted');
         });
 
         static::created(function ($edition) {
@@ -29,7 +29,7 @@ class Edition extends Model
                 $answer = $translation->translatable;
 
                 if ($edition->user->id == $answer->user->id) {
-                    $edition->is_accepted = true;
+                    $edition->status = 'accepted';
                     $edition->save();
                 }
             }

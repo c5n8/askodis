@@ -34,7 +34,7 @@ class QuestionController extends Controller
         $translation->save();
 
         $edition = $translation->editions()->make();
-        $edition->is_accepted = true;
+        $edition->status = 'accepted';
         $edition->text = request('body');
         $edition->translation()->associate($translation);
         $edition->user()->associate(auth()->user());
@@ -51,7 +51,7 @@ class QuestionController extends Controller
             $translation->save();
 
             $edition = $translation->editions()->make();
-            $edition->is_accepted = true;
+            $edition->status = 'accepted';
             $edition->text = request('detail');
             $edition->translation()->associate($translation);
             $edition->user()->associate(auth()->user());
@@ -81,7 +81,7 @@ class QuestionController extends Controller
             $translation->save();
 
             $edition = $translation->editions()->make();
-            $edition->is_accepted = true;
+            $edition->status = 'accepted';
             $edition->text = $tagText;
             $edition->translation()->associate($translation);
             $edition->user()->associate(auth()->user());

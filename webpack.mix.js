@@ -21,6 +21,7 @@ mix
   .js('resources/assets/js/app.js', 'public/js')
   .extract([
     'axios',
+    'diff',
     'jquery',
     'laravel-echo',
     'lodash',
@@ -29,7 +30,6 @@ mix
     'vue',
     'vuex',
   ])
-  .sourceMaps()
   .disableNotifications()
   // .browserSync(process.env.MIX_APP_URL)
 
@@ -41,6 +41,9 @@ if (mix.config.inProduction) {
       uglify: false
     })
     .version()
+} else {
+  mix
+    .sourceMaps()
 }
 
 mix.webpackConfig(webpackConfig)

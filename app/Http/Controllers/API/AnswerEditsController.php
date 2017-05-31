@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Answer;
 use App\Slug as Question;
 use App\Http\Controllers\Controller;
+use App\Notifications\AnswerEditSuggested;
 
 class AnswerEditsController extends Controller
 {
@@ -15,10 +16,6 @@ class AnswerEditsController extends Controller
 
     function store(Question $question, Answer $answer)
     {
-        if (auth()->user()->id == $answer->user->id) {
-            abort(403);
-        }
-
         $translation = $answer->translationInLanguage($question->language);
 
         if (is_null($translation)) {
@@ -35,9 +32,18 @@ class AnswerEditsController extends Controller
 
         $edition = $translation->editions()->make();
         $edition->text = request('body');
+        if (auth()->user()->id == $answer->user->id) {
+            $edition->status = 'accepted';
+        } else {
+            $edition->status = 'pending';
+        }
         $edition->translation()->associate($translation);
         $edition->user()->associate(request()->user());
         $edition->save();
+
+        if (auth()->user()->id != $answer->user->id) {
+            $answer->user->notify(new AnswerEditSuggested($edition));
+        }
 
         return response()->json(null, 201);
     }

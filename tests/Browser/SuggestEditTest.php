@@ -7,6 +7,7 @@ use Tests\Browser\Pages\QuestionPage;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\User;
+use App\Answer;
 
 class SuggestEditTest extends DuskTestCase
 {
@@ -14,10 +15,18 @@ class SuggestEditTest extends DuskTestCase
 
     function testExample()
     {
-        $this->browse(function (Browser $browser) {
-            $browser
+        $this->browse(function ($first, $second) {
+
+            $first
                 ->loginAs(factory(User::class)->create())
-                ->visit(new QuestionPage)
+                ->visit(new QuestionPage);
+
+            $second
+                ->loginAs(Answer::first()->user)
+                ->visit('/')
+                ->assertDontSeeIn('#notificationMenu', '1');
+
+            $first
                 ->press('.more')
                 ->click('.more .suggest')
                 ->whenAvailable('.suggestion.modal', function ($form){
@@ -27,6 +36,8 @@ class SuggestEditTest extends DuskTestCase
                 })
                 ->waitUntilMissing('.suggestion.modal')
                 ->assertSee('Your edit suggestion is posted!');
+
+            $second->assertSeeIn('#notificationMenu', '1');
         });
     }
 }
