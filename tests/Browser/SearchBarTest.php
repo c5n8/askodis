@@ -3,7 +3,8 @@
 namespace Tests\Browser;
 
 use App\Edition;
-use App\Slug as Question;
+use App\Slug;
+use App\Question;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
@@ -16,8 +17,12 @@ class SearchBarTest extends DuskTestCase
     {
         config(['scout.driver' => 'algolia']);
 
-        factory(Edition::class)->states('question')->create();
-        $question = Question::first();
+        factory(Question::class)
+            ->create()
+            ->editions()
+            ->save(factory(Edition::class)->make());
+
+        $question = Slug::first();
 
         $this->browse(function (Browser $browser) use ($question) {
             $browser

@@ -45,7 +45,7 @@
         <question-form></question-form>
         <div id="successModal" class="ui basic small modal">
           <div class="ui positive message">
-            <div class="header">
+            <div class="description">
               Your edit suggestion is posted!
             </div>
           </div>

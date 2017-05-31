@@ -3,9 +3,9 @@
     .ui.centered.grid
       .ten.wide.computer.sixteen.wide.mobile.column
         p
-          .stat {{ question.answerRequestsCount }} People ask
+          .stat {{ question.votesCount }} People ask
 
-        request-answer-button
+        ask-button
         button.ui.tiny.basic.button(@click='onAnswerButtonClick')
           i.edit.icon
           strong {{ answerButtonText }}
@@ -36,7 +36,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import store from 'store'
-import RequestAnswerButton from 'components/RequestAnswerButton'
+import AskButton from 'components/AskButton'
 import AnswerCard from 'components/AnswerCard'
 import AnswerForm from 'components/AnswerForm'
 
@@ -44,7 +44,7 @@ export default {
   store,
   props: ['id'],
   components: {
-    RequestAnswerButton,
+    AskButton,
     AnswerCard,
     AnswerForm
   },

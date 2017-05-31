@@ -3,7 +3,8 @@
 namespace Tests\Feature\Pages;
 
 use App\Edition;
-use App\Slug as Question;
+use App\Question;
+use App\Slug;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
@@ -13,10 +14,10 @@ class QuestionPageTest extends TestCase
 
     function test_get_question_page()
     {
-        factory(Edition::class)->states('question')->create();
-        $question = Question::first();
+        $question = factory(Question::class)->create();
+        $question->editions()->save(factory(Edition::class)->make());
 
-        $response = $this->get($question->slug);
+        $response = $this->get(Slug::first()->text);
 
         $response
             ->assertStatus(200)

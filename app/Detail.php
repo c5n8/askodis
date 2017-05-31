@@ -3,11 +3,11 @@
 namespace App;
 
 use App\Question;
-use App\Traits\Translatable;
+use App\Traits\Editable;
 
 class Detail extends Model
 {
-    use Translatable;
+    use Editable;
 
     function question()
     {

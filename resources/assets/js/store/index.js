@@ -23,21 +23,15 @@ export default new vuex.Store({
     setQuestion(state, payload) {
       state.question = payload
     },
-    startRequestingAnswer(state) {
-      state.question.answerRequestsCount++
-      state.question.hasAnswerRequestFromCurrentUser = true
+    createVote(state, { votable, payload }) {
+      votable.votesCount++
+      votable.hasVoteFromCurrentUser = true
+      votable.voteFromCurrentUser = payload
     },
-    stopRequestingAnswer(state) {
-      state.question.answerRequestsCount--
-      state.question.hasAnswerRequestFromCurrentUser = false
-    },
-    voteAnswer(state, { answer }) {
-      answer.votesCount++
-      answer.hasVoteFromCurrentUser = true
-    },
-    unvoteAnswer(state, { answer }) {
-      answer.votesCount--
-      answer.hasVoteFromCurrentUser = false
+    deleteVote(state, { votable }) {
+      votable.votesCount--
+      votable.hasVoteFromCurrentUser = false
+      votable.voteFromCurrentUser = null
     },
     setAnswerFromCurrentUserBody(state, payload) {
       if (! state.question.hasAnswerFromCurrentUser) {
@@ -66,21 +60,21 @@ export default new vuex.Store({
         .then(response => response.data)
       commit('setQuestion', question)
     },
-    async postAnswerRequest({ commit, state }) {
-      await http.post('/api/questions/' + state.question.id + '/answer_requests')
-      commit('startRequestingAnswer')
+    async postQuestionVote({ commit, state }) {
+      var vote = await http
+        .post('/api/questions/' + state.question.id + '/votes')
+        .then(response => response.data)
+      commit('createVote', { votable: state.question, payload: vote })
     },
-    async deleteAnswerRequest({ commit, state }) {
-      await http.delete('/api/questions/' + state.question.id + '/answer_requests')
-      commit('stopRequestingAnswer')
+    async postAnswerVote({ commit, state }, answer) {
+      var vote = await http
+        .post('/api/questions/' + state.question.id + '/answers/' + answer.id + '/votes')
+        .then(response => response.data)
+      commit('createVote', { votable: answer, payload: vote })
     },
-    async postAnswerVote({ commit }, answer) {
-      await http.post('/api/answers/' + answer.id + '/votes')
-      commit('voteAnswer', { answer: answer })
-    },
-    async deleteAnswerVote({ commit }, answer) {
-      await http.delete('/api/answers/' + answer.id + '/votes')
-      commit('unvoteAnswer', { answer: answer  })
+    async deleteVote({ commit }, votable) {
+      await http.delete('/api/votes/' + votable.voteFromCurrentUser.id)
+      commit('deleteVote', { votable: votable })
     },
     async postAnswer({ commit, state }) {
       var answer = await http
@@ -88,9 +82,9 @@ export default new vuex.Store({
         .then(response => response.data)
       commit('addAnswerFromCurrentUser', answer)
     },
-    async patchAnswer({ commit, state }) {
+    async patchAnswer({ commit, state }, answer) {
       var answer = await http
-        .patch('/api/questions/' + state.question.id + '/answers', state.question.answerFromCurrentUser)
+        .patch('/api/questions/' + state.question.id + '/answers/' + answer.id, answer)
         .then(response => response.data)
       commit('setAnswerFromCurrentUser', answer)
     }

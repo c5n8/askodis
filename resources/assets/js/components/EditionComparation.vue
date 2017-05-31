@@ -56,7 +56,7 @@ export default {
       this.isDisabled = true
 
       http
-        .patch('/api/edits/' + this.id, { status: 'accepted'})
+        .patch('/api/editions/' + this.id, { status: 'accepted'})
         .then(() => {
           this.isDisabled = false
           this.status = 'accepted'
@@ -67,7 +67,7 @@ export default {
       this.isDisabled = true
 
       http
-        .patch('/api/edits/' + this.id, { status: 'rejected'})
+        .patch('/api/editions/' + this.id, { status: 'rejected'})
         .then(() => {
           this.isDisabled = false
           this.status = 'rejected'

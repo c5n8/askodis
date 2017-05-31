@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Detail;
+use App\Edition;
 use App\Language;
-use App\Slug as Question;
+use App\Question;
+use App\Slug;
 use App\Tag;
-use App\Http\Controllers\Controller;
+use App\Vote;
 
 class QuestionController extends Controller
 {
@@ -26,65 +29,46 @@ class QuestionController extends Controller
 
         $language = Language::where('code', request('language'))->first();
 
-        $question = \App\Question::create();
+        $question = Question::create();
 
-        $translation = $question->translations()->make();
-        $translation->translatable()->associate($question);
-        $translation->language()->associate($language);
-        $translation->save();
-
-        $edition = $translation->editions()->make();
-        $edition->status = 'accepted';
+        $edition = new Edition;
         $edition->text = request('body');
-        $edition->translation()->associate($translation);
+        $edition->language()->associate($language);
         $edition->user()->associate(auth()->user());
+        $edition->editable()->associate($question);
         $edition->save();
 
         if (request()->has('detail')) {
-            $detail = $question->detail()->make();
-            $detail->question()->associate($question);
-            $detail->save();
+            $detail = $question->detail()->save(new Detail);
 
-            $translation = $detail->translations()->make();
-            $translation->translatable()->associate($detail);
-            $translation->language()->associate($language);
-            $translation->save();
-
-            $edition = $translation->editions()->make();
-            $edition->status = 'accepted';
+            $edition = new Edition;
             $edition->text = request('detail');
-            $edition->translation()->associate($translation);
+            $edition->language()->associate($language);
             $edition->user()->associate(auth()->user());
+            $edition->editable()->associate($detail);
             $edition->save();
         }
 
-        $existingTags = Tag::whereHas('translations', function ($query) use ($language) {
+        $existingTags = Tag::whereHas('editions', function ($query) use ($language) {
                 $query
                     ->inLanguage($language)
-                    ->whereHas('editions', function ($query) {
-                        $query->whereIn('text', request('tags'));
-                    });
+                    ->whereIn('text', request('tags'));
             })
-            ->with('translations.editions')
+            ->with('editions')
             ->get();
 
-        $newTags = collect(request('tags'))->diff($existingTags->pluck('translations.0.editions.0.text'));
+        $newTags = collect(request('tags'))->diff($existingTags->pluck('editions.0.text'));
 
         $tags = collect($existingTags);
 
         foreach ($newTags as $tagText) {
             $tag = Tag::create();
 
-            $translation = $tag->translations()->make();
-            $translation->translatable()->associate($tag);
-            $translation->language()->associate($language);
-            $translation->save();
-
-            $edition = $translation->editions()->make();
-            $edition->status = 'accepted';
+            $edition = new Edition;
             $edition->text = $tagText;
-            $edition->translation()->associate($translation);
+            $edition->language()->associate($language);
             $edition->user()->associate(auth()->user());
+            $edition->editable()->associate($tag);
             $edition->save();
 
             $tags->push($tag);
@@ -92,13 +76,16 @@ class QuestionController extends Controller
 
         $question->tags()->sync($tags->pluck('id'));
 
-        $question->startRequestingAnswer();
+        $vote = new Vote;
+        $vote->votable()->associate($question);
+        $vote->user()->associate(auth()->user());
+        $vote->save();
 
         return $question->slugs()->inLanguage($language)->first();
     }
 
-    function show(Question $question)
+    function show(Slug $slug)
     {
-        return $question;
+        return $slug;
     }
 }

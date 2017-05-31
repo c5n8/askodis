@@ -58,7 +58,7 @@ export default {
         return
       }
 
-      this.patchAnswer().then(() => {
+      this.patchAnswer(this.question.answerFromCurrentUser).then(() => {
         this.isDisabled = false
         this.$emit('finishWritingAnswer')
       })

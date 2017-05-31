@@ -24,13 +24,9 @@ class QuestionsTableSeeder extends Seeder
         */
         $question = factory(Question::class)->create();
 
-        $translation = $question->translations()->make();
-        $translation->translatable()->associate($question);
-        $translation->language()->associate($language);
-        $translation->save();
-
         $edition = factory(Edition::class)->make(['text' => 'Is this an example of question?']);
-        $edition->translation()->associate($translation);
+        $edition->editable()->associate($question);
+        $edition->language()->associate($language);
         $edition->save();
 
         /*
@@ -38,17 +34,11 @@ class QuestionsTableSeeder extends Seeder
         | Mock Detail
         |--------------------------------------------------------------------------        |
         */
-        $detail = $question->detail()->make();
-        $detail->question()->associate($question);
-        $detail->save();
+        $detail = $question->detail()->save($question->detail()->make());
 
-        $translation = $detail->translations()->make();
-        $translation->translatable()->associate($detail);
-        $translation->language()->associate($language);
-        $translation->save();
-
-        $edition = factory(Edition::class)->make();
-        $edition->translation()->associate($translation);
+        $edition = factory(Edition::class)->make(['text' => 'Here is the detail of the question']);
+        $edition->editable()->associate($detail);
+        $edition->language()->associate($language);
         $edition->save();
 
         /*
@@ -58,13 +48,9 @@ class QuestionsTableSeeder extends Seeder
         */
         $tag = factory(Tag::class)->create();
 
-        $translation = $tag->translations()->make();
-        $translation->translatable()->associate($tag);
-        $translation->language()->associate($language);
-        $translation->save();
-
         $edition = factory(Edition::class)->make(['text' => 'tag']);
-        $edition->translation()->associate($translation);
+        $edition->editable()->associate($tag);
+        $edition->language()->associate($language);
         $edition->save();
 
         $question->tags()->attach($tag);
@@ -74,18 +60,17 @@ class QuestionsTableSeeder extends Seeder
         | Mock Answer
         |--------------------------------------------------------------------------        |
         */
+        $user = factory(User::class)->create(['name' => 'John Doe']);
+
         $answer = $question->answers()->make();
         $answer->question()->associate($question);
-        $answer->user()->associate(User::first());
+        $answer->user()->associate($user);
         $answer->save();
 
-        $translation = $answer->translations()->make();
-        $translation->translatable()->associate($answer);
-        $translation->language()->associate($language);
-        $translation->save();
-
-        $edition = factory(Edition::class)->make();
-        $edition->translation()->associate($translation);
+        $edition = factory(Edition::class)->make(['text' => 'Here is my answer']);
+        $edition->editable()->associate($answer);
+        $edition->language()->associate($language);
+        $edition->user()->associate($user);
         $edition->save();
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App;
 
-use App\Traits\Translatable;
+use App\Traits\Editable;
 
 class Tag extends Model
 {
-    use Translatable;
+    use Editable;
 }

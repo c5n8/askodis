@@ -10,16 +10,18 @@ class CreateEditionsTable extends Migration
     {
         Schema::create('editions', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('translation_id');
+            $table->unsignedInteger('language_id');
             $table->unsignedInteger('user_id');
+            $table->unsignedInteger('editable_id');
+            $table->string('editable_type');
             $table->string('status')->default('pending');
             $table->text('text');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('translation_id')
+            $table->foreign('language_id')
                   ->references('id')
-                  ->on('translations')
+                  ->on('languages')
                   ->onDelete('cascade');
 
             $table->foreign('user_id')

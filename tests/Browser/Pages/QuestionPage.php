@@ -22,13 +22,9 @@ class QuestionPage extends Page
         */
         $question = factory(Question::class)->create();
 
-        $translation = $question->translations()->make();
-        $translation->translatable()->associate($question);
-        $translation->language()->associate($language);
-        $translation->save();
-
         $edition = factory(Edition::class)->make(['text' => 'Is this an example of question?']);
-        $edition->translation()->associate($translation);
+        $edition->editable()->associate($question);
+        $edition->language()->associate($language);
         $edition->save();
 
         /*
@@ -36,17 +32,11 @@ class QuestionPage extends Page
         | Mock Detail
         |--------------------------------------------------------------------------        |
         */
-        $detail = $question->detail()->make();
-        $detail->question()->associate($question);
-        $detail->save();
-
-        $translation = $detail->translations()->make();
-        $translation->translatable()->associate($detail);
-        $translation->language()->associate($language);
-        $translation->save();
+        $detail = $question->detail()->save($question->detail()->make());
 
         $edition = factory(Edition::class)->make(['text' => 'Here is the detail of the question']);
-        $edition->translation()->associate($translation);
+        $edition->editable()->associate($detail);
+        $edition->language()->associate($language);
         $edition->save();
 
         /*
@@ -56,13 +46,9 @@ class QuestionPage extends Page
         */
         $tag = factory(Tag::class)->create();
 
-        $translation = $tag->translations()->make();
-        $translation->translatable()->associate($tag);
-        $translation->language()->associate($language);
-        $translation->save();
-
         $edition = factory(Edition::class)->make(['text' => 'tag']);
-        $edition->translation()->associate($translation);
+        $edition->editable()->associate($tag);
+        $edition->language()->associate($language);
         $edition->save();
 
         $question->tags()->attach($tag);
@@ -79,13 +65,10 @@ class QuestionPage extends Page
         $answer->user()->associate($user);
         $answer->save();
 
-        $translation = $answer->translations()->make();
-        $translation->translatable()->associate($answer);
-        $translation->language()->associate($language);
-        $translation->save();
-
         $edition = factory(Edition::class)->make(['text' => 'Here is my answer']);
-        $edition->translation()->associate($translation);
+        $edition->editable()->associate($answer);
+        $edition->language()->associate($language);
+        $edition->user()->associate($answer->user);
         $edition->save();
 
         return 'is-this-an-example-of-question';

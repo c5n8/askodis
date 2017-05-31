@@ -4,11 +4,6 @@ namespace App\Traits;
 
 trait ActAsQuestion
 {
-    function tags()
-    {
-        return $this->question->tags();
-    }
-
     function getSlugAttribute()
     {
         return $this->text;
@@ -16,7 +11,14 @@ trait ActAsQuestion
 
     function getBodyAttribute()
     {
-        return $this->question->translationInLanguage($this->language)->body;
+        return $this
+            ->question
+            ->editions()
+            ->inLanguage($this->language)
+            ->accepted()
+            ->latest()
+            ->first()
+            ->text;
     }
 
     function getHasDetailAttribute()
@@ -26,17 +28,30 @@ trait ActAsQuestion
 
     function getDetailAttribute()
     {
-        return $this->question->detail->translationInLanguage($this->language)->body;
+        return $this
+            ->question
+            ->detail
+            ->editions()
+            ->inLanguage($this->language)
+            ->accepted()
+            ->latest()
+            ->first()
+            ->text;
     }
 
-    function getAnswerRequestsCountAttribute()
+    function getVotesCountAttribute()
     {
-        return $this->question->answerRequestsCount;
+        return $this->question->votesCount;
     }
 
-    function getHasAnswerRequestFromCurrentUserAttribute()
+    function getHasVoteFromCurrentUserAttribute()
     {
-        return $this->question->hasAnswerRequestFromCurrentUser;
+        return $this->question->hasVoteFromCurrentUser;
+    }
+
+    function getVoteFromCurrentUserAttribute()
+    {
+        return $this->question->voteFromCurrentUser;
     }
 
     function getAnswersCountAttribute()
@@ -51,15 +66,22 @@ trait ActAsQuestion
             ->answers()
             ->withCount('votes')
             ->orderBy('votes_count', 'desc')
-            ->hasTranslationInLanguage($this->language)
+            ->hasEditionInLanguage($this->language)
             ->get()
             ->transform(function ($answer) {
                 return collect([
                     'id'                     => $answer->id,
-                    'body'                   => $answer->translationInLanguage($this->language)->body,
+                    'body'                   => $answer
+                                                    ->editions()
+                                                    ->inLanguage($this->language)
+                                                    ->accepted()
+                                                    ->latest()
+                                                    ->first()
+                                                    ->text,
                     'updatedAt'              => $answer->updated_at->toDateTimeString(),
                     'votesCount'             => $answer->votesCount,
                     'hasVoteFromCurrentUser' => $answer->hasVoteFromCurrentUser,
+                    'voteFromCurrentUser'    => $answer->voteFromCurrentUser,
                     'user'                   => $answer->user,
                 ]);
             });
@@ -70,19 +92,25 @@ trait ActAsQuestion
         return $this
             ->question
             ->tags()
-            ->hasTranslationInLanguage($this->language)
+            ->hasEditionInLanguage($this->language)
             ->get()
             ->transform(function ($tag) {
                 return collect([
                     'id'   => $tag->id,
-                    'body' => $tag->translationInLanguage($this->language)->body,
+                    'body' => $tag
+                                ->editions()
+                                ->inLanguage($this->language)
+                                ->accepted()
+                                ->latest()
+                                ->first()
+                                ->text,
                 ]);
             });
     }
 
     function getHasTagsAttribute()
     {
-        return $this->question->tags()->exists();
+        return $this->question->hasTags;
     }
 
     function getHasAnswerFromCurrentUserAttribute()
@@ -95,7 +123,7 @@ trait ActAsQuestion
             ->question
             ->answers()
             ->from(auth('api')->user())
-            ->hasTranslationInLanguage($this->language)
+            ->hasEditionInLanguage($this->language)
             ->exists();
     }
 
@@ -113,73 +141,22 @@ trait ActAsQuestion
             ->question
             ->answers()
             ->from(auth('api')->user())
-            ->hasTranslationInLanguage($this->language)
+            ->hasEditionInLanguage($this->language)
             ->first();
 
         return collect([
             'id'                     => $answer->id,
-            'body'                   => $answer->translationInLanguage($this->language)->body,
+            'body'                   => $answer
+                                            ->editions()
+                                            ->inLanguage($this->language)
+                                            ->accepted()
+                                            ->latest()
+                                            ->first()
+                                            ->text,
             'updatedAt'              => $answer->updated_at->toDateTimeString(),
             'votesCount'             => $answer->votesCount,
             'hasVoteFromCurrentUser' => $answer->hasVoteFromCurrentUser,
             'user'                   => $answer->user,
         ]);
-    }
-
-    function answerFrom($user)
-    {
-        return $this->question->answerFrom($user);
-    }
-
-    function startRequestingAnswer()
-    {
-        $this->question->startRequestingAnswer();
-    }
-
-    function stopRequestingAnswer()
-    {
-        $this->question->stopRequestingAnswer();
-    }
-
-    function saveAnswer(array $data)
-    {
-        $answer = $this->question->answers()->make();
-        $answer->question()->associate($this->question);
-        $answer->user()->associate(auth()->user());
-        $answer->save();
-
-        $translation = $answer->translationInLanguage($this->language);
-
-        if (is_null($translation)) {
-            $translation = $answer->translations()->make();
-            $translation->translatable()->associate($answer);
-            $translation->language()->associate($this->language);
-            $translation->save();
-        }
-
-        $edition       = $translation->editions()->make();
-        $edition->text = $data['body'];
-        $edition->translation()->associate($translation);
-        $edition->user()->associate(auth()->user());
-        $edition->save();
-
-        return $answer;
-    }
-
-    function updateAnswer(array $data)
-    {
-        $translation = $this
-            ->answerFrom(auth()->user())
-            ->translationInLanguage($this->language);
-
-        if ($translation->body == $data['body']) {
-            return;
-        }
-
-        $edition       = $translation->editions()->make();
-        $edition->text = $data['body'];
-        $edition->translation()->associate($translation);
-        $edition->user()->associate(auth()->user());
-        $edition->save();
     }
 }

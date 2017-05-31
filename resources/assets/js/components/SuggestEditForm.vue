@@ -36,7 +36,7 @@ export default {
     onSubmit() {
       this.isDisabled = true
 
-      http.post('/api/questions/' + this.question.id +'/answers/' + this.answer.id + '/edits', this.payload)
+      http.patch('/api/questions/' + this.question.id +'/answers/' + this.answer.id, this.payload)
         .then(response => {
           this.isDisabled = false
           $('#answer-' + this.answer.id + ' .suggestion.modal').modal('hide')

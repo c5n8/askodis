@@ -13,14 +13,4 @@ abstract class Model extends BaseModel
     protected $hidden = [
         'deleted_at',
     ];
-
-    function toArray()
-    {
-        foreach(parent::toArray() as $key => $value)
-        {
-            $array[camel_case($key)] = $value;
-        }
-
-        return $array;
-    }
 }

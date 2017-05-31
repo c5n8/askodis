@@ -22,13 +22,9 @@ class QuestionFormTest extends DuskTestCase
 
         $tag = factory(Tag::class)->create();
 
-        $translation = $tag->translations()->make();
-        $translation->translatable()->associate($tag);
-        $translation->language()->associate($language);
-        $translation->save();
-
         $edition = factory(Edition::class)->make(['text' => 'tag 1']);
-        $edition->translation()->associate($translation);
+        $edition->editable()->associate($tag);
+        $edition->language()->associate($language);
         $edition->save();
 
         $this->browse(function (Browser $browser) use ($user) {

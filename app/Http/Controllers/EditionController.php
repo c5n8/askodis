@@ -17,19 +17,18 @@ class EditionController extends Controller
         $suggestedEdit = Edition::withoutGlobalScopes()->findOrFail($id);
 
         if ($suggestedEdit->status == 'pending') {
-            if ($suggestedEdit->translation->translatable->user->id != auth()->user()->id) {
+            if ($suggestedEdit->editable->user->id != auth()->user()->id) {
                 abort(403);
             }
         }
 
-        $translation   = $suggestedEdit->translation;
-        $language      = $translation->language;
-        $answer        = $translation->translatable;
+        $language      = $suggestedEdit->language;
+        $answer        = $suggestedEdit->editable;
         $question      = $answer->question->slugs()->inLanguage($language)->first();
 
         $originalEdit  = $answer
-            ->translationInLanguage($language)
             ->editions()
+            ->inLanguage($language)
             ->latest('id')
             ->first();
 

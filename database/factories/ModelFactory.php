@@ -7,7 +7,6 @@ use App\Language;
 use App\Question;
 use App\Slug;
 use App\Tag;
-use App\Translation;
 use App\User;
 use App\Vote;
 use Faker\Generator;
@@ -34,127 +33,27 @@ $factory->define(Language::class, function (Generator $faker) {
     ];
 });
 
-$factory->define(Translation::class, function (Generator $faker) {
-    return [
-        'language_id' => function () {
-            return factory(Language::class)->create()->id;
-        },
-    ];
-});
-
-$factory->state(Translation::class, 'question', function (Generator $faker) {
-    return [
-        'translatable_type' => 'question',
-        'translatable_id'   => function () {
-            return factory(Question::class)->create()->id;
-        },
-    ];
-});
-
-$factory->state(Translation::class, 'detail', function (Generator $faker) {
-    $detail = factory(Detail::class)->create();
-
-    return [
-        'translatable_type' => 'detail',
-        'translatable_id'   => function () use ($detail) {
-            return $detail->id;
-        },
-        'language_id' => function () {
-            return Language::first()->id;
-        },
-    ];
-});
-
-$factory->state(Translation::class, 'answer', function (Generator $faker) {
-    $answer = factory(Answer::class)->create();
-
-    return [
-        'translatable_type' => 'answer',
-        'translatable_id'   => function () use ($answer) {
-            return $answer->id;
-        },
-        'language_id' => function () {
-            return Language::first()->id;
-        },
-    ];
-});
-
-$factory->state(Translation::class, 'tag', function (Generator $faker) {
-    $language = Language::first();
-
-    if (is_null($language)) {
-        $language = factory(Language::class)->create();
-    }
-
-    return [
-        'translatable_type' => 'tag',
-        'translatable_id'   => function () {
-            return factory(Tag::class)->create();
-        },
-        'language_id' => function () use ($language) {
-            return $language->id;
-        },
-    ];
-});
-
 $factory->define(Edition::class, function (Generator $faker) {
     return [
         'text' => $faker->paragraph,
         'user_id' => function () {
             return factory(User::class)->create()->id;
         },
+        'language_id' => function () {
+            return factory(Language::class)->create()->id;
+        },
         'status' => 'accepted'
     ];
 });
 
-$factory->state(Edition::class, 'question', function (Generator $faker) {
-    return [
-        'text' => str_replace('.', '?', $faker->sentence),
-        'translation_id' => function () {
-            return factory(Translation::class)->states('question')->create()->id;
-        },
-    ];
-});
-
-$factory->state(Edition::class, 'detail', function (Generator $faker) {
-    return [
-        'text'           => $faker->paragraph,
-        'translation_id' => function () {
-            return factory(Translation::class)->states('detail')->create()->id;
-        },
-    ];
-});
-
-$factory->state(Edition::class, 'answer', function (Generator $faker) {
-    return [
-        'text'           => $faker->paragraph(10),
-        'translation_id' => function () {
-            return factory(Translation::class)->states('answer')->create()->id;
-        },
-    ];
-});
-
-$factory->state(Edition::class, 'tag', function (Generator $faker) {
-    return [
-        'text'           => $faker->word,
-        'translation_id' => function () {
-            return factory(Translation::class)->states('tag')->create()->id;
-        },
-    ];
-});
-
 $factory->define(Detail::class, function (Generator $faker) {
-    return [
-        'question_id' => function () {
-            return factory(Edition::class)->states('question')->create()->translation->translatable->id;
-        },
-    ];
+    return [];
 });
 
 $factory->define(Answer::class, function (Generator $faker) {
     return [
         'question_id' => function () {
-            return factory(Edition::class)->states('question')->create()->translation->translatable->id;
+            return factory(Question::class)->create()->id;
         },
         'user_id' => function () {
             return factory(User::class)->create()->id;
@@ -174,11 +73,14 @@ $factory->define(Vote::class, function (Generator $faker) {
     ];
 });
 
-$factory->state(Vote::class, 'answer', function (Generator $faker) {
+$factory->define(Slug::class, function (Generator $faker) {
     return [
-        'votable_type' => 'answer',
-        'votable_id' => function () {
-            return factory(Answer::class)->create()->id;
+        'text' => str_slug($faker->text),
+        'question_id' => function () {
+            return factory(Question::class)->create()->id;
+        },
+        'language_id' => function () {
+            return factory(Language::class)->create()->id;
         },
     ];
 });

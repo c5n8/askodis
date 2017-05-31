@@ -39,20 +39,20 @@ const mutations = {
 const actions = {
   async getNotifications({ commit }) {
     var notifications = await http
-      .get('/api/notifications')
+      .get('/api/my/notifications')
       .then(response => response.data)
     commit('concatNotifications', notifications)
     commit('setUnreadNotificationsCount', 0)
   },
   async getOlderNotifications({ commit, state }) {
     var notifications = await http
-      .get('/api/notifications?before=' + _.last(state.notifications).id)
+      .get('/api/my/notifications?before=' + _.last(state.notifications).id)
       .then(response => response.data)
     commit('concatNotifications', notifications)
   },
   async getNotification({ commit }, id) {
     var notification = await http
-      .get('/api/notifications/' + id)
+      .get('/api/my/notifications/' + id)
       .then(response => response.data)
     commit('unshiftNotifications', notification)
   },

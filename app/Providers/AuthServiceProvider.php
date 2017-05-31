@@ -10,6 +10,8 @@ class AuthServiceProvider extends ServiceProvider
 {
     protected $policies = [
         \App\Answer::class => \App\Policies\AnswerPolicy::class,
+        \App\Edition::class => \App\Policies\EditionPolicy::class,
+        \App\Vote::class => \App\Policies\VotePolicy::class,
     ];
 
     function boot()

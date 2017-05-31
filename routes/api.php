@@ -1,26 +1,39 @@
 <?php
 
 Route::group(['namespace' => 'API'], function () {
-    Route::post('questions', 'QuestionController@store');
-    Route::get('questions/{question}', 'QuestionController@show');
+    Route::resource('questions', QuestionController::class, [
+        'only'       => ['store', 'show'],
+    ]);
 
-    Route::post('questions/{question}/answer_requests', 'AnswerRequestController@store');
-    Route::delete('questions/{question}/answer_requests', 'AnswerRequestController@destroy');
+    Route::resource('questions.votes', QuestionVoteController::class, [
+        'parameters' => ['question' => 'slug'],
+        'only'       => ['store'],
+    ]);
 
-    Route::post('questions/{question}/answers', 'AnswerController@store');
-    Route::patch('questions/{question}/answers', 'AnswerController@update');
-    Route::post('questions/{question}/answers/{answer}/edits', 'AnswerEditsController@store');
+    Route::resource('questions.answers', QuestionAnswerController::class, [
+        'parameters' => ['question' => 'slug'],
+        'only'       => ['store', 'update'],
+    ]);
 
-    Route::post('answers/{answer}/votes', 'AnswerVoteController@store');
-    Route::delete('answers/{answer}/votes', 'AnswerVoteController@destroy');
+    Route::resource('questions.answers.votes', QuestionAnswerVoteController::class, [
+        'parameters' => ['question' => 'slug'],
+        'only'       => ['store'],
+    ]);
 
+    Route::resource('votes', VoteController::class, [
+        'only'       => ['destroy'],
+    ]);
 
-    Route::get('notifications', 'NotificationController@index');
-    Route::get('notifications/{id}', 'NotificationController@show');
+    Route::resource('editions', EditionController::class, [
+        'only'       => ['update'],
+    ]);
 
-    Route::patch('unread_notifications', 'UnreadNotificationController@update');
+    Route::resource('my/languages', MyLanguageController::class, [
+        'only'       => ['index'],
+    ]);
 
-    Route::get('my/languages', 'MyLanguagesController@index');
-
-    Route::patch('edits/{cid}', 'EditionController@update');
+    Route::resource('my/notifications', MyNotificationController::class, [
+        'only'       => ['index', 'show'],
+    ]);
+    Route::patch('my/notifications', 'MyNotificationController@update');
 });

@@ -36,14 +36,14 @@ export default {
   methods: {
     ...mapActions([
       'postAnswerVote',
-      'deleteAnswerVote'
+      'deleteVote'
     ]),
     onVoteAnswerButtonClick() {
       this.isDisabled = true
 
       if (this.answer.hasVoteFromCurrentUser) {
         this
-          .deleteAnswerVote(this.answer)
+          .deleteVote(this.answer)
           .then(() => this.isDisabled = false)
 
         return

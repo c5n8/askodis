@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Edition;
-use App\Notifications\EditSuggestionResponded;
+use App\Notifications\EditionUpdated;
 
 class EditionController extends Controller
 {
@@ -13,13 +12,9 @@ class EditionController extends Controller
         $this->middleware('auth:api');
     }
 
-    function update($id)
+    function update(Edition $edition)
     {
-        $edition = Edition::withoutGlobalScopes()->findOrFail($id);
-
-        if ($edition->translation->translatable->user->id != auth()->user()->id) {
-            abort(403);
-        }
+        $this->authorize('update', $edition);
 
         $this->validate(request(), [
             'status' => 'required|in:accepted,rejected',
@@ -28,7 +23,7 @@ class EditionController extends Controller
         $edition->status = request('status');
         $edition->save();
 
-        $edition->user->notify(new EditSuggestionResponded($edition));
+        $edition->user->notify(new EditionUpdated($edition));
 
         return $edition;
     }

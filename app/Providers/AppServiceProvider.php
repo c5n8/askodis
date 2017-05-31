@@ -12,6 +12,8 @@ class AppServiceProvider extends ServiceProvider
 {
     function boot()
     {
+        \App\Edition::observe(\App\Observers\EditionObserver::class);
+
         Relation::morphMap([
             'question' => \App\Question::class,
             'detail' => \App\Detail::class,

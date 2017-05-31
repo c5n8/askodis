@@ -3,30 +3,15 @@
 namespace App;
 
 use App\Answer;
-use App\AnswerRequest;
 use App\Detail;
 use App\Slug;
 use App\Tag;
-use App\Traits\Translatable;
+use App\Traits\Editable;
+use App\Traits\Votable;
 
 class Question extends Model
 {
-    use Translatable;
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::deleting(function ($question) {
-            if ($question->isforceDeleting()) {
-                $question->translations()->forceDelete();
-
-                return;
-            }
-
-            $question->translations()->delete();
-        });
-    }
+    use Editable, Votable;
 
     function slugs()
     {
@@ -36,11 +21,6 @@ class Question extends Model
     function detail()
     {
         return $this->hasOne(Detail::class);
-    }
-
-    function answerRequests()
-    {
-        return $this->hasMany(AnswerRequest::class);
     }
 
     function answers()
@@ -58,46 +38,13 @@ class Question extends Model
         return $this->detail()->exists();
     }
 
-    function getAnswerRequestsCountAttribute()
-    {
-        return $this->answerRequests()->count();
-    }
-
-    function getHasAnswerRequestFromCurrentUserAttribute()
-    {
-        if (auth('api')->guest()) {
-            return false;
-        }
-
-        return $this->answerRequests()->from(auth('api')->user())->exists();
-    }
-
     function getAnswersCountAttribute()
     {
         return $this->answers()->count();
     }
 
-    function startRequestingAnswer()
+    function getHasTagsAttribute()
     {
-        if ($this->hasAnswerRequestFromCurrentUser) {
-            return;
-        }
-
-        $answerRequest = $this->answerRequests()->make();
-        $answerRequest->question()->associate($this);
-        $answerRequest->user()->associate(auth()->user());
-        $answerRequest->save();
-    }
-
-    function stopRequestingAnswer()
-    {
-        if ($this->hasAnswerRequestFromCurrentUser) {
-            $this->answerRequests()->from(auth()->user())->delete();
-        }
-    }
-
-    function answerFrom($user)
-    {
-        return $this->answers()->from($user)->first();
+        return $this->tags()->exists();
     }
 }
