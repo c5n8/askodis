@@ -14,6 +14,7 @@ class Slug extends Model
     protected $visible = [
         'id',
         'votesCount',
+        'hasDetail',
         'hasVoteFromCurrentUser',
         'hasAnswerFromCurrentUser',
         'answerFromCurrentUser',
@@ -21,10 +22,15 @@ class Slug extends Model
         'answersCount',
         'answers',
         'slug',
+        'body',
+        'detail',
+        'tags',
+        'language',
     ];
 
     protected $appends = [
         'votesCount',
+        'hasDetail',
         'hasVoteFromCurrentUser',
         'hasAnswerFromCurrentUser',
         'answerFromCurrentUser',
@@ -32,6 +38,9 @@ class Slug extends Model
         'answersCount',
         'answers',
         'slug',
+        'body',
+        'detail',
+        'tags',
     ];
 
     function question()

@@ -9,11 +9,11 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\User;
 use App\Answer;
 
-class SuggestEditTest extends DuskTestCase
+class SuggestEditionTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
-    function testExample()
+    function test_suggest_edition()
     {
         $this->browse(function ($first, $second) {
 
@@ -21,14 +21,16 @@ class SuggestEditTest extends DuskTestCase
                 ->loginAs(factory(User::class)->create())
                 ->visit(new QuestionPage);
 
+            $answer = Answer::first();
+
             $second
-                ->loginAs(Answer::first()->user)
+                ->loginAs($answer->user)
                 ->visit('/')
                 ->assertDontSeeIn('#notificationMenu', '1');
 
             $first
-                ->press('.more')
-                ->click('.more .suggest')
+                ->press('#answer-' . $answer->id . ' .more')
+                ->click('#answer-' . $answer->id . ' .more .suggest')
                 ->whenAvailable('.suggestion.modal', function ($form){
                     $form
                         ->type('body', 'Edited answer')

@@ -23,11 +23,6 @@ import SuggestEditForm from 'components/SuggestEditForm'
 
 export default {
   props: ['answer'],
-  // data() {
-  //   return {
-  //     isWritingEditSuggestion: false
-  //   }
-  // },
   components: {
     SuggestEditForm,
     VoteAnswerButton

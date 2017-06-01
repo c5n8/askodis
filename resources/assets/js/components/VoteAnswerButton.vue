@@ -25,7 +25,7 @@ export default {
       return {
         basic: ! this.answer.hasVoteFromCurrentUser,
         blue: this.answer.hasVoteFromCurrentUser,
-        disabled: this.isDisabled || this.question.hasAnswerFromCurrentUser ? this.answer.id == this.question.answerFromCurrentUser.id : false
+        disabled: this.isDisabled || (this.question.hasAnswerFromCurrentUser ? this.answer.id == this.question.answerFromCurrentUser.id : false)
       }
     },
     voteAnswerButtonText() {
