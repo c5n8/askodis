@@ -53,4 +53,11 @@ class EditionObserver
                 break;
         }
     }
+
+    function saved(Edition $edition)
+    {
+        if ($edition->status == 'accepted') {
+            $edition->editable->touch();
+        }
+    }
 }
