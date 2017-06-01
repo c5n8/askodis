@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   props: ['answer'],
@@ -18,11 +18,14 @@ export default {
     }
   },
   computed: {
+    ...mapState([
+      'question'
+    ]),
     voteAnswerButtonClass() {
       return {
         basic: ! this.answer.hasVoteFromCurrentUser,
         blue: this.answer.hasVoteFromCurrentUser,
-        disabled: this.isDisabled
+        disabled: this.isDisabled || this.question.hasAnswerFromCurrentUser ? this.answer.id == this.question.answerFromCurrentUser.id : false
       }
     },
     voteAnswerButtonText() {
