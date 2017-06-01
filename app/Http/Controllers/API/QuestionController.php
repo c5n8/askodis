@@ -20,8 +20,8 @@ class QuestionController extends Controller
     function store()
     {
         $this->validate(request(), [
-            'body' => 'required|string|unique_question|not_reserved',
-            'detail' => 'string|nullable',
+            'body' => 'required|string|unique_question|not_reserved|max:160',
+            'detail' => 'string|nullable|max:480',
             'tags' => 'array|max:5',
             'topics.*' => 'string',
             'language' => 'required|exists:languages,code',
