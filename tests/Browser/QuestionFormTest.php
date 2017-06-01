@@ -60,7 +60,7 @@ class QuestionFormTest extends DuskTestCase
                     ->assertSee('1 People ask');
 
                 foreach ($tags as $tag) {
-                    $browser->assertSee('Here is the detail', $tag);
+                    $browser->assertSee($tag);
                 }
         });
     }

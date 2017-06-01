@@ -23,11 +23,25 @@ trait ActAsQuestion
 
     function getHasDetailAttribute()
     {
-        return $this->question->hasDetail;
+        if (! $this->question->hasDetail) {
+            return false;
+        }
+
+        return $this
+            ->question
+            ->detail
+            ->editions()
+            ->inLanguage($this->language)
+            ->accepted()
+            ->exists();
     }
 
     function getDetailAttribute()
     {
+        if (! $this->hasDetail) {
+            return false;
+        }
+
         return $this
             ->question
             ->detail

@@ -23,7 +23,7 @@ class QuestionController extends Controller
             'body' => 'required|string|unique_question|not_reserved',
             'detail' => 'string|nullable',
             'tags' => 'array|max:5',
-            'topics.*' => 'string',
+            'tags.*' => 'string|max:25',
             'language' => 'required|exists:languages,code',
         ]);
 

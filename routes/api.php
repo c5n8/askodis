@@ -10,6 +10,11 @@ Route::group(['namespace' => 'API'], function () {
         'only'       => ['store'],
     ]);
 
+    Route::resource('questions.editions', QuestionEditionController::class, [
+        'parameters' => ['question' => 'slug'],
+        'only'       => ['store'],
+    ]);
+
     Route::resource('questions.answers', QuestionAnswerController::class, [
         'parameters' => ['question' => 'slug'],
         'only'       => ['store', 'update'],

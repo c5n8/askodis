@@ -1,36 +1,42 @@
 <template lang='jade'>
-  .ui.main.container(v-if='isReady')
-    .ui.centered.grid
-      .ten.wide.computer.sixteen.wide.mobile.column
-        p
-          .stat {{ question.votesCount }} People ask
+.ui.main.container(v-show='isReady')
+  .ui.centered.grid
+    .ten.wide.computer.sixteen.wide.mobile.column
+      p
+        .stat {{ question.votesCount }} People ask
 
+      #questionMenu
         ask-button
         button.ui.tiny.basic.button(@click='onAnswerButtonClick')
           i.edit.icon
           strong {{ answerButtonText }}
+        button.more.ui.icon.top.left.pointing.dropdown.tiny.basic.right.floated.button
+          i.vertical.ellipsis.icon
+          .menu
+            .translate.item(@click='onTranslateButtonClick') Translate
 
-        template(v-if='question.hasAnswerFromCurrentUser && ! isWritingAnswer')
-          h4 Your Answer
-          answer-card(:answer='question.answerFromCurrentUser')
+      template(v-if='question.hasAnswerFromCurrentUser && ! isWritingAnswer')
+        h4 Your Answer
+        answer-card(:answer='question.answerFromCurrentUser')
 
-        template(v-if='isWritingAnswer')
-          .ui.hidden.divider
-          answer-form(
-            ':is-writing-answer'='isWritingAnswer'
-            @finishWritingAnswer='isWritingAnswer = false'
-          )
+      template(v-if='isWritingAnswer')
+        .ui.hidden.divider
+        answer-form(
+          ':is-writing-answer'='isWritingAnswer'
+          @finishWritingAnswer='isWritingAnswer = false'
+        )
 
-        .ui.divider
+      .ui.divider
 
-        h4 {{ answersCountMessage }}
+      h4 {{ answersCountMessage }}
 
-        .ui.cards
-          answer-card(
-            :answer='answer'
-            v-for='answer in question.answers'
-            ':key'='answer.id'
-          )
+      .ui.cards
+        answer-card(
+          :answer='answer'
+          v-for='answer in question.answers'
+          ':key'='answer.id'
+        )
+  question-translation-form
 </template>
 
 <script>
@@ -39,6 +45,7 @@ import store from 'store'
 import AskButton from 'components/AskButton'
 import AnswerCard from 'components/AnswerCard'
 import AnswerForm from 'components/AnswerForm'
+import QuestionTranslationForm from 'components/QuestionTranslationForm'
 
 export default {
   store,
@@ -46,6 +53,7 @@ export default {
   components: {
     AskButton,
     AnswerCard,
+    QuestionTranslationForm,
     AnswerForm
   },
   data() {
@@ -82,11 +90,19 @@ export default {
     onAnswerButtonClick() {
       this.isWritingAnswer = true
     },
+    onTranslateButtonClick() {
+      $('#questionTranslationForm')
+        .modal({ detachable: false })
+        .modal("show")
+    }
   },
   mounted() {
+    $('#questionMenu .more').dropdown()
+
     this
       .getQuestion(this.id)
       .then(() => this.isReady = true)
+
   }
 }
 </script>

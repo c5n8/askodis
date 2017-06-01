@@ -46,14 +46,14 @@ class QuestionsTableSeeder extends Seeder
         | Mock Tag
         |--------------------------------------------------------------------------        |
         */
-        $tag = factory(Tag::class)->create();
+        $tags = factory(Tag::class, 3)->create()->each(function ($tag) use ($language) {
+            $edition = factory(Edition::class)->make(['text' => 'tag' . $tag->id]);
+            $edition->editable()->associate($tag);
+            $edition->language()->associate($language);
+            $edition->save();
+        });
 
-        $edition = factory(Edition::class)->make(['text' => 'tag']);
-        $edition->editable()->associate($tag);
-        $edition->language()->associate($language);
-        $edition->save();
-
-        $question->tags()->attach($tag);
+        $question->tags()->sync($tags);
 
         /*
         |--------------------------------------------------------------------------

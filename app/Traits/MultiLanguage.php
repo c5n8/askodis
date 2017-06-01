@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Language;
 
+
 trait MultiLanguage
 {
     function language()
