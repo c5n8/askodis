@@ -4,7 +4,7 @@
   .stat(
     v-if='user.hasReadAllNotifications && user.notifications == 0'
     style='text-align: center'
-  ) No notification yet
+  ) {{ $t('No notification yet') }}
 
   .ui.mini.centered.inline.loader(
     v-else-if='user.notifications == 0'
@@ -24,7 +24,7 @@
     .item(v-if='user.hasReadAllNotifications' style='text-align: center')
       .content
         .description
-          span.stat That's all
+          span.stat {{ $t('That\'s all') }}
 
     .ui.mini.centered.inline.loader(:class='{ active: ! user.hasReadAllNotifications }')
 </template>

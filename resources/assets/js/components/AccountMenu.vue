@@ -1,9 +1,9 @@
 <template lang='jade'>
 #accountMenu.ui.pointing.dropdown.link.item
   i.user.icon
-  span.text Account
+  span.text {{ $t('Account')}}
   .menu
-    .item(@click='onLogoutButtonClick') Logout
+    .item(@click='onLogoutButtonClick') {{ $t('Logout') }}
 </template>
 
 <script>

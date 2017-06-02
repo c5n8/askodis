@@ -3,17 +3,17 @@
   .ui.centered.grid
     .ten.wide.computer.sixteen.wide.mobile.column
       p
-        .stat {{ question.votesCount }} People ask
+        .stat {{ $tc('People ask', question.votesCount) }}
 
       #questionMenu
         ask-button
         button.ui.tiny.basic.button(@click='onAnswerButtonClick')
           i.edit.icon
-          strong {{ answerButtonText }}
+          strong {{ $t(answerButtonText) }}
         button.more.ui.icon.top.left.pointing.dropdown.tiny.basic.right.floated.button
           i.vertical.ellipsis.icon
           .menu
-            .translate.item(@click='onTranslateButtonClick') Translate
+            .translate.item(@click='onTranslateButtonClick') {{ $t('Translate') }}
 
       template(v-if='question.hasAnswerFromCurrentUser && ! isWritingAnswer')
         h4 Your Answer

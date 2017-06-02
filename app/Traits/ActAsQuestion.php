@@ -70,7 +70,11 @@ trait ActAsQuestion
 
     function getAnswersCountAttribute()
     {
-        return $this->question->answersCount;
+        return $this
+            ->question
+            ->answers()
+            ->hasEditionInLanguage($this->language)
+            ->count();
     }
 
     function getAnswersAttribute()

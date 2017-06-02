@@ -3,30 +3,30 @@
   .content
     .ui.form
       .field.four.wide
-        label Translate to
+        label {{ $t('Translate to') }}
         select.language.ui.dropdown(name='language' v-model="payload.language")
           option(v-for="language in user.languages" ":value"="language.code") {{ language.name }}
       .field
-        label Question
+        label {{ $t('Question') }}
         p {{ question.body }}
-        input(name='body' type='text' placeholder='Write question translation' v-model='payload.body')
+        input(name='body' type='text' ':placeholder'='$t("Write question translation")' v-model='payload.body')
       .field
-        label Detail
+        label {{ $t('Detail') }}
         p {{ question.detail }}
         textarea(
           name='detail'
           rows='2'
-          placeholder='Write detail translation if any or necessary in target language'
+          ':placeholder'='$t("Write detail translation if any or necessary in target language")'
           v-model='payload.detail'
         )
       .field
-        label Tags
+        label {{ $t('Tags') }}
       .field.inline(v-for='(tag, index) in question.tags')
         .ui.small.tag.label {{ tag.body }}
         input(:name='"tags[" + index + "][body]"' type='text' v-model='payload.tags[index].body')
       button.ui.green.tiny.button(:class='{ disabled: this.isDisabled }' @click='onSubmit')
         i.send.icon
-        | Post Translation
+        | {{ $t('Post Translation') }}
 </template>
 
 <script>

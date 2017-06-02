@@ -15,6 +15,7 @@ const webpackConfig = {
 }
 
 mix
+  .copy('resources/lang', 'public/lang')
   .copy('resources/assets/lib/semantic/dist/semantic.css', 'resources/assets/sass/_semantic.scss')
   .copy('resources/assets/lib/semantic/dist/semantic.js', 'resources/assets/js/semantic-ui.js')
   .sass('resources/assets/sass/app.scss', 'public/css')

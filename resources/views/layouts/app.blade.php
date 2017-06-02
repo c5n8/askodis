@@ -33,7 +33,7 @@
               <notification-popup></notification-popup>
               <account-menu></account-menu>
             @else
-              <a class="item" href="{{ url('login') }}">Login</a>
+              <a class="item" href="{{ url('login') }}">@lang('Login')</a>
             @endunless
           </div>
         </div>
@@ -53,8 +53,9 @@
       @endunless
     </div>
 
-    <script src="{{ mix('/js/manifest.js') }}"></script>
-    <script src="{{ mix('/js/vendor.js') }}"></script>
-    <script src="{{ mix('/js/app.js') }}"></script>
+    <script type="application/json" src="{{ url('lang/' . config('app.locale') . '.json') }}"></script>
+    <script src="{{ mix('js/manifest.js') }}"></script>
+    <script src="{{ mix('js/vendor.js') }}"></script>
+    <script src="{{ mix('js/app.js') }}"></script>
   </body>
 </html>

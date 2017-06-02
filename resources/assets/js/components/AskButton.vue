@@ -4,7 +4,7 @@
     @click='onAskButtonClick'
   )
     i.help.circle.icon
-    strong {{ askButtonText }}
+    strong {{ $t(askButtonText) }}
 </template>
 
 <script>

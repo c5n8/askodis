@@ -6,13 +6,13 @@
       a.date(:title='answer.updatedAt | formatDateTime') {{ answer.updatedAt | humanizeDateTime }}
     .description {{ answer.body }}
   .extra.content
-      span.stat {{ answer.votesCount }} Votes
+      span.stat {{ $tc('Votes', answer.votesCount) }}
   .extra.content
     vote-answer-button(:answer='answer')
     button.more.ui.icon.top.left.pointing.dropdown.tiny.basic.right.floated.button
       i.vertical.ellipsis.icon
       .menu
-        .suggest.item(@click='onSuggestEditButtonClick') Suggest Edit
+        .suggest.item(@click='onSuggestEditButtonClick') {{ $t('Suggest Edit') }}
   suggest-edit-form(:answer='answer')
 </template>
 

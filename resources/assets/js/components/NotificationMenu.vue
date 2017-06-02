@@ -1,7 +1,7 @@
 <template lang='jade'>
 a#notificationMenu.item
   i.bell.outline.icon
-  span.text Notifications
+  span.text {{ $t("Notifications") }}
   .ui.tiny.top.right.attached.red.label(v-show='user.unreadNotificationsCount > 0')
     | {{ user.unreadNotificationsCount }}
 </template>

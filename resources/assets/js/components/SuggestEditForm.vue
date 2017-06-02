@@ -3,14 +3,14 @@
   .content
     .ui.form
       .field
-        label Suggest edit to {{ answer.user.name }}'s answer
-        textarea(name='body' placeholder='Write detail if any' v-model='payload.body')
+        label {{ $t('Suggest edit to answer', { name: answer.user.name}) }}
+        textarea(name='body' v-model='payload.body')
       button.ui.green.tiny.button(
         :class='{ disabled: this.isDisabled || answer.body == payload.body }'
         @click='onSubmit'
       )
         i.send.icon
-        | Post Edit Suggestion
+        | {{ $t('Post Edit Suggestion') }}
 </template>
 
 <script>

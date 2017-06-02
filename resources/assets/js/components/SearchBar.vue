@@ -1,17 +1,17 @@
 <template lang='jade'>
   #searchBar.ui.category.search.item
     .ui.icon.input
-      input.prompt(name='search' type='text' placeholder='Search questions' v-model='query')
+      input.prompt(name='search' type='text' ':placeholder'='$t("Search questions")' v-model='query')
       i.search.link.icon
     .results
     #noResultMessage(style='display: none')
       .message.empty
-        .header No Results
-        .description Your search returned no results
+        .header {{ $t('No Results') }}
+        .description {{ $t('Your search returned no results') }}
         .ui.hidden.divider
         button.ui.tiny.basic.button(onclick='$("#questionForm").modal("show")')
           i.edit.icon
-          | Write New Question
+          | {{ $t('Write New Question') }}
 </template>
 
 <script>

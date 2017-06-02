@@ -2,13 +2,13 @@
 form#answerForm.ui.form(@submit.prevent='onSubmit')
   .field(:class='{ disabled: this.isDisabled }')
     textarea(
-      placeholder='Write your answer'
+      ':placeholder'='$t("Write your answer")'
       ':autofocus'='isWritingAnswer'
       v-model='body'
     )
   button.ui.tiny.green.button(type='submit' ':class'='{ disabled: this.isDisabled }')
     i.send.icon
-    | Post Answer
+    | {{ $t('Post Answer') }}
 </template>
 
 <script>

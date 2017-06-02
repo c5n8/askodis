@@ -4,22 +4,22 @@
   .content
     .ui.form
       .field.required
-        label Question
-        input(name='body' type='text' placeholder='Write your question' v-model='payload.body')
+        label {{ $t('Question') }}
+        input(name='body' type='text' ':placeholder'='$t("Write your question")' v-model='payload.body')
       .field
-        label Detail
-        textarea(name='detail' rows='2' placeholder='Write detail if any' v-model='payload.detail')
+        label {{ $t('Detail') }}
+        textarea(name='detail' rows='2' ':placeholder'='$t("Write detail if any")' v-model='payload.detail')
       .field
-        label Tags
+        label {{ $t('Tags') }}
         select.tags.ui.fluid.search.dropdown(name='tags[]' multiple v-model='payload.tags')
           option Tags
       .field.required.four.wide
-        label Language
+        label {{ $t('Language') }}
         select.language.ui.dropdown(name='language' v-model="payload.language")
           option(v-for="language in user.languages" ":value"="language.code") {{ language.name }}
       button.ui.green.tiny.button(:class='{ disabled: this.isDisabled }' @click='onSubmit')
         i.send.icon
-        | Post Question
+        | {{ $t('Post Question') }}
 </template>
 
 <script>
