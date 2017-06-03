@@ -17,7 +17,7 @@ Route::group(['namespace' => 'API'], function () {
 
     Route::resource('questions.answers', QuestionAnswerController::class, [
         'parameters' => ['question' => 'slug'],
-        'only'       => ['store', 'update'],
+        'only'       => ['index', 'store', 'update'],
     ]);
 
     Route::resource('questions.answers.votes', QuestionAnswerVoteController::class, [

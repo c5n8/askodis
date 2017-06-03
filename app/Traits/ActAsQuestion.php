@@ -39,7 +39,7 @@ trait ActAsQuestion
     function getDetailAttribute()
     {
         if (! $this->hasDetail) {
-            return false;
+            return null;
         }
 
         return $this
@@ -85,6 +85,7 @@ trait ActAsQuestion
             ->withCount('votes')
             ->orderBy('votes_count', 'desc')
             ->hasEditionInLanguage($this->language)
+            ->limit(5)
             ->get()
             ->transform(function ($answer) {
                 return collect([

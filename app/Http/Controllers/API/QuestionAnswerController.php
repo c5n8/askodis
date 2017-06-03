@@ -11,7 +11,39 @@ class QuestionAnswerController extends Controller
 {
     function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api')->only(['store', 'update']);
+    }
+
+    function index(Slug $slug)
+    {
+        return $slug
+            ->question
+            ->answers()
+            ->withCount('votes')
+            ->orderBy('votes_count', 'desc')
+            ->hasEditionInLanguage($slug->language)
+            ->when(request()->has('loadedAnswers'), function ($query) {
+                return $query->whereNotIn('id', request('loadedAnswers'));
+            })
+            ->limit(5)
+            ->get()
+            ->transform(function ($answer) use ($slug) {
+                return collect([
+                    'id'                     => $answer->id,
+                    'body'                   => $answer
+                                                    ->editions()
+                                                    ->inLanguage($slug->language)
+                                                    ->accepted()
+                                                    ->latest()
+                                                    ->first()
+                                                    ->text,
+                    'updatedAt'              => $answer->updated_at->toDateTimeString(),
+                    'votesCount'             => $answer->votesCount,
+                    'hasVoteFromCurrentUser' => $answer->hasVoteFromCurrentUser,
+                    'voteFromCurrentUser'    => $answer->voteFromCurrentUser,
+                    'user'                   => $answer->user,
+                ]);
+            });
     }
 
     function store(Slug $slug)

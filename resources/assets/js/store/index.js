@@ -51,7 +51,10 @@ export default new vuex.Store({
 
       var currentUserAnswerIndex = _.findIndex(state.question.answers, answer => answer.id == payload.id)
       state.question.answers[currentUserAnswerIndex] = payload
-    }
+    },
+    concatAnswers(state, payload) {
+      state.question.answers = state.question.answers.concat(payload)
+    },
   },
   actions: {
     async getQuestion({ commit }, id) {
@@ -87,6 +90,16 @@ export default new vuex.Store({
         .patch('/api/questions/' + state.question.id + '/answers/' + answer.id, answer)
         .then(response => response.data)
       commit('setAnswerFromCurrentUser', answer)
+    },
+    async getMoreAnswers({ commit, state}) {
+      var answers = await http
+        .get('/api/questions/' + state.question.id + '/answers', {
+          params: {
+            loadedAnswers: _.map(state.question.answers, 'id')
+          }
+        })
+        .then(response => response.data)
+      commit('concatAnswers', answers)
     }
   }
 })

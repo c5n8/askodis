@@ -43,7 +43,8 @@
       "modal",
       "dimmer",
       "message",
-      "checkbox"
+      "checkbox",
+      "visibility"
     ],
   "version": "2.2.10"
 }
