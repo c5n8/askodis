@@ -4,7 +4,7 @@
 
 @section('content')
   <div class="ui main text container">
-    <h3 class="ui header">{{ $question->body }}</h3>
+    <h3 class="ui header"><a style="color: black" href="{{ url($question->slug) }}">{{ $question->body }}</a></h3>
 
     @if ($question->hasDetail)
       <p>{{ $question->detail }}</p>
@@ -15,17 +15,17 @@
 
   <edition-comparation
     v-cloak
-    :id="{{ $suggestedEdit->id }}"
-    init-status="{{ $suggestedEdit->status }}"
-    created-at="{{ $suggestedEdit->created_at }}"
-    updated-at="{{ $suggestedEdit->updated_at }}">
-    <strong slot='user'>{{ $suggestedEdit->user->name }}</strong>
+    :id="{{ $edition->id }}"
+    init-status="{{ $edition->status }}"
+    created-at="{{ $edition->created_at }}"
+    updated-at="{{ $edition->updated_at }}">
+    <strong slot='user'>{{ $edition->user->name }}</strong>
 
     <div slot='data' id="originalEdit">
-      {{ $originalEdit->text }}
+      {{ $originalEdition->text }}
     </div>
     <div slot='data' id="suggestedEdit">
-      {{ $suggestedEdit->text }}
+      {{ $edition->text }}
     </div>
   </edition-comparation>
 @endsection

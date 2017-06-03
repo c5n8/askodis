@@ -2,6 +2,7 @@
 
 use App\User;
 use App\Language;
+use App\Locale;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -10,14 +11,18 @@ class UsersTableSeeder extends Seeder
     {
         DB::table('users')->delete();
 
-        $user = factory(User::class)->create([
+        $locale = Locale::where('code', 'id-ID')->first();
+
+        $user = factory(User::class)->make([
             'name' => 'Developer',
             'email' => 'dev@askodis.com',
             'password' => bcrypt('12345678'),
         ]);
-        $languages = factory(Language::class, 2)->create();
+        $user->locale()->associate($locale);
+        $user->save();
+
+        $languages = Language::all();
         $user->languages()->sync($languages);
-        $user->languages()->updateExistingPivot($languages->first()->id, ['is_preferred' => true]);
 
         $user = factory(User::class)->create([
             'name' => 'Engineer',

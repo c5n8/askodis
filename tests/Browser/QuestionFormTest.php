@@ -17,8 +17,10 @@ class QuestionFormTest extends DuskTestCase
     function test_question_form()
     {
         $user     = factory(User::class)->create();
-        $language = factory(Language::class)->create();
-        $user->languages()->attach($language, ['is_preferred' => true]);
+        $language = factory(Language::class)->create([
+            'code' => $user->locale->code,
+        ]);
+        $user->languages()->attach($language);
 
         $tag = factory(Tag::class)->create();
 
@@ -57,7 +59,7 @@ class QuestionFormTest extends DuskTestCase
                     ->assertPathIs('/gibberish-question')
                     ->assertSee('Gibberish question?')
                     ->assertSee('Here is the detail')
-                    ->assertSee('1 People ask');
+                    ->assertSee('1 Person ask');
 
                 foreach ($tags as $tag) {
                     $browser->assertSee($tag);

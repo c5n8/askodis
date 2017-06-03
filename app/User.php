@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Language;
+use App\Locale;
 use App\Traits\CamelCaseJsonAttribute;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -25,7 +25,7 @@ class User extends Authenticatable
 
     function languages()
     {
-        return $this->belongsToMany(Language::class)->withPivot(['is_preferred'])->withTimestamps();
+        return $this->belongsToMany(Language::class)->withTimestamps();
     }
 
     function notifications()
@@ -33,5 +33,17 @@ class User extends Authenticatable
         return $this
             ->morphMany(Notification::class, 'notifiable')
             ->orderBy('created_at', 'desc');
+    }
+
+    function locale()
+    {
+        return $this->belongsTo(Locale::class);
+    }
+
+    function getSettingsAttribute()
+    {
+        return [
+            'locale' => $this->locale
+        ];
     }
 }

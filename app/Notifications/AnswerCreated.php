@@ -27,8 +27,9 @@ class AnswerCreated extends Notification implements ShouldQueue
     function toArray($notifiable)
     {
         return ([
-            'message' => $this->answer->user->name . ' answered your question',
-            'action'  => url($this->slug->text),
+            'actor'  => $this->answer->user->name,
+            'message' => 'answered your question',
+            'url'  => url($this->slug->text),
         ]);
     }
 }

@@ -17,6 +17,17 @@ class EditionPolicy extends Policy
         return true;
     }
 
+    function view(User $user, Edition $edition)
+    {
+        if ($edition->status == 'pending') {
+            if ($edition->editable->user->id != $user->id) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     function update(User $user, Edition $edition)
     {
         if ($edition->editable_type == 'answer') {

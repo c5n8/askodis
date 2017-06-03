@@ -27,8 +27,9 @@ class AnswerVoteCreated extends Notification implements ShouldQueue
     function toArray($notifiable)
     {
         return ([
-            'message' => $this->vote->user->name . ' voted your answer',
-            'action'  => url($this->slug->text),
+            'actor'  => $this->vote->user->name,
+            'message' => 'voted your answer',
+            'url'  => url($this->slug->text),
         ]);
     }
 }

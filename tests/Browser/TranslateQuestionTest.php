@@ -19,7 +19,6 @@ class TranslateQuestionTest extends DuskTestCase
         $languages = factory(Language::class, 2)->create();
         $user = factory(User::class)->create();
         $user->languages()->sync($languages);
-        $user->languages()->updateExistingPivot($languages->first()->id, ['is_preferred' => true]);
 
         $this->browse(function (Browser $browser) use ($user) {
             $browser

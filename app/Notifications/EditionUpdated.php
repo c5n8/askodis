@@ -25,11 +25,9 @@ class EditionUpdated extends Notification implements ShouldQueue
     function toArray($notifiable)
     {
         return ([
-            'message' => $this->edition->editable->user->name
-                . ' '
-                . $this->edition->status
-                . ' your edit suggestion',
-            'action'  => url('editions/' . $this->edition->id),
+            'actor'  => $this->edition->editable->user->name,
+            'message' => $this->edition->status . ' your edit suggestion',
+            'url'  => url('editions/' . $this->edition->id),
         ]);
     }
 }

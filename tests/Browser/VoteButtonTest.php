@@ -19,7 +19,7 @@ class VoteButtonTest extends DuskTestCase
             $first
                 ->loginAs(factory(User::class)->create())
                 ->visit(new QuestionPage)
-                ->assertSee('0 Votes');
+                ->assertSee('No vote yet');
 
             $second
                 ->loginAs(Answer::first()->user)
@@ -28,13 +28,13 @@ class VoteButtonTest extends DuskTestCase
 
             $first->press('Vote')
                 ->waitForText('Voted')
-                ->assertSee('1 Votes');
+                ->assertSee('1 Vote');
 
             $second->assertSeeIn('#notificationMenu', '1');
 
             $first->press('Voted')
                 ->waitForText('Vote')
-                ->assertSee('0 Votes');
+                ->assertSee('No vote yet');
         });
     }
 }

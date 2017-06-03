@@ -4,6 +4,7 @@ use App\Answer;
 use App\Detail;
 use App\Edition;
 use App\Language;
+use App\Locale;
 use App\Question;
 use App\Slug;
 use App\Tag;
@@ -19,6 +20,9 @@ $factory->define(User::class, function (Generator $faker) {
         'email'          => $faker->unique()->safeEmail,
         'password'       => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
+        'locale_id'      => function () {
+            return factory(Locale::class)->create()->id;
+        }
     ];
 });
 
@@ -27,6 +31,13 @@ $factory->define(Question::class, function (Generator $faker) {
 });
 
 $factory->define(Language::class, function (Generator $faker) {
+    return [
+        'name' => $faker->country,
+        'code' => $faker->languageCode,
+    ];
+});
+
+$factory->define(Locale::class, function (Generator $faker) {
     return [
         'name' => $faker->country,
         'code' => $faker->languageCode,

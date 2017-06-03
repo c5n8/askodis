@@ -15,7 +15,7 @@ class MyLanguageController extends Controller
             return [
                 'code' => $language->code,
                 'name' => $language->name,
-                'isPreferred' => (boolean) $language->pivot->is_preferred,
+                'isPreferred' => (boolean) starts_with(auth()->user()->locale->code, $language->code),
             ];
         });
     }

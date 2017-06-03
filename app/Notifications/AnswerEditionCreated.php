@@ -25,8 +25,9 @@ class AnswerEditionCreated extends Notification implements ShouldQueue
     function toArray($notifiable)
     {
         return ([
-            'message' => $this->edition->user->name . ' suggested edit to your answer',
-            'action'  => url('editions/' . $this->edition->id),
+            'actor'  => $this->edition->user->name,
+            'message' => 'suggested edit to your answer',
+            'url'  => url('editions/' . $this->edition->id),
         ]);
     }
 }

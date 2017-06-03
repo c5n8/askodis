@@ -2,7 +2,7 @@
 .ui.main.container
   .ui.centered.grid
     .ten.wide.computer.sixteen.wide.mobile.column
-      h4 Edit suggestion to your answer
+      h4 {{ $t('Edit suggestion to your answer') }}
       .ui.raised.fluid.card
         .content
           slot(name='user')
@@ -13,19 +13,19 @@
           template(v-if='status == "pending"')
             button.ui.green.tiny.button(:class='{ disabled: this.isDisabled }' @click='onAcceptButtonClick')
               i.check.icon
-              | Accept
+              | {{ $t('Accept') }}
             button.ui.red.tiny.right.floated.button(
               :class='{ disabled: this.isDisabled }'
               @click='onRejectButtonClick'
             )
               i.cancel.icon
-              | Reject
+              | {{ $t('Reject') }}
           .ui.positive.message(v-else-if='status == "accepted"')
             .description(:title=' actionAt | formatDateTime')
-              | Accepted {{  actionAt | humanizeDateTime }}
+              | {{ $t('Accepted') }} {{  actionAt | humanizeDateTime }}
           .ui.negative.message(v-else)
             .description(:title=' actionAt | formatDateTime')
-              | Rejected {{  actionAt | humanizeDateTime }}
+              | {{ $t('Rejected') }} {{  actionAt | humanizeDateTime }}
 
   div(v-show='false ')
     slot(name='data')

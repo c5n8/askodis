@@ -12,7 +12,6 @@ class CreateLanguageUserTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('language_id');
             $table->unsignedInteger('user_id');
-            $table->boolean('is_preferred')->default(false);
             $table->timestamps();
             $table->softDeletes();
 

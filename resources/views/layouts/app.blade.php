@@ -53,7 +53,6 @@
       @endunless
     </div>
 
-    <script type="application/json" src="{{ url('lang/' . config('app.locale') . '.json') }}"></script>
     <script src="{{ mix('js/manifest.js') }}"></script>
     <script src="{{ mix('js/vendor.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>

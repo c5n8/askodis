@@ -18,7 +18,6 @@ class QuestionPostTest extends TestCase
     {
         $language = factory(Language::class)->create();
         $user     = factory(User::class)->create();
-        $user->languages()->attach($language, ['is_preferred' => true]);
 
         $tag = factory(Tag::class)->create();
 

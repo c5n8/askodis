@@ -12,26 +12,24 @@ class EditionController extends Controller
         $this->middleware('auth');
     }
 
-    function show($id)
+    function show(Edition $edition)
     {
-        $suggestedEdit = Edition::withoutGlobalScopes()->findOrFail($id);
+        $this->authorize('view', $edition);
 
-        if ($suggestedEdit->status == 'pending') {
-            if ($suggestedEdit->editable->user->id != auth()->user()->id) {
-                abort(403);
-            }
-        }
-
-        $language      = $suggestedEdit->language;
-        $answer        = $suggestedEdit->editable;
+        $language      = $edition->language;
+        $answer        = $edition->editable;
         $question      = $answer->question->slugs()->inLanguage($language)->first();
 
-        $originalEdit  = $answer
+        $originalEdition  = $answer
             ->editions()
             ->inLanguage($language)
+            ->accepted()
+            ->when($edition->status != 'pending', function ($query) use ($edition){
+                return $query->where('created_at', '<', $edition->created_at);
+            })
             ->latest('id')
             ->first();
 
-        return view('edition.show', compact('suggestedEdit', 'originalEdit', 'question'));
+        return view('edition.show', compact('edition', 'originalEdition', 'question'));
     }
 }

@@ -16,7 +16,6 @@ class MyLanguagesGetTest extends TestCase
         $languages = factory(Language::class, 2)->create();
         $user = factory(User::class)->create();
         $user->languages()->sync($languages);
-        $user->languages()->updateExistingPivot($languages->first()->id, ['is_preferred' => true]);
 
         $response = $this
             ->actingAs($user, 'api')

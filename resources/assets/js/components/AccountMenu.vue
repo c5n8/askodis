@@ -3,6 +3,7 @@
   i.user.icon
   span.text {{ $t('Account')}}
   .menu
+    a.item(href='/my/settings') {{ $t('Settings')}}
     .item(@click='onLogoutButtonClick') {{ $t('Logout') }}
 </template>
 

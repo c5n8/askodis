@@ -25,6 +25,8 @@
   "That's all": "That's all",
   "Translate to": "Translate to",
   "Translate": "Translate",
+  "Settings": "Settings",
+  "No notification yet": "No notification yet",
   "Votes": "No vote yet | 1 Vote | {count} Votes",
   "Write detail if any": "Write detail if any",
   "Write detail translation if any or necessary in target language": "Write detail translation if any or necessary in target languageau diperlukan dalam bahasa tujuan",
@@ -33,6 +35,8 @@
   "Write your answer": "Write your answer",
   "Write your question": "Write your question",
   "Your search returned no results": "Your search returned no results",
+  "Interface Language": "Interface Language",
+  "Save": "Save",
 
   "": "",
   "": ""
