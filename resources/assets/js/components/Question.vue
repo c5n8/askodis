@@ -1,35 +1,34 @@
 <template lang='jade'>
-.ui.main.container
+.ui.main.container(v-show="isReady")
   .ui.centered.grid
     .ten.wide.computer.sixteen.wide.mobile.column
-      template(v-if='isReady')
-        p
-          .stat {{ $tc('People ask', question.votesCount) }}
+      p
+        .stat {{ $tc('People ask', question.votesCount) }}
 
-        #questionMenu
-          ask-button
-          button.ui.tiny.basic.button(@click='onAnswerButtonClick')
-            i.edit.icon
-            strong {{ $t(answerButtonText) }}
-          button.more.ui.icon.top.left.pointing.dropdown.tiny.basic.right.floated.button
-            i.vertical.ellipsis.icon
-            .menu
-              .translate.item(@click='onTranslateButtonClick') {{ $t('Translate') }}
+      #questionMenu
+        ask-button
+        button.ui.tiny.basic.button(@click='onAnswerButtonClick')
+          i.edit.icon
+          strong {{ $t(answerButtonText) }}
+        button.more.ui.icon.top.left.pointing.dropdown.tiny.basic.right.floated.button
+          i.vertical.ellipsis.icon
+          .menu
+            .translate.item(@click='onTranslateButtonClick') {{ $t('Translate') }}
 
-        template(v-if='question.hasAnswerFromCurrentUser && ! isWritingAnswer')
-          h4 Your Answer
-          answer-card(:answer='question.answerFromCurrentUser')
+      template(v-if='question.hasAnswerFromCurrentUser && ! isWritingAnswer')
+        h4 Your Answer
+        answer-card(:answer='question.answerFromCurrentUser')
 
-        template(v-if='isWritingAnswer')
-          .ui.hidden.divider
-          answer-form(
-            ':is-writing-answer'='isWritingAnswer'
-            @finishWritingAnswer='isWritingAnswer = false'
-          )
+      template(v-if='isWritingAnswer')
+        .ui.hidden.divider
+        answer-form(
+          ':is-writing-answer'='isWritingAnswer'
+          @finishWritingAnswer='isWritingAnswer = false'
+        )
 
-        .ui.divider
+      .ui.divider
 
-        h4 {{ answersCountMessage }}
+      h4 {{ answersCountMessage }}
 
       #answerList.ui.cards
         answer-card(
