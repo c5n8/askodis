@@ -69,6 +69,8 @@
             </div>
           </div>
         </div>
+      @else
+        @include('partials._login_modal')
       @endunless
     </div>
 

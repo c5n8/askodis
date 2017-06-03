@@ -34,9 +34,11 @@ export default {
   },
   methods: {
     onSuggestEditButtonClick() {
+      if (this.$root.auth()) {
       $('#answer-' + this.answer.id + ' .suggestion.modal')
         .modal({ detachable: false })
         .modal("show")
+      }
     }
   },
   mounted() {

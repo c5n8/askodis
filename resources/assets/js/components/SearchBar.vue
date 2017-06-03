@@ -9,7 +9,7 @@
         .header {{ $t('No Results') }}
         .description {{ $t('Your search returned no results') }}
         .ui.hidden.divider
-        button.ui.tiny.basic.button(onclick='$("#questionForm").modal("show")')
+        button#writeQuestionButton.ui.tiny.basic.button
           i.edit.icon
           | {{ $t('Write New Question') }}
 </template>
@@ -80,6 +80,12 @@ export default {
         message(type, message) {
           return $('#noResultMessage').html()
         }
+      }
+    })
+
+    $(document).on('click', '#writeQuestionButton', e => {
+      if (this.$root.auth()) {
+        $('#questionForm').modal('show')
       }
     })
   }

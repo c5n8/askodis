@@ -88,12 +88,16 @@ export default {
       'getQuestion'
     ]),
     onAnswerButtonClick() {
-      this.isWritingAnswer = true
+      if (this.$root.auth()) {
+        this.isWritingAnswer = true
+      }
     },
     onTranslateButtonClick() {
-      $('#questionTranslationForm')
-        .modal({ detachable: false })
-        .modal("show")
+      if (this.$root.auth()) {
+        $('#questionTranslationForm')
+          .modal({ detachable: false })
+          .modal("show")
+      }
     }
   },
   mounted() {

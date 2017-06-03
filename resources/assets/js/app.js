@@ -33,12 +33,21 @@ const app = new vue({
       'startClock',
       'stopClock'
     ]),
+    auth() {
+      if (document.head.querySelector('meta[name="user-id"]') == null) {
+        $('#loginModal').modal('show')
+
+        return false
+      }
+
+      return true
+    }
   },
   mounted() {
     this.startClock()
 
-    $('#settingsForm [name="locale"]')
-      .dropdown()
+    $('#settingsForm [name="locale"]').dropdown()
+    $('.ui.checkbox').checkbox()
   },
   destroyed() {
     this.stopClock()

@@ -42,7 +42,8 @@
       "loader",
       "modal",
       "dimmer",
-      "message"
+      "message",
+      "checkbox"
     ],
   "version": "2.2.10"
 }
