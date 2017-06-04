@@ -27,6 +27,8 @@ class TranslateQuestionTest extends DuskTestCase
                 ->press('#questionMenu .more')
                 ->click('#questionMenu .more .translate')
                 ->waitFor('#questionTranslationForm')
+                ->pause(500)
+                ->click('#questionTranslationForm [name="body"]')
                 ->keys('#questionTranslationForm [name="body"]', 'Translated question?')
                 ->pause(500)
                 ->keys('#questionTranslationForm [name="detail"]', 'Translated detail')

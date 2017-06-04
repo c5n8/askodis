@@ -68,6 +68,11 @@ class User extends Authenticatable
         return $this->belongsTo(Locale::class);
     }
 
+    function activation()
+    {
+        return $this->hasOne(AccountActivation::class);
+    }
+
     function getSettingsAttribute()
     {
         return [

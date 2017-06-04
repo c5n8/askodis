@@ -28,10 +28,6 @@ class SetLocale
 
         app()->setLocale($locale['code']);
 
-        // dump('check', auth()->check());
-        // dump(request()->server('HTTP_ACCEPT_LANGUAGE'));
-        // dump('global', app()->getLocale());
-
         return $next($request);
     }
 }

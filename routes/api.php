@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['namespace' => 'API'], function () {
+Route::group(['middleware' => 'activation', 'namespace' => 'API'], function () {
     Route::resource('questions', QuestionController::class, [
         'only'       => ['store', 'show'],
     ]);
