@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Locale;
 use App\Traits\CamelCaseJsonAttribute;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -28,6 +27,10 @@ class User extends Authenticatable
         parent::boot();
 
         static::creating(function ($user) {
+            if ($user->locale()->exists()) {
+                return;
+            }
+
             $locale = Locale::where('code', app()->getLocale())->first();
 
             if (is_null($locale)) {
@@ -35,6 +38,16 @@ class User extends Authenticatable
             }
 
             $user->locale()->associate($locale);
+        });
+
+        static::created(function ($user) {
+            $language = Language::where('code', substr($user->locale->code, 0, 2))->first();
+
+            if (is_null($language)) {
+                $language = Language::where('code', 'en')->first();
+            }
+
+            $user->languages()->attach($language);
         });
     }
 
