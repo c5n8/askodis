@@ -6,10 +6,6 @@ class HomeController
 {
     function __invoke()
     {
-        if (auth()->check()) {
-            return view('home');
-        }
-
-        return view('welcome');
+        return view('home');
     }
 }

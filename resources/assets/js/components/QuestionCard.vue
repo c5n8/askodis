@@ -1,5 +1,5 @@
 <template lang='jade'>
-.ui.fluid.card(':id'='"answer-" + question.topAnswer.id')
+.ui.fluid.card(':id'='"question-" + question.id')
   .content
     h3
       a(
@@ -8,42 +8,93 @@
         target='_blank'
       ) {{ question.body }}
 
-    strong {{ question.topAnswer.user.name }}
-    .meta
-      a.date(:title='question.topAnswer.updatedAt | formatDateTime') {{ question.topAnswer.updatedAt | humanizeDateTime }}
-    .description {{ question.topAnswer.body }}
-  .extra.content
-      span.stat {{ $tc('Votes', question.topAnswer.votesCount) }}
-  .extra.content
-    vote-answer-button(:answer='question.topAnswer' ':question'='question')
-    button.more.ui.icon.top.left.pointing.dropdown.tiny.basic.right.floated.button
-      i.vertical.ellipsis.icon
-      .menu
-        .suggest.item(@click='onSuggestEditButtonClick') {{ $t('Suggest Edit') }}
-  suggest-edit-form(:answer='question.topAnswer' ':question'='question')
+    template(v-if='! question.hasAnswer')
+      p(v-if='question.hasDetail') {{ question.detail}}
+
+      span.stat {{ question.createdAt | humanizeDateTime}}
+
+      p
+        .ui.tiny.tag.labels
+          .ui.label(v-for='tag in question.tags') {{ tag.body }}
+
+      p
+        .stat {{ $tc('People ask', question.votesCount) }}
+
+      ask-button(:question='question')
+      button.ui.tiny.basic.button(@click='onAnswerButtonClick')
+        i.edit.icon
+        strong {{ $t(answerButtonText) }}
+      button.more.ui.icon.top.left.pointing.dropdown.tiny.basic.right.floated.button
+        i.vertical.ellipsis.icon
+        .menu
+          .translate.item(@click='onTranslateButtonClick') {{ $t('Translate') }}
+
+      answer-form-modal(':question'='question')
+
+  template(v-if='question.hasAnswer')
+    .content.answer
+      strong {{ question.topAnswer.user.name }}
+      .meta
+        a.date(:title='question.topAnswer.updatedAt | formatDateTime') {{ question.topAnswer.updatedAt | humanizeDateTime }}
+      .description {{ question.topAnswer.body }}
+    .extra.content
+        span.stat {{ $tc('Votes', question.topAnswer.votesCount) }}
+    .extra.content
+      vote-answer-button(:answer='question.topAnswer' ':question'='question')
+      button.more.ui.icon.top.left.pointing.dropdown.tiny.basic.right.floated.button
+        i.vertical.ellipsis.icon
+        .menu
+          .suggest.item(@click='onSuggestEditButtonClick') {{ $t('Suggest Edit') }}
+    suggest-edit-form(:answer='question.topAnswer' ':question'='question')
 </template>
 
 <script>
 import VoteAnswerButton from 'components/VoteAnswerButton'
 import SuggestEditForm from 'components/SuggestEditForm'
+import AskButton from 'components/AskButton'
 
 export default {
   props: ['question'],
   components: {
     SuggestEditForm,
-    VoteAnswerButton
+    VoteAnswerButton,
+    AskButton
+  },
+  computed: {
+    answerButtonText() {
+      if (this.question.hasAnswerFromCurrentUser) {
+        return 'Edit My Answer'
+      }
+
+      return 'Answer'
+    }
   },
   methods: {
+    onAnswerButtonClick() {
+      if (this.$root.auth()) {
+        $('#question-' + this.question.id + ' .answer.modal')
+          .modal({ detachable: false })
+          .modal("show")
+      }
+    },
     onSuggestEditButtonClick() {
       if (this.$root.auth()) {
-        $('#answer-' + this.question.topAnswer.id + ' .suggestion.modal')
+        if (this.question.hasAnswer) {
+          $('#question-' + this.question.id + ' .suggestion.modal')
+            .modal({ detachable: false })
+            .modal("show")
+        }
+      }
+    },
+    onTranslateButtonClick() {
+      if (this.$root.auth()) {
+        $('#questionTranslationForm')
           .modal({ detachable: false })
           .modal("show")
       }
     }
   },
   mounted() {
-    $('#answer-' + this.question.topAnswer.id + ' .more').dropdown()
-  }
+    $('#question-' + this.question.id + ' .more').dropdown()  }
 }
 </script>

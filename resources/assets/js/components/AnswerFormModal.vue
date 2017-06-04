@@ -1,30 +1,29 @@
 <template lang='jade'>
-form#answerForm.ui.form(@submit.prevent='onSubmit')
-  .field(:class='{ disabled: this.isDisabled }')
-    textarea(
-      ':placeholder'='$t("Write your answer")'
-      ':autofocus'='isWritingAnswer'
-      v-model='body'
-    )
-  button.ui.tiny.green.button(type='submit' ':class'='{ disabled: this.isDisabled }')
-    i.send.icon
-    | {{ $t('Post Answer') }}
+.answer.ui.small.modal
+  .content
+    form.ui.form(@submit.prevent='onSubmit')
+      .field(:class='{ disabled: this.isDisabled }')
+        textarea(
+          ':placeholder'='$t("Write your answer")'
+          ':autofocus'='isWritingAnswer'
+          v-model='body'
+        )
+      button.ui.tiny.green.button(type='submit' ':class'='{ disabled: this.isDisabled }')
+        i.send.icon
+        | {{ $t('Post Answer') }}
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
 
 export default {
-  props: ['isWritingAnswer'],
+  props: ['question', 'isWritingAnswer'],
   data() {
     return {
       isDisabled: false
     }
   },
   computed: {
-    ...mapState([
-      'question'
-    ]),
     body: {
       get () {
         if (! this.question.hasAnswerFromCurrentUser) {
@@ -53,6 +52,8 @@ export default {
         this.postQuestionAnswer(this.question).then(() => {
           this.isDisabled = false
           this.$emit('finishWritingAnswer')
+          $('.answer.modal').modal("hide")
+          this.question.hasAnswer = true
         })
 
         return
@@ -62,6 +63,7 @@ export default {
         .then(() => {
           this.isDisabled = false
           this.$emit('finishWritingAnswer')
+          $('.answer.modal').modal("hide")
         })
     }
   }

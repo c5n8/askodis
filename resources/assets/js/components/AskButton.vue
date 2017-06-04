@@ -8,18 +8,16 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
+  props: ['question'],
   data() {
     return {
       isDisabled: false
     }
   },
   computed: {
-    ...mapState([
-      'question'
-    ]),
     askButtonClass() {
       return {
         basic: ! this.question.hasVoteFromCurrentUser,
@@ -52,8 +50,9 @@ export default {
       }
 
       this
-        .postQuestionVote()
+        .postQuestionVote(this.question)
         .then(() => this.isDisabled = false)
+        .catch(() => this.isDisabled = false)
     }
   }
 }

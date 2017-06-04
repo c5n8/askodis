@@ -2,6 +2,7 @@ import _ from 'lodash'
 import http from 'lib/http'
 
 const state = {
+  hasReadAllQuestions: false,
   hasReadAllNotifications: false,
   unreadNotificationsCount: 0,
   notifications: [],

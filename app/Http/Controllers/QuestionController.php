@@ -8,7 +8,6 @@ class QuestionController extends Controller
 {
     function show(Question $question)
     {
-        // dd('final', app()->getLocale());
         return view('question.show', compact('question'));
     }
 }

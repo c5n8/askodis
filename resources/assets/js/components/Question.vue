@@ -6,7 +6,7 @@
         .stat {{ $tc('People ask', question.votesCount) }}
 
       #questionMenu
-        ask-button
+        ask-button(:question='question')
         button.ui.tiny.basic.button(@click='onAnswerButtonClick')
           i.edit.icon
           strong {{ $t(answerButtonText) }}
@@ -129,7 +129,6 @@ export default {
     }
   },
   mounted() {
-
     this
       .getQuestion(this.id)
       .then(() => {

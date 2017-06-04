@@ -55,6 +55,7 @@ export default {
       this
         .postQuestionAnswerVote({ question: this.question, answer: this.answer})
         .then(() => this.isDisabled = false)
+        .catch(() => this.isDisabled = false)
     }
   }
 }

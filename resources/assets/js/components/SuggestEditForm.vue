@@ -33,7 +33,7 @@ export default {
       http.patch('/api/questions/' + this.question.id +'/answers/' + this.answer.id, this.payload)
         .then(response => {
           this.isDisabled = false
-          $('#answer-' + this.answer.id + ' .suggestion.modal').modal('hide')
+          $('.suggestion.modal').modal('hide')
           $('#successModal').modal('show')
         })
         .catch(error => {

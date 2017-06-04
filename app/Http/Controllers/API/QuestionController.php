@@ -28,9 +28,14 @@ class QuestionController extends Controller
         $questions = Slug::whereHas('language', function ($query) use ($languages) {
                 $query->whereIn('id', $languages->pluck('id'));
             })
+            ->orderBy('created_at', 'desc')
+            ->when(request()->has('before'), function ($query) {
+                return $query->where('id', '<', request('before'));
+            })
             ->paginate(10)
             ->transform(function ($question) {
                 $question = $question->toArray();
+                $question['hasAnswer'] = false;
                 $question['topAnswer'] = null;
 
                 if (count($question['answers']) > 0) {

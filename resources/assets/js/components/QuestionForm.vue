@@ -57,14 +57,14 @@ export default {
       'getUserLanguages'
     ]),
     onSubmit() {
-      this.disabled = true
+      this.isDisabled = true
 
       http.post('/api/questions', this.payload)
         .then(response => {
           window.location.replace(response.data.slug)
         })
         .catch(error => {
-          this.disabled = false
+          this.isDisabled = false
         })
     }
   },
