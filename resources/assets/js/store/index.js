@@ -14,7 +14,8 @@ export default new vuex.Store({
   },
   state: {
     query: '',
-    question: {}
+    question: {},
+    questions: []
   },
   mutations: {
     setQuery(state, payload) {
@@ -55,6 +56,9 @@ export default new vuex.Store({
     concatAnswers(state, payload) {
       state.question.answers = state.question.answers.concat(payload)
     },
+    concatQuestions(state, payload) {
+      state.questions = state.questions.concat(payload)
+    },
   },
   actions: {
     async getQuestion({ commit }, id) {
@@ -69,9 +73,9 @@ export default new vuex.Store({
         .then(response => response.data)
       commit('createVote', { votable: state.question, payload: vote })
     },
-    async postAnswerVote({ commit, state }, answer) {
+    async postQuestionAnswerVote({ commit, state }, { question, answer }) {
       var vote = await http
-        .post('/api/questions/' + state.question.id + '/answers/' + answer.id + '/votes')
+        .post('/api/questions/' + question.id + '/answers/' + answer.id + '/votes')
         .then(response => response.data)
       commit('createVote', { votable: answer, payload: vote })
     },
@@ -100,6 +104,13 @@ export default new vuex.Store({
         })
         .then(response => response.data)
       commit('concatAnswers', answers)
+    },
+    async getQuestions({ commit }) {
+      var questions = await http
+        .get('/api/questions')
+        .then(response => response.data)
+
+      commit('concatQuestions', questions)
     }
   }
 })

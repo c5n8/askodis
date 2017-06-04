@@ -4,23 +4,23 @@
     @click='onVoteAnswerButtonClick'
   )
     i.check.icon
-    strong {{ voteAnswerButtonText }}
+    strong {{ $t(voteAnswerButtonText) }}
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  props: ['answer'],
+  props: ['question', 'answer'],
   data() {
     return {
       isDisabled: false
     }
   },
   computed: {
-    ...mapState([
-      'question'
-    ]),
+    // ...mapState([
+    //   'question'
+    // ]),
     voteAnswerButtonClass() {
       return {
         basic: ! this.answer.hasVoteFromCurrentUser,
@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'postAnswerVote',
+      'postQuestionAnswerVote',
       'deleteVote'
     ]),
     onVoteAnswerButtonClick() {
@@ -53,7 +53,7 @@ export default {
       }
 
       this
-        .postAnswerVote(this.answer)
+        .postQuestionAnswerVote({ question: this.question, answer: this.answer})
         .then(() => this.isDisabled = false)
     }
   }

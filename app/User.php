@@ -77,7 +77,8 @@ class User extends Authenticatable
     function getSettingsAttribute()
     {
         return [
-            'locale' => $this->locale
+            'locale' => $this->locale,
+            'languages' => $this->languages
         ];
     }
 

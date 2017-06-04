@@ -14,11 +14,10 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import http from 'lib/http'
 
 export default {
-  props: ['answer'],
+  props: ['question', 'answer'],
   data() {
     return {
       isDisabled: false,
@@ -26,11 +25,6 @@ export default {
         body: this.answer.body
       }
     }
-  },
-  computed: {
-    ...mapState([
-      'question'
-    ])
   },
   methods: {
     onSubmit() {

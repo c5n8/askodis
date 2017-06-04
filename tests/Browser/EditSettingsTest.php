@@ -7,6 +7,7 @@ use Tests\Browser\Pages\SettingsPage;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Locale;
+use App\Language;
 use App\User;
 
 class EditSettingsTest extends DuskTestCase
@@ -26,6 +27,11 @@ class EditSettingsTest extends DuskTestCase
             'name' => 'Bahasa Indonesia',
         ]));
         $user->save();
+
+        $user->languages()->attach(factory(Language::class)->create([
+            'code' => 'id-ID',
+            'name' => 'Bahasa Indonesia',
+        ]));
 
         $this->browse(function (Browser $browser) use ($user) {
             $browser

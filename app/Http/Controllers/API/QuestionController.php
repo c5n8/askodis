@@ -17,6 +17,35 @@ class QuestionController extends Controller
         $this->middleware('auth:api')->only(['store']);
     }
 
+    function index()
+    {
+        if (auth('api')->check()) {
+            $languages = auth('api')->user()->languages;
+        } else {
+            $languages = Language::where('code', substr(app()->getLocale(), 0, 2))->get();
+        }
+
+        $questions = Slug::whereHas('language', function ($query) use ($languages) {
+                $query->whereIn('id', $languages->pluck('id'));
+            })
+            ->paginate(10)
+            ->transform(function ($question) {
+                $question = $question->toArray();
+                $question['topAnswer'] = null;
+
+                if (count($question['answers']) > 0) {
+                    $question['hasAnswer'] = true;
+                    $question['topAnswer'] = $question['answers'][0];
+                }
+
+                unset($question['answers']);
+
+                return $question;
+            });
+
+        return $questions;
+    }
+
     function store()
     {
         $this->validate(request(), [

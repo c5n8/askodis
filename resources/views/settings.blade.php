@@ -14,12 +14,24 @@
       </label>
       <select class="ui search dropdown" name="locale">
         @foreach ($locales as $locale)
-          <option value="">Language</option>
+          <option value="">Locale</option>
           <option value="{{ $locale->code }}"
-            {{ $locale->code == $settings['locale']->code ? 'selected' : '' }}
+            {{ $locale->id == $settings['locale']->id ? 'selected' : '' }}
           >
             {{ $locale->name }}
           </option>
+        @endforeach
+      </select>
+    </div>
+
+    <div class="field ten wide">
+      <label>@lang('Spoken Languages')</label>
+      <select class="ui fluid search dropdown" name="languages[]" multiple>
+        <option value="">Language</option>
+        @foreach ($languages as $language)
+          <option value="{{ $language->code }}"
+              {{ in_array($language->id, $settings['languages']->pluck('id')->toArray()) ? 'selected' : '' }}
+          >{{ $language->name }}</option>
         @endforeach
       </select>
     </div>

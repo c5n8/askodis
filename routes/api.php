@@ -2,7 +2,7 @@
 
 Route::group(['middleware' => 'activation', 'namespace' => 'API'], function () {
     Route::resource('questions', QuestionController::class, [
-        'only'       => ['store', 'show'],
+        'only'       => ['index', 'store', 'show'],
     ]);
 
     Route::resource('questions.votes', QuestionVoteController::class, [

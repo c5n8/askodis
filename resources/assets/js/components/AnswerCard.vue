@@ -8,12 +8,12 @@
   .extra.content
       span.stat {{ $tc('Votes', answer.votesCount) }}
   .extra.content
-    vote-answer-button(:answer='answer')
+    vote-answer-button(:answer='answer' ':question'='question')
     button.more.ui.icon.top.left.pointing.dropdown.tiny.basic.right.floated.button
       i.vertical.ellipsis.icon
       .menu
         .suggest.item(@click='onSuggestEditButtonClick') {{ $t('Suggest Edit') }}
-  suggest-edit-form(:answer='answer')
+  suggest-edit-form(:answer='answer' ':question'='question')
 </template>
 
 <script>

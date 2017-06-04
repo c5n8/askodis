@@ -47,6 +47,7 @@ const app = new vue({
     this.startClock()
 
     $('#settingsForm [name="locale"]').dropdown()
+    $('#settingsForm [name="languages[]"]').dropdown()
     $('.ui.checkbox').checkbox()
   },
   destroyed() {
