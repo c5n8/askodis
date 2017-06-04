@@ -9,6 +9,7 @@
         "algolia/algoliasearch-client-php": "^1.18",
         "doctrine/dbal": "^2.5",
         "graham-campbell/htmlmin": "^4.5",
+        "guzzlehttp/guzzle": "^6.2",
         "laravel/dusk": "^1.1",
         "laravel/framework": "5.4.*",
         "laravel/passport": "^2.0",

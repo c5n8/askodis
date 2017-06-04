@@ -1,68 +1,41 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
-                        {{ csrf_field() }}
+<div class="ui main container" style="margin-top: 5em">
+  <div class="ui centered grid">
+    <div class="eight wide computer sixteen wide mobile column">
+      <h3 class="ui header">
+        @lang('Login')
+      </h3>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+      <form class="ui form" action="{{ route('login') }}" method="post">
+        {{ csrf_field() }}
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Login
-                                </button>
-
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    Forgot Your Password?
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+        <div class="field">
+          <label for="email">@lang('E-mail Address')</label>
+          <input id="email" type="email" name="email" required autofocus>
         </div>
+
+        <div class="field">
+          <label for="password">@lang('Password')</label>
+          <input id="password" type="password" name="password" required>
+        </div>
+
+        <div class="inline field">
+          <div class="ui checkbox">
+            <input type="checkbox" name="remember " tabindex="0" class="hidden">
+            <label>@lang('Remember me')</label>
+          </div>
+        </div>
+
+        <button type="submit" class="ui tiny green button">
+          <i class="sign in icon"></i>
+          @lang('Login')
+        </button>
+
+        <a href="{{ route('password.request') }}">@lang('Forgot Password')</a>
+      </form>
     </div>
+  </div>
 </div>
 @endsection

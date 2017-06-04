@@ -1,5 +1,11 @@
 {
+  "E-mail Address": "Alamat e-mail",
   "Account": "Akun",
+  "Registration": "Pendaftaran",
+  "Register": "Daftar",
+  "Password Confirmation": "Konfirmasi Password",
+  "Remember me": "Ingat saya",
+  "Forgot Password": "Lupa Password",
   "Answer": "Jawab",
   "Ask": "Tanyakan",
   "Asked": "Bertanya",
@@ -47,6 +53,7 @@
   "Reject": "Tolak",
   "Accepted": "Diterima",
   "Rejected": "Ditolak",
+  "Send Password Reset Link": "Kirim tautan reset password",
 
   "": "",
   "": ""

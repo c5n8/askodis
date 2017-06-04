@@ -1,46 +1,34 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
-                <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+  <div class="ui main container" style="margin-top: 5em">
+    <div class="ui centered grid">
+      <div class="eight wide computer sixteen wide mobile column">
+        <h3 class="ui header">
+          @lang('Reset Password')
+        </h3>
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('password.email') }}">
-                        {{ csrf_field() }}
+        <form class="ui form" action="{{ route('password.email') }}" method="post">
+          {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+          <div class="field">
+            <label for="email">@lang('E-mail Address')</label>
+            <input id="email" type="email" name="email" required>
+          </div>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+          <button type="submit" class="ui tiny green button">
+            @lang('Send Password Reset Link')
+          </button>
+        </form>
 
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Send Password Reset Link
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+        @if (session('status'))
+          <div class="ui positive message">
+            <div class="description">
+              {{ session('status') }}
             </div>
-        </div>
+          </div>
+        @endif
+      </div>
     </div>
-</div>
+  </div>
 @endsection

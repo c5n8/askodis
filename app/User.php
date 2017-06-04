@@ -23,6 +23,21 @@ class User extends Authenticatable
         'name',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            $locale = Locale::where('code', app()->getLocale())->first();
+
+            if (is_null($locale)) {
+                $locale = Locale::where('code', 'en-US')->first();
+            }
+
+            $user->locale()->associate($locale);
+        });
+    }
+
     function languages()
     {
         return $this->belongsToMany(Language::class)->withTimestamps();

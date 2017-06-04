@@ -53,6 +53,7 @@
               <account-menu></account-menu>
             @else
               <a class="item" href="{{ url('login') }}">@lang('Login')</a>
+              <a class="item" href="{{ url('register') }}">@lang('Register')</a>
             @endunless
           </div>
         </div>
