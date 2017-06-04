@@ -1,4 +1,4 @@
-@extends('layouts.app_min')
+@extends('auth.layouts.app')
 
 @section('content')
   <div class="ui main container" style="margin-top: 5em">
@@ -15,10 +15,10 @@
           @lang('Please wait because it may take some time to be delivered to your inbox.')
         </p>
         <p>
-          @lang('If it takes more than an hour you can send the link again')
+          @lang('If it takes more than an hour you can send the link again.')
         </p>
         <div class="">
-          <a class='ui tiny green button' href="{{ url('account/activation/resend') }}">@lang('Send again')</a>
+          <a class='ui tiny green button' href="{{ url('account/activation/resend') }}">@lang('Send Again')</a>
         </div>
       </div>
     </div>

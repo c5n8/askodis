@@ -54,6 +54,10 @@
   "Accepted": "Diterima",
   "Rejected": "Ditolak",
   "Send Password Reset Link": "Kirim tautan reset password",
+  "We have sent email containing account activation link to": "Kami telah mengirim email berisi tautan aktivasi akun ke",
+  "Please wait because it may take some time to be delivered to your inbox.": "Mohon tunggu karena ini mungkin memerlukan waktu untuk sampai ke kotak masuk Anda.",
+  "If it takes more than an hour you can send the link again.": "Jika hingga satu jam belum terkirim, Anda bisa mengirim tautannya lagi.",
+  "Send Again": "Kirim Lagi",
 
   "": "",
   "": ""
