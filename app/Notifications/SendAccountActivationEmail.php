@@ -26,10 +26,9 @@ class SendAccountActivationEmail extends Notification implements ShouldQueue
     function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Activation email')
-                    ->greeting('Hello!')
-                    ->line('You need to activate your email before you can start using all of our services.')
-                    ->action('Activate Email', url('account/activation/' . $this->token))
-                    ->line('Thank you for using our application!');
+                    ->subject(__('Account activation email'))
+                    ->line(__('You need to activate your account before you can start using Askodis.'))
+                    ->action(__('Activate Account'), url('account/activation/' . $this->token))
+                    ->line(__('Thank you for using Askodis!'));
     }
 }

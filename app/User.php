@@ -6,6 +6,7 @@ use App\Traits\CamelCaseJsonAttribute;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\ResetPassword;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
@@ -78,5 +79,10 @@ class User extends Authenticatable
         return [
             'locale' => $this->locale
         ];
+    }
+
+    function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
     }
 }
