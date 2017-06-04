@@ -1,22 +1,84 @@
+import 'bootstrap'
+import vue from 'vue'
+import store from 'store'
+import http from 'lib/http'
+import vueI18n from 'vue-i18n'
+import { mapActions } from 'vuex'
+import SearchBar from 'components/SearchBar'
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+vue.use(vueI18n)
 
-require('./bootstrap');
+const locale = document.documentElement.lang
+const messages = {
+  'en-US': {}
+}
 
-window.Vue = require('vue');
+if (locale != 'en-US') {
+  messages[locale] = {}
+}
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+const i18n = new vueI18n({
+  locale,
+  messages
+})
 
-Vue.component('example', require('./components/Example.vue'));
+const app = new vue({
+  store,
+  i18n,
+  components: {
+    SearchBar
+  },
+  methods: {
+    ...mapActions([
+      'startClock',
+      'stopClock'
+    ]),
+    auth() {
+      if (document.head.querySelector('meta[name="user-id"]') == null) {
+        $('#loginModal').modal('show')
 
-const app = new Vue({
-    el: '#app'
-});
+        return false
+      }
+
+      return true
+    }
+  },
+  mounted() {
+    this.startClock()
+
+    $('#settingsForm [name="locale"]').dropdown()
+    $('.ui.checkbox').checkbox()
+  },
+  destroyed() {
+    this.stopClock()
+  }
+})
+
+http
+  .get('/lang/' + locale + '.json')
+  .then(response => {
+    i18n.setLocaleMessage(locale, response.data)
+
+    app.$mount('#app')
+  })
+  .catch(error => {
+    if (error.response.status === 404) {
+      var fallbackLocale = 'en-US'
+
+      http
+        .get('/lang/' + fallbackLocale + '.json')
+        .then(response => {
+          i18n.locale = fallbackLocale
+          i18n.setLocaleMessage(fallbackLocale, response.data)
+
+          app.$mount('#app')
+        })
+        .catch(error => {
+          app.$mount('#app')
+        })
+
+      return
+    }
+
+    app.$mount('#app')
+  })

@@ -1,6 +1,14 @@
 /node_modules
+/public/css
+/public/js
+/public/fonts
+/public/images
+/public/lang
+/public/mix*
 /public/hot
 /public/storage
+/resources/assets/lib/semantic/dist/
+/resources/assets/sass/_semantic.scss
 /storage/*.key
 /vendor
 /.idea

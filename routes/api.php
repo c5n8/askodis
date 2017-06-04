@@ -1,18 +1,44 @@
 <?php
 
-use Illuminate\Http\Request;
+Route::group(['namespace' => 'API'], function () {
+    Route::resource('questions', QuestionController::class, [
+        'only'       => ['store', 'show'],
+    ]);
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+    Route::resource('questions.votes', QuestionVoteController::class, [
+        'parameters' => ['question' => 'slug'],
+        'only'       => ['store'],
+    ]);
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+    Route::resource('questions.editions', QuestionEditionController::class, [
+        'parameters' => ['question' => 'slug'],
+        'only'       => ['store'],
+    ]);
+
+    Route::resource('questions.answers', QuestionAnswerController::class, [
+        'parameters' => ['question' => 'slug'],
+        'only'       => ['index', 'store', 'update'],
+    ]);
+
+    Route::resource('questions.answers.votes', QuestionAnswerVoteController::class, [
+        'parameters' => ['question' => 'slug'],
+        'only'       => ['store'],
+    ]);
+
+    Route::resource('votes', VoteController::class, [
+        'only'       => ['destroy'],
+    ]);
+
+    Route::resource('editions', EditionController::class, [
+        'only'       => ['update'],
+    ]);
+
+    Route::resource('my/languages', MyLanguageController::class, [
+        'only'       => ['index'],
+    ]);
+
+    Route::resource('my/notifications', MyNotificationController::class, [
+        'only'       => ['index', 'show'],
+    ]);
+    Route::patch('my/notifications', 'MyNotificationController@update');
 });
