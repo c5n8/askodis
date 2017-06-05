@@ -12,12 +12,20 @@
 
           <div class="field">
             <label for="name">@lang('Nama')</label>
-            <input id="name" type="text" name="name" required autofocus>
+            <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus>
           </div>
 
           <div class="field">
             <label for="email">@lang('E-mail Address')</label>
-            <input id="email" type="email" name="email" required>
+            <input id="email" type="email" name="email" value="{{ old('email') }}" required>
+          </div>
+
+          <div class="field">
+            <label for="username">@lang('Username')</label>
+            <div class="ui labeled input">
+              <div class="ui label">@</div>
+              <input id="username" type="text" name="username" value="{{ old('email') }}" required>
+            </div>
           </div>
 
           <div class="field">
@@ -36,13 +44,16 @@
         </form>
 
         @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+          <div class="ui error message">
+            <div class="header">
+              @lang('There were some errors with your submission')
             </div>
+            <ul class="list">
+              @foreach ($errors->all() as $error)
+                <li>@lang($error)</li>
+              @endforeach
+            </ul>
+          </div>
         @endif
       </div>
     </div>

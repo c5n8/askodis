@@ -17,6 +17,9 @@ $factory->define(User::class, function (Generator $faker) {
 
     return [
         'name'           => $faker->name,
+        'username'       => function (array $user) {
+            return snake_case($user['name']) . str_random(8);
+        },
         'email'          => $faker->unique()->safeEmail,
         'password'       => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),

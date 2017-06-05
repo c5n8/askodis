@@ -81,8 +81,6 @@ class QuestionEditionController extends Controller
             $edition->save();
         }
 
-        // dd($question->slugs()->inLanguage($language)->first()->toArray());
-
         return $question->slugs()->inLanguage($language)->first();
     }
 }

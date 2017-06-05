@@ -13,13 +13,27 @@
 
           <div class="field">
             <label for="email">@lang('E-mail Address')</label>
-            <input id="email" type="email" name="email" required>
+            <input id="email" type="email" name="email" value="{{ old('email') }}" required>
           </div>
 
           <button type="submit" class="ui tiny green button">
+            <i class="mail icon"></i>
             @lang('Send Password Reset Link')
           </button>
         </form>
+
+        @if (count($errors) > 0)
+          <div class="ui error message">
+            <div class="header">
+              @lang('There were some errors with your submission')
+            </div>
+            <ul class="list">
+              @foreach ($errors->all() as $error)
+                <li>@lang($error)</li>
+              @endforeach
+            </ul>
+          </div>
+        @endif
 
         @if (session('status'))
           <div class="ui positive message">

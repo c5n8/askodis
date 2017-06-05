@@ -40,6 +40,7 @@
         <div class="ui container">
           <a href="/" class="header item">
             {{ config('app.name') }}
+            <sup>BETA</sup>
           </a>
 
           <div class="right menu">
