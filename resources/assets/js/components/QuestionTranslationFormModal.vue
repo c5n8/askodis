@@ -1,5 +1,5 @@
 <template lang='jade'>
-#questionTranslationForm.ui.small.modal
+.translation.ui.small.modal
   .content
     .ui.form
       .field.four.wide
@@ -23,7 +23,11 @@
         label {{ $t('Tags') }}
       .field.inline(v-for='(tag, index) in question.tags')
         .ui.small.tag.label {{ tag.body }}
-        input(:name='"tags[" + index + "][body]"' type='text' v-model='payload.tags[index].body')
+        input(
+          :name='"tags[" + index + "][body]"'
+          type='text'
+          v-model='payload.tags[index].body'
+        )
       button.ui.green.tiny.button(:class='{ disabled: this.isDisabled }' @click='onSubmit')
         i.send.icon
         | {{ $t('Post Translation') }}
@@ -34,6 +38,7 @@ import { mapState, mapActions } from 'vuex'
 import http from 'lib/http'
 
 export default {
+  props: ['question'],
   data() {
     return {
       isDisabled: false,
@@ -47,23 +52,12 @@ export default {
   },
   computed: {
     ...mapState([
-      'question',
       'user'
     ]),
     languages() {
       return this.user.languages.filter(language => {
         return language.code != this.question.language.code
       })
-    }
-  },
-  watch: {
-    question() {
-      for (var i = 0; i < this.question.tags.length; i++) {
-        this.payload.tags.push({
-          id: this.question.tags[i].id,
-          body: ''
-        })
-      }
     }
   },
   methods: {
@@ -82,9 +76,17 @@ export default {
         })
     }
   },
+  created() {
+    for (var i = 0; i < this.question.tags.length; i++) {
+      this.payload.tags.push({
+        id: this.question.tags[i].id,
+        body: ''
+      })
+    }
+  },
   updated() {
     if (this.user.languages.length > 0) {
-      $('#questionTranslationForm [name=language]').dropdown('set selected', this.user.languages[0].code)
+      $('#question-' + this.question.id + ' .translation.modal [name=language]').dropdown('set selected', this.user.languages[0].code)
     }
   }
 }

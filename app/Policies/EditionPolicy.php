@@ -4,13 +4,14 @@ namespace App\Policies;
 
 use App\Edition;
 use App\Question;
+use App\Language;
 use App\User;
 
 class EditionPolicy extends Policy
 {
     function create(User $user, $editable, Language $language)
     {
-        if ($editable->edition()->inLanguage($language)->exists()) {
+        if ($editable->editions()->inLanguage($language)->exists()) {
             return false;
         }
 

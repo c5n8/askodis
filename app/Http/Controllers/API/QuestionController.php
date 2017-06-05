@@ -56,7 +56,7 @@ class QuestionController extends Controller
         $this->validate(request(), [
             'body' => 'required|string|unique_question|not_reserved|max:160',
             'detail' => 'string|nullable|max:480',
-            'tags' => 'array|max:5',
+            'tags' => 'array|min:1|max:5',
             'tags.*' => 'string|max:25',
             'language' => 'required|exists:languages,code',
         ]);

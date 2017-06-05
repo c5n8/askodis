@@ -13,7 +13,9 @@
     button.more.ui.icon.top.left.pointing.dropdown.tiny.basic.right.floated.button
       i.vertical.ellipsis.icon
       .menu
-        .suggest.item(@click='onSuggestEditButtonClick') {{ $t('Suggest Edit') }}
+        .suggest.item(@click='onSuggestEditButtonClick')
+          i.edit.icon
+          | {{ $t('Suggest Edit') }}
   suggest-edit-form(:answer='answer' ':question'='question')
 </template>
 

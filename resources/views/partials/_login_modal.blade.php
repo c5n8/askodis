@@ -28,7 +28,7 @@
         @lang('Login')
       </button>
 
-      <a href="{{ route('password.request') }}">@lang('Forgot The Password')</a>
+      <a href="{{ route('password.request') }}">@lang('Forgot Password')</a>
     </form>
   </div>
 </div>

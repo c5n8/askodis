@@ -51,9 +51,8 @@ export default {
       if (! this.question.hasAnswerFromCurrentUser) {
         this.postQuestionAnswer(this.question).then(() => {
           this.isDisabled = false
-          this.$emit('finishWritingAnswer')
-          $('.answer.modal').modal("hide")
           this.question.hasAnswer = true
+          $('#question-' + this.question.id + ' .answer.modal').modal("hide")
         })
 
         return
@@ -62,8 +61,7 @@ export default {
       this.patchQuestionAnswer({ question: this.question, answer: this.question.answerFromCurrentUser })
         .then(() => {
           this.isDisabled = false
-          this.$emit('finishWritingAnswer')
-          $('.answer.modal').modal("hide")
+          $('#question-' + this.question.id + ' .answer.modal').modal("hide")
         })
     }
   }

@@ -14,7 +14,9 @@
         button.more.ui.icon.top.left.pointing.dropdown.tiny.basic.right.floated.button
           i.vertical.ellipsis.icon
           .menu
-            .translate.item(@click='onTranslateButtonClick') {{ $t('Translate') }}
+            .translate.item(@click='onTranslateButtonClick')
+              i.translate.icon
+              | {{ $t('Translate') }}
 
       template(v-if='question.hasAnswerFromCurrentUser && ! isWritingAnswer')
         h4 Your Answer

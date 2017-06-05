@@ -22,7 +22,7 @@ class QuestionEditionController extends Controller
         $question = $slug->question;
         $language = Language::where('code', request('language'))->first();
 
-        $this->authorize('create', [Answer::class, $question, $language]);
+        $this->authorize('create', [Edition::class, $question, $language]);
 
         $this->validate(request(), [
             'body' => 'required|string|unique_question|not_reserved',

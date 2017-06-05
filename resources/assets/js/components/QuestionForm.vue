@@ -10,7 +10,7 @@
         label {{ $t('Detail') }}
         textarea(name='detail' rows='2' ':placeholder'='$t("Write detail if any")' v-model='payload.detail')
       .field
-        label {{ $t('Tags') }}
+        label {{ $t('Tags') }} ({{ $t('add one to five tags')}})
         select.tags.ui.fluid.search.dropdown(name='tags[]' multiple v-model='payload.tags')
           option Tags
       .field.required.four.wide
