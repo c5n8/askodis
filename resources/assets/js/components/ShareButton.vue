@@ -1,22 +1,22 @@
 <template lang='jade'>
 .share.ui.top.left.pointing.dropdown.tiny.basic.button
-  i.share.icon
-  strong {{ $t('Share')}}
+  i.icon(:class='{ group: message, share: ! message}' )
+  strong {{ message ? $t(message) : $t('Share')}}
   .menu
     a.item(
-      :href='"https://www.facebook.com/sharer/sharer.php?u=" + shareable.shareUrl'
+      :href='"https://www.facebook.com/sharer/sharer.php?u=" + shareUrl'
       target='_blank'
     )
       i.facebook.icon
       | Facebook
     a.item(
-      :href='"https://twitter.com/intent/tweet?url=" + shareable.shareUrl'
+      :href='"https://twitter.com/intent/tweet?url=" + shareUrl'
       target='_blank'
     )
       i.twitter.icon
       | Twitter
     a.item(
-      :href='"https://plus.google.com/share?url=" + shareable.shareUrl'
+      :href='"https://plus.google.com/share?url=" + shareUrl'
       target='_blank'
     )
       i.google.icon
@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  props: ['shareable'],
+  props: ['shareUrl', 'message'],
   mounted() {
     $('.share.button').dropdown()
   }

@@ -1,6 +1,17 @@
 <template lang='jade'>
 .ui.main.container
-  .ui.centered.grid
+  .ui.grid
+    .three.wide.computer.sixteen.wide.mobile.column
+      .ui.raised.card
+        .content
+          .header Askodis
+          .description {{ $t('Ask, answer, collaborate, translate, and more.') }}
+
+      .ui.raised.card
+        .content
+          .description {{ $t('Askodis is more fun with your friend!') }}
+          share-button(':shareUrl'='"https%3A%2F%2Faskodis.com"' ':message'='$t("Invite Friend")')
+
     .ten.wide.computer.sixteen.wide.mobile.column
       //- h3  {{ $t('Newest Questions') }}
       .ui.cards
@@ -19,10 +30,12 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import QuestionCard from 'components/QuestionCard'
+import ShareButton from 'components/ShareButton'
 import _ from 'lodash'
 
 export default {
   components: {
+    ShareButton,
     QuestionCard
   },
   data() {

@@ -1,4 +1,9 @@
 {
+  "": "",
+  "Ask, answer, collaborate, translate, and more.": "Tanya, jawab, berkolaborasi, terjemahkan, dan masih banyak lagi.",
+  "What's your question?": "Apa pertanyaanmu?",
+  "Askodis is more fun with your friend!": "Askodis lebih seru dengan temanmu!",
+  "Invite Friend": "Undang Teman",
   "You need to login first": "Anda harus masuk dulu",
   "add one to five tags": "tambahkan satu hingga lima tag",
   "More": "Selengkapnya",
@@ -30,7 +35,6 @@
   "Post Question": "Kirim Pertanyaan",
   "Post Translation": "Kirim Terjemahan",
   "Question": "Pertanyaan",
-  "Search questions": "Cari pertanyaan",
   "Suggest edit to answer": "Sarankan suntingan untuk jawaban %{name}",
   "Suggest Edit": "Sarankan suntingan",
   "Tags": "Tag",

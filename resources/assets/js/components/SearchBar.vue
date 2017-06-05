@@ -1,7 +1,7 @@
 <template lang='jade'>
   #searchBar.ui.category.search.item
     .ui.icon.input
-      input.prompt(name='search' type='text' ':placeholder'='$t("Search questions")' v-model='query')
+      input.prompt(name='search' type='text' ':placeholder'='$t("What\'s your question?")' v-model='query')
       i.search.link.icon
     small#algoliaMessage.stat Powered by
     img(src='/img/algolia-logo.jpg')
