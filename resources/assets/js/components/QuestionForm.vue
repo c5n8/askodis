@@ -61,7 +61,7 @@ export default {
 
       http.post('/api/questions', this.payload)
         .then(response => {
-          window.location.replace(response.data.slug)
+          window.location.replace('/' + response.data.slug)
         })
         .catch(error => {
           this.isDisabled = false

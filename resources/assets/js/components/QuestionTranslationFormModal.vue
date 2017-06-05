@@ -69,7 +69,7 @@ export default {
 
       http.post('/api/questions/' + this.question.id + '/editions', this.payload)
         .then(response => {
-          window.location.replace(response.data.slug)
+          window.location.replace('/' + response.data.slug)
         })
         .catch(error => {
           this.disabled = false
