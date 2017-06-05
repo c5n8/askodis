@@ -28,6 +28,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url('favicon-16x16.png') }}">
     <link rel="manifest" href="{{ url('manifest.json') }}">
 
+    @yield('meta')
+
     <title>
       @yield('title')
     </title>

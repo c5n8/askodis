@@ -2,6 +2,13 @@
 
 @section('title', $question->body . ' – ' . config('app.name'))
 
+@section('meta')
+  <meta property="og:url"           content="{{ url($question->slug) }}" />
+  <meta property="og:type"          content="article" />
+  <meta property="og:title"         content="{{ $question->body }}" />
+  <meta property="og:description"   content="{{ $question->detail }}" />
+@endsection
+
 @section('content')
   <div class="ui main text container">
     <h3 class="ui header">{{ $question->body }}</h3>
