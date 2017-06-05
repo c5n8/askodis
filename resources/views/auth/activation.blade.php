@@ -1,5 +1,7 @@
 @extends('auth.layouts.app')
 
+@section('title', __('Account Activation') . ' – ' . config('app.name'))
+
 @section('content')
   <div class="ui main container" style="margin-top: 5em">
     <div class="ui centered grid">
