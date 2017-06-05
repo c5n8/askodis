@@ -3,6 +3,8 @@
     .ui.icon.input
       input.prompt(name='search' type='text' ':placeholder'='$t("Search questions")' v-model='query')
       i.search.link.icon
+    small#algoliaMessage.stat Powered by
+    img(src='/img/algolia-logo.jpg')
     .results
     #noResultMessage(style='display: none')
       .message.empty
@@ -91,3 +93,9 @@ export default {
   }
 }
 </script>
+
+<style lang='stylus' scoped>
+  #algoliaMessage
+    margin-left: 5px
+    min-width: 60px
+</style>
