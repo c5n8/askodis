@@ -51,9 +51,13 @@ export default {
       'user'
     ]),
     languages() {
-      return this.user.languages.filter(language => {
-        return language.code != this.question.language.code
-      })
+      if (this.user.languages.length > 0) {
+        return this.user.languages.filter(language => {
+          return language.code != this.question.language.code
+        })
+      }
+
+      return [{code: 'co-DE', name:'Name'}]
     }
   },
   watch: {
