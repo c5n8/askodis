@@ -5,7 +5,8 @@
       .field.four.wide
         label {{ $t('Translate to') }}
         select.language.ui.dropdown(name='language' v-model="payload.language")
-          option(v-for="language in languages" ":value"="language.code") {{ language.name }}
+          template(v-if='user.languages.length > 0')
+            option(v-for="language in languages" ":value"="language.code") {{ language.name }}
       .field
         label {{ $t('Question') }}
         p {{ question.body }}
@@ -55,13 +56,9 @@ export default {
       'user'
     ]),
     languages() {
-      if (this.user.languages.length > 0) {
-        return this.user.languages.filter(language => {
-          return language.code != this.question.language.code
-        })
-      }
-
-      return [{code: 'co-DE', name:'Name'}]
+      return this.user.languages.filter(language => {
+        return language.code != this.question.language.code
+      })
     }
   },
   methods: {
