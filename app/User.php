@@ -22,6 +22,7 @@ class User extends Authenticatable
 
     protected $visible = [
         'name',
+        'username',
     ];
 
     protected static function boot()

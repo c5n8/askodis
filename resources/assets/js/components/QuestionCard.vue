@@ -44,6 +44,8 @@
   template(v-if="question.hasAnswer")
     .content.answer
       strong {{ question.topAnswer.user.name }}
+      span {{ ' ' }}
+      span.stat@{{ question.topAnswer.user.username }}
       .meta
         a.date(:title='question.topAnswer.updatedAt | formatDateTime') {{ question.topAnswer.updatedAt | humanizeDateTime }}
       .description {{ question.topAnswer.body }}

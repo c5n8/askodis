@@ -2,6 +2,8 @@
 .ui.raised.fluid.card(':id'='"answer-" + answer.id')
   .content
     strong {{ answer.user.name }}
+    span {{ ' ' }}
+    span.stat@{{ answer.user.username }}
     .meta
       a.date(:title='answer.updatedAt | formatDateTime') {{ answer.updatedAt | humanizeDateTime }}
     .description {{ answer.body }}
