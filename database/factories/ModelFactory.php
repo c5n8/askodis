@@ -1,24 +1,97 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| Here you may define all of your model factories. Model factories give
-| you a convenient way to create models for testing and seeding your
-| database. Just tell the factory how a default model should look.
-|
-*/
+use App\Answer;
+use App\Detail;
+use App\Edition;
+use App\Language;
+use App\Locale;
+use App\Question;
+use App\Slug;
+use App\Tag;
+use App\User;
+use App\Vote;
+use Faker\Generator;
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(User::class, function (Generator $faker) {
     static $password;
 
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
+        'name'           => $faker->name,
+        'email'          => $faker->unique()->safeEmail,
+        'password'       => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
+        'locale_id'      => function () {
+            return factory(Locale::class)->create()->id;
+        }
+    ];
+});
+
+$factory->define(Question::class, function (Generator $faker) {
+    return [];
+});
+
+$factory->define(Language::class, function (Generator $faker) {
+    return [
+        'name' => $faker->country,
+        'code' => $faker->languageCode,
+    ];
+});
+
+$factory->define(Locale::class, function (Generator $faker) {
+    return [
+        'name' => $faker->country,
+        'code' => $faker->languageCode,
+    ];
+});
+
+$factory->define(Edition::class, function (Generator $faker) {
+    return [
+        'text' => $faker->paragraph,
+        'user_id' => function () {
+            return factory(User::class)->create()->id;
+        },
+        'language_id' => function () {
+            return factory(Language::class)->create()->id;
+        },
+        'status' => 'accepted'
+    ];
+});
+
+$factory->define(Detail::class, function (Generator $faker) {
+    return [];
+});
+
+$factory->define(Answer::class, function (Generator $faker) {
+    return [
+        'question_id' => function () {
+            return factory(Question::class)->create()->id;
+        },
+        'user_id' => function () {
+            return factory(User::class)->create()->id;
+        },
+    ];
+});
+
+$factory->define(Tag::class, function (Generator $faker) {
+    return [];
+});
+
+$factory->define(Vote::class, function (Generator $faker) {
+    return [
+        'user_id' => function () {
+            return factory(User::class)->create()->id;
+        },
+    ];
+});
+
+$factory->define(Slug::class, function (Generator $faker) {
+    return [
+        'text' => str_slug($faker->text),
+        'question_id' => function () {
+            return factory(Question::class)->create()->id;
+        },
+        'language_id' => function () {
+            return factory(Language::class)->create()->id;
+        },
     ];
 });
