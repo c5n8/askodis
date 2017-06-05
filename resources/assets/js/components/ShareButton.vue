@@ -1,7 +1,7 @@
 <template lang='jade'>
 .share.ui.top.left.pointing.dropdown.tiny.basic.button
   i.icon(:class='{ group: message, share: ! message}' )
-  strong {{ message ? $t(message) : $t('Share')}}
+  strong {{ message ? message : $t('Share')}}
   .menu
     a.item(
       :href='"https://www.facebook.com/sharer/sharer.php?u=" + shareUrl'
