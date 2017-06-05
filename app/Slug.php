@@ -25,6 +25,7 @@ class Slug extends Model
         'body',
         'detail',
         'tags',
+        'shareUrl',
         'language',
     ];
 
@@ -41,6 +42,7 @@ class Slug extends Model
         'body',
         'detail',
         'tags',
+        'shareUrl',
     ];
 
     function question()

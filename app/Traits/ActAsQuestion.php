@@ -102,6 +102,7 @@ trait ActAsQuestion
                     'hasVoteFromCurrentUser' => $answer->hasVoteFromCurrentUser,
                     'voteFromCurrentUser'    => $answer->voteFromCurrentUser,
                     'user'                   => $answer->user,
+                    'shareUrl'               => urlencode(url($this->slug . '#' . 'answer-' . $answer->id)),
                 ]);
             });
     }
@@ -177,5 +178,10 @@ trait ActAsQuestion
             'hasVoteFromCurrentUser' => $answer->hasVoteFromCurrentUser,
             'user'                   => $answer->user,
         ]);
+    }
+
+    function getShareUrlAttribute()
+    {
+        return  urlencode(url($this->slug));
     }
 }

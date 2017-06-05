@@ -1,5 +1,5 @@
 <template lang='jade'>
-.ui.main.container(v-show="isReady")
+.ui.main.container(v-show='isReady')
   .ui.centered.grid
     .ten.wide.computer.sixteen.wide.mobile.column
       p
@@ -10,6 +10,7 @@
         button.ui.tiny.basic.button(@click='onAnswerButtonClick')
           i.edit.icon
           strong {{ $t(answerButtonText) }}
+        share-button(:shareable='question')
         button.more.ui.icon.top.left.pointing.dropdown.tiny.basic.right.floated.button
           i.vertical.ellipsis.icon
           .menu
@@ -48,6 +49,7 @@
 import { mapState, mapActions } from 'vuex'
 import store from 'store'
 import AskButton from 'components/AskButton'
+import ShareButton from 'components/ShareButton'
 import AnswerCard from 'components/AnswerCard'
 import AnswerForm from 'components/AnswerForm'
 import QuestionTranslationForm from 'components/QuestionTranslationForm'
@@ -56,6 +58,7 @@ export default {
   store,
   props: ['id'],
   components: {
+    ShareButton,
     AskButton,
     AnswerCard,
     QuestionTranslationForm,
@@ -103,7 +106,7 @@ export default {
       if (this.$root.auth()) {
         $('#questionTranslationForm')
           .modal({ detachable: false })
-          .modal("show")
+          .modal('show')
       }
     }
   },

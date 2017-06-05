@@ -24,6 +24,7 @@
       button.ui.tiny.basic.button(@click='onAnswerButtonClick')
         i.edit.icon
         strong {{ $t(answerButtonText) }}
+      share-button(:shareable='question')
       button.more.ui.icon.top.left.pointing.dropdown.tiny.basic.right.floated.button
         i.vertical.ellipsis.icon
         .menu
@@ -39,8 +40,9 @@
       .description {{ question.topAnswer.body }}
     .extra.content
         span.stat {{ $tc('Votes', question.topAnswer.votesCount) }}
-    .extra.content
+    .content
       vote-answer-button(:answer='question.topAnswer' ':question'='question')
+      share-button(':shareable'='question.topAnswer')
       button.more.ui.icon.top.left.pointing.dropdown.tiny.basic.right.floated.button
         i.vertical.ellipsis.icon
         .menu
@@ -52,13 +54,15 @@
 import VoteAnswerButton from 'components/VoteAnswerButton'
 import SuggestEditForm from 'components/SuggestEditForm'
 import AskButton from 'components/AskButton'
+import ShareButton from 'components/ShareButton'
 
 export default {
   props: ['question'],
   components: {
     SuggestEditForm,
     VoteAnswerButton,
-    AskButton
+    AskButton,
+    ShareButton
   },
   computed: {
     answerButtonText() {

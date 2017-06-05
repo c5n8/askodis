@@ -42,6 +42,7 @@ class QuestionAnswerController extends Controller
                     'hasVoteFromCurrentUser' => $answer->hasVoteFromCurrentUser,
                     'voteFromCurrentUser'    => $answer->voteFromCurrentUser,
                     'user'                   => $answer->user,
+                    'shareUrl'               => urlencode(url($slug->text . '#' . 'answer-' . $answer->id)),
                 ]);
             });
     }

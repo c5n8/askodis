@@ -6,9 +6,10 @@
       a.date(:title='answer.updatedAt | formatDateTime') {{ answer.updatedAt | humanizeDateTime }}
     .description {{ answer.body }}
   .extra.content
-      span.stat {{ $tc('Votes', answer.votesCount) }}
-  .extra.content
+      span {{ $tc('Votes', answer.votesCount) }}
+  .content
     vote-answer-button(:answer='answer' ':question'='question')
+    share-button(':shareable'='answer')
     button.more.ui.icon.top.left.pointing.dropdown.tiny.basic.right.floated.button
       i.vertical.ellipsis.icon
       .menu
@@ -19,13 +20,15 @@
 <script>
 import { mapState } from 'vuex'
 import VoteAnswerButton from 'components/VoteAnswerButton'
+import ShareButton from 'components/ShareButton'
 import SuggestEditForm from 'components/SuggestEditForm'
 
 export default {
   props: ['answer'],
   components: {
     SuggestEditForm,
-    VoteAnswerButton
+    ShareButton,
+    VoteAnswerButton,
   },
   computed: {
     ...mapState([
