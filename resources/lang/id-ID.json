@@ -1,5 +1,11 @@
 {
   "": "",
+  "The username may only contain letters, numbers, and dashes." : "Username harus terdiri hanya dari huruf, angka, -, dan _.",
+  "The email has already been taken." : "Email sudah dipakai.",
+  "The password must be at least 6 characters." : "Password minimal 6 karakter.",
+  "The password confirmation does not match." : "Konfirmasi password tidak cocok.",
+  "These credentials do not match our records.": "Akun atau password salah.",
+  "There were some errors with your submission": "Ups, ada kesalahan.",
   "Ask, answer, collaborate, translate, and more.": "Tanya, jawab, kolaborasi, terjemahan, dan masih banyak lagi.",
   "What's your question?": "Apa pertanyaanmu?",
   "Askodis is more fun with your friend!": "Askodis lebih seru dengan temanmu!",
