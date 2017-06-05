@@ -21,6 +21,14 @@
           </div>
 
           <div class="field">
+            <label for="username">@lang('Username')</label>
+            <div class="ui labeled input">
+              <div class="ui label">@</div>
+              <input id="username" type="text" name="username" required>
+            </div>
+          </div>
+
+          <div class="field">
             <label for="password">@lang('Password')</label>
             <input id="password" type="password" name="password" required>
           </div>
