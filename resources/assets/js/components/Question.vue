@@ -10,7 +10,7 @@
         button.ui.tiny.basic.button(@click='onAnswerButtonClick')
           i.edit.icon
           strong {{ $t(answerButtonText) }}
-        share-button(:shareable='question')
+        share-button(:shareUrl='question.shareUrl')
         button.more.ui.icon.top.left.pointing.dropdown.tiny.basic.right.floated.button
           i.vertical.ellipsis.icon
           .menu

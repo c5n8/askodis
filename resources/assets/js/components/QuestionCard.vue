@@ -24,7 +24,7 @@
       button.ui.tiny.basic.button(@click='onAnswerButtonClick')
         i.edit.icon
         strong {{ $t(answerButtonText) }}
-      share-button(:shareable='question')
+      share-button(:shareUrl='question.shareUrl')
       a.ui.tiny.basic.button(
         :href='question.slug'
         target='_blank'
@@ -54,7 +54,7 @@
   .content(v-show="question.hasAnswer")
     template(v-if="question.hasAnswer")
       vote-answer-button(:answer='question.topAnswer' ':question'='question')
-      share-button(':shareable'='question.topAnswer')
+      share-button(':shareUrl'='question.topAnswer.shareUrl')
       a.ui.tiny.basic.button(
         :href='question.slug'
         target='_blank'

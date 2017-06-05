@@ -9,7 +9,7 @@
       span {{ $tc('Votes', answer.votesCount) }}
   .content
     vote-answer-button(:answer='answer' ':question'='question')
-    share-button(':shareable'='answer')
+    share-button(':shareUrl'='answer.shareUrl')
     button.more.ui.icon.top.left.pointing.dropdown.tiny.basic.right.floated.button
       i.vertical.ellipsis.icon
       .menu
