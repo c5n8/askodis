@@ -24,7 +24,7 @@
             <label for="username">@lang('Username')</label>
             <div class="ui labeled input">
               <div class="ui label">@</div>
-              <input id="username" type="text" name="username" value="{{ old('email') }}" required>
+              <input id="username" type="text" name="username" value="{{ old('username') }}" required>
             </div>
           </div>
 
