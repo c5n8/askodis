@@ -5,7 +5,8 @@
       .field.four.wide
         label {{ $t('Translate to') }}
         select.language.ui.dropdown(name='language' v-model="payload.language")
-          option(v-for="language in languages" ":value"="language.code") {{ language.name }}
+          template(v-if='user.languages.length > 0')
+            option(v-for="language in languages" ":value"="language.code") {{ language.name }}
       .field
         label {{ $t('Question') }}
         p {{ question.body }}
@@ -69,7 +70,7 @@ export default {
 
       http.post('/api/questions/' + this.question.id + '/editions', this.payload)
         .then(response => {
-          window.location.replace(response.data.slug)
+          window.location.replace('/' + response.data.slug)
         })
         .catch(error => {
           this.disabled = false

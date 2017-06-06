@@ -1,5 +1,7 @@
 @extends('auth.layouts.app')
 
+@section('title', __('Registration') . ' – ' . config('app.name'))
+
 @section('content')
   <div class="ui main container" style="margin-top: 5em">
     <div class="ui centered grid">
@@ -24,7 +26,7 @@
             <label for="username">@lang('Username')</label>
             <div class="ui labeled input">
               <div class="ui label">@</div>
-              <input id="username" type="text" name="username" value="{{ old('email') }}" required>
+              <input id="username" type="text" name="username" value="{{ old('username') }}" required>
             </div>
           </div>
 

@@ -2,16 +2,19 @@
 
 namespace App\Providers;
 
-use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Validator;
-use Laravel\Dusk\DuskServiceProvider;
 use App\Slug;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\ServiceProvider;
+use Laravel\Dusk\DuskServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     function boot()
     {
+        Schema::defaultStringLength(191);
+
         \App\Edition::observe(\App\Observers\EditionObserver::class);
 
         Relation::morphMap([
