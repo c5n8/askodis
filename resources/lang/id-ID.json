@@ -1,6 +1,7 @@
 {
   "Spoken Languages": "Bahasa yang dikuasai",
   "Account Activation": "Aktifasi Akun",
+  "The username has already been taken.": "Username sudah diambil",
   "The username may only contain letters, numbers, and dashes." : "Username harus terdiri hanya dari huruf, angka, -, dan _.",
   "The email has already been taken." : "Email sudah dipakai.",
   "The password must be at least 6 characters." : "Password minimal 6 karakter.",
