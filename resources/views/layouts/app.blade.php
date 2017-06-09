@@ -37,6 +37,10 @@
     <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
   </head>
   <body>
+    @if (app()->environment() == 'production')
+      @include('layouts.analyticstracking')
+    @endif
+
     <div id="app">
       <div class="ui fixed menu">
         <div class="ui container">
@@ -81,10 +85,6 @@
     <script src="{{ mix('js/manifest.js') }}"></script>
     <script src="{{ mix('js/vendor.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>
-
-    @if (app()->environment() == 'production')
-      @include('layouts.analyticstracking')
-    @endif
 
   </body>
 </html>
