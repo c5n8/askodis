@@ -10,6 +10,7 @@
 /resources/assets/lib/semantic/dist/
 /resources/assets/sass/_semantic.scss
 /storage/*.key
+/storage/debugbar
 /vendor
 /.idea
 /.vagrant
