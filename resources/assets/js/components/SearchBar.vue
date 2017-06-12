@@ -1,10 +1,11 @@
 <template lang='jade'>
   #searchBar.ui.category.search.item
     .ui.icon.input
-      input.prompt(name='search' type='text' ':placeholder'='$t("What\'s your question?")' v-model='query')
+      input.prompt(name='search' type='text' ':placeholder'='$t("What is your question?")' v-model='query')
       i.search.link.icon
-    small#algoliaMessage.stat Powered by
-    img(src='/img/algolia-logo.jpg')
+    small#algoliaMessage.stat powered by
+    a(href='https://www.algolia.com' target='_blank')
+      img#algoliaLogo(src='/img/algolia-logo.jpg' height='12px')
     .results
     #noResultMessage(style='display: none')
       .message.empty
@@ -98,4 +99,7 @@ export default {
   #algoliaMessage
     margin-left: 5px
     min-width: 60px
+
+  #algoliaLogo
+    margin-bottom: -1px
 </style>
