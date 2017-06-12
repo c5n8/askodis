@@ -51,7 +51,7 @@ export default {
     var vm = this
 
     $('#searchBar').search({
-      minCharacters: 7,
+      minCharacters: 1,
       apiSettings: {
         method: 'post',
         url: 'https://' + algolia.id + '-dsn.algolia.net/1/indexes/' + algolia.index + '/query',
