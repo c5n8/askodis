@@ -13,11 +13,15 @@ export default new vuex.Store({
     user
   },
   state: {
+    languages: [],
     query: '',
     question: {},
     questions: []
   },
   mutations: {
+    concatLanguages(state, payload) {
+      state.languages = state.languages.concat(payload)
+    },
     setQuery(state, payload) {
       state.query = payload
     },

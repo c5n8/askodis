@@ -25,12 +25,21 @@ Route::group(['middleware' => ['locale', 'activation'], 'namespace' => 'API'], f
         'only'       => ['store'],
     ]);
 
+    Route::resource('questions.translation_requests', QuestionTranslationRequestController::class, [
+        'parameters' => ['question' => 'slug'],
+        'only'       => ['store'],
+    ]);
+
     Route::resource('votes', VoteController::class, [
         'only'       => ['destroy'],
     ]);
 
     Route::resource('editions', EditionController::class, [
         'only'       => ['update'],
+    ]);
+
+    Route::resource('languages', LanguageController::class, [
+        'only'       => ['index'],
     ]);
 
     Route::resource('my/languages', MyLanguageController::class, [

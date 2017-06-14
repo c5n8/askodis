@@ -77,17 +77,22 @@ const app = new vue({
 })
 
 http
-  .get('/lang/' + locale + '.json')
+  .get('/api/languages')
   .then(response => {
-    i18n.setLocaleMessage(locale, response.data)
+    store.commit('concatLanguages', response.data)
 
-    app.$mount('#app')
-  })
-  .catch(error => {
-    if (error.response.status === 404) {
-      var fallbackLocale = 'en-US'
+    http
+    .get('/lang/' + locale + '.json')
+    .then(response => {
+      i18n.setLocaleMessage(locale, response.data)
 
-      http
+      app.$mount('#app')
+    })
+    .catch(error => {
+      if (error.response.status === 404) {
+        var fallbackLocale = 'en-US'
+
+        http
         .get('/lang/' + fallbackLocale + '.json')
         .then(response => {
           i18n.locale = fallbackLocale
@@ -99,8 +104,9 @@ http
           app.$mount('#app')
         })
 
-      return
-    }
+        return
+      }
 
-    app.$mount('#app')
+      app.$mount('#app')
+    })
   })

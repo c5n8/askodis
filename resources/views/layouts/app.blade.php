@@ -73,7 +73,7 @@
         <div id="successModal" class="ui basic small modal">
           <div class="ui positive message">
             <div class="description">
-              Your edit suggestion is posted!
+              Sent!
             </div>
           </div>
         </div>

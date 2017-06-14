@@ -2,12 +2,9 @@
 
 namespace App;
 
-use App\Answer;
-use App\Detail;
-use App\Slug;
-use App\Tag;
 use App\Traits\Editable;
 use App\Traits\Votable;
+use App\TranslationRequest;
 
 class Question extends Model
 {
@@ -31,6 +28,11 @@ class Question extends Model
     function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    function translationRequests()
+    {
+        return $this->morphMany(TranslationRequest::class, 'translatable');
     }
 
     function getHasDetailAttribute()
