@@ -177,6 +177,7 @@ trait ActAsQuestion
             'votesCount'             => $answer->votesCount,
             'hasVoteFromCurrentUser' => $answer->hasVoteFromCurrentUser,
             'user'                   => $answer->user,
+            'shareUrl'               => urlencode(url($this->slug . '#' . 'answer-' . $answer->id)),
         ]);
     }
 
