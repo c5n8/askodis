@@ -1,4 +1,4 @@
-<template lang='jade'>
+<template lang='pug'>
 #questionForm.ui.small.modal
   i.close.icon
   .content

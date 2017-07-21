@@ -1,4 +1,4 @@
-<template lang='jade'>
+<template lang='pug'>
 a#notificationMenu.item
   i.bell.outline.icon
   span.text {{ $t("Notifications") }}

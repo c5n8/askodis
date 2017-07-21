@@ -1,4 +1,4 @@
-<template lang='jade'>
+<template lang='pug'>
 .suggestion.ui.small.modal
   .content
     .ui.form

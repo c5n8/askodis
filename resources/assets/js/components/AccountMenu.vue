@@ -1,4 +1,4 @@
-<template lang='jade'>
+<template lang='pug'>
 #accountMenu.ui.pointing.dropdown.link.item
   i.user.icon
   span.text {{ $t('Account')}}

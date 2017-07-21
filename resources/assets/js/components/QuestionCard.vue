@@ -1,4 +1,4 @@
-<template lang='jade'>
+<template lang='pug'>
 .ui.fluid.card(':id'='"question-" + question.id')
   .content
     h3

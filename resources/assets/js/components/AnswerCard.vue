@@ -1,4 +1,4 @@
-<template lang='jade'>
+<template lang='pug'>
 .ui.raised.fluid.card(':id'='"answer-" + answer.id')
   .content
     strong {{ answer.user.name }}
