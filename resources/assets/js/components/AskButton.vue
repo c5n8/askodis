@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang='jade'>
   button.ui.tiny.button(
     :class='askButtonClass'
     @click='onAskButtonClick'

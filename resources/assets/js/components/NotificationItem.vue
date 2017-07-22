@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang='jade'>
 a.item(':href'='notification.data.url')
   .content
     .description

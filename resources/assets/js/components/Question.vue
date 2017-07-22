@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang='jade'>
 .ui.main.container(v-show='isReady')
   .ui.centered.grid
     .ten.wide.computer.sixteen.wide.mobile.column

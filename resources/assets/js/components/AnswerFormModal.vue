@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang='jade'>
 .answer.ui.small.modal
   .content
     form.ui.form(@submit.prevent='onSubmit')

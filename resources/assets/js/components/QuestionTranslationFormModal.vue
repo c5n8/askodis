@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang='jade'>
 .translation.ui.small.modal
   .content
     .ui.form

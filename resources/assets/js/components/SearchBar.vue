@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang='jade'>
   #searchBar.ui.category.search.item
     .ui.icon.input
       input.prompt(name='search' type='text' ':placeholder'='$t("What\'s your question?")' v-model='query')

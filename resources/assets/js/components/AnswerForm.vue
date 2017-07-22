@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang='jade'>
 form#answerForm.ui.form(@submit.prevent='onSubmit')
   .field(:class='{ disabled: this.isDisabled }')
     textarea(
