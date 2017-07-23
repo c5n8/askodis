@@ -30,6 +30,20 @@ class EditionController extends Controller
             ->latest('id')
             ->first();
 
+        if (is_null($originalEdition)) {
+            $originalEdition = $answer
+                ->editions()
+                ->accepted()
+                ->when($edition->status != 'pending', function ($query) use ($edition){
+                    return $query->where('created_at', '<', $edition->created_at);
+                })
+                ->latest('id')
+                ->first();
+            $question = $answer->question->slugs()->inLanguage($originalEdition->language)->first();
+
+            return view('edition.translation.show', compact('edition', 'originalEdition', 'question'));
+        }
+
         return view('edition.show', compact('edition', 'originalEdition', 'question'));
     }
 }

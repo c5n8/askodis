@@ -20,6 +20,11 @@ Route::group(['middleware' => ['locale', 'activation'], 'namespace' => 'API'], f
         'only'       => ['index', 'store', 'update'],
     ]);
 
+    Route::resource('questions.answers.editions', QuestionAnswerEditionController::class, [
+        'parameters' => ['question' => 'slug'],
+        'only'       => ['store'],
+    ]);
+
     Route::resource('questions.answers.votes', QuestionAnswerVoteController::class, [
         'parameters' => ['question' => 'slug'],
         'only'       => ['store'],

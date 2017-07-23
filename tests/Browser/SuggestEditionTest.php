@@ -37,7 +37,7 @@ class SuggestEditionTest extends DuskTestCase
                         ->press('Post Edit Suggestion');
                 })
                 ->waitUntilMissing('.suggestion.modal')
-                ->assertSee('Your edit suggestion is posted!');
+                ->assertSee('Sent!');
 
             $second->assertSeeIn('#notificationMenu', '1');
         });
