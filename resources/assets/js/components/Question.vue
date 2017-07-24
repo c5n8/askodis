@@ -14,7 +14,7 @@
         button.more.ui.icon.top.left.pointing.dropdown.tiny.basic.right.floated.button
           i.vertical.ellipsis.icon
           .menu
-            .header
+            .translate.item(@click='onTranslateButtonClick')
               i.translate.icon
               | {{ $t('Translate') }}
             .request.translation.item(@click='onRequestTranslationButtonClick')

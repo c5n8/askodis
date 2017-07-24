@@ -30,11 +30,6 @@ class Question extends Model
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
-    function translationRequests()
-    {
-        return $this->morphMany(TranslationRequest::class, 'translatable');
-    }
-
     function getHasDetailAttribute()
     {
         return $this->detail()->exists();
