@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\TranslationRequest;
 use App\Language;
 use App\Slug;
+use App\TranslationRequest;
 
 class QuestionTranslationRequestController extends Controller
 {
@@ -16,33 +16,24 @@ class QuestionTranslationRequestController extends Controller
 
     function store(Slug $slug)
     {
+        $question = $slug->question;
+
+        if ($question->translationRequests()->from(request()->user())->exists()) {
+            return $question->translationRequests()->from(request()->user())->first();
+        }
+
         $this->validate(request(), [
             'language' => 'required|exists:languages,code',
         ]);
 
-        $question = $slug->question;
-        $targetLanguage = Language::where('code', request('language'))->first();
+        $language = Language::where('code', request('language'))->first();
 
-        if ($slug->language->code == $targetLanguage->code) {
-            abort(403);
-        }
+        $request = new TranslationRequest;
+        $request->user()->associate(request()->user());
+        $request->language()->associate($language);
+        $request->requestable()->associate($question);
+        $request->save();
 
-        $translationRequest = $question
-            ->translationRequests()
-            ->fromLanguage($slug->language)
-            ->toLanguage($targetLanguage)
-            ->from(auth()->user())
-            ->first();
-
-        if (is_null($translationRequest)) {
-            $translationRequest = new TranslationRequest;
-            $translationRequest->translatable()->associate($question);
-            $translationRequest->originLanguage()->associate($slug->language);
-            $translationRequest->targetLanguage()->associate($targetLanguage);
-            $translationRequest->user()->associate(auth()->user());
-            $translationRequest->save();
-        }
-
-        return $translationRequest;
+        return $request;
     }
 }

@@ -2,12 +2,13 @@
 
 namespace Tests\Browser;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use Tests\Browser\Pages\QuestionPage;
+use Laravel\Dusk\Browser;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\User;
 use App\Language;
+use App\Tag;
 
 class RequestQuestionTranslationTest extends DuskTestCase
 {
@@ -19,19 +20,17 @@ class RequestQuestionTranslationTest extends DuskTestCase
         $user = factory(User::class)->create();
         $user->languages()->sync($languages);
 
-        $this->browse(function (Browser $browser) use ($user, $languages) {
+        $this->browse(function (Browser $browser) use ($user) {
             $browser
                 ->loginAs($user)
                 ->visit(new QuestionPage)
                 ->press('#questionMenu .more')
-                ->assertSee('Request Translation')
                 ->click('#questionMenu .more .request.translation')
-                ->waitFor('#questionTranslationRequestForm')
-                ->pause(500)
-                ->press('Send Request')
-                ->waitUntilMissing('#questionTranslationRequestForm')
-                ->assertSee('Sent!')
-                ;
+                ->whenAvailable('#requestQuestionTranslationForm', function ($form){
+                    $form->press('Request Translation');
+                })
+                ->waitUntilMissing('#requestQuestionTranslationForm')
+                ->assertSee('Sent!');
         });
     }
 }

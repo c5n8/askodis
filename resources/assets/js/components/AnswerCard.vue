@@ -3,7 +3,7 @@
   .content
     strong {{ answer.user.name }}
     span {{ ' ' }}
-    span.stat@{{ answer.user.username }}
+    span.stat @{{ answer.user.username }}
     .meta
       a.date(:title='answer.updatedAt | formatDateTime') {{ answer.updatedAt | humanizeDateTime }}
     .description {{ answer.body }}
@@ -15,10 +15,14 @@
     button.more.ui.icon.top.left.pointing.dropdown.tiny.basic.right.floated.button
       i.vertical.ellipsis.icon
       .menu
-        .suggest.item(@click='onSuggestEditButtonClick')
+        .suggest.item(@click='openSuggestionForm')
           i.edit.icon
           | {{ $t('Suggest Edit') }}
+        .translate.item(@click='openTranslationForm')
+          i.translate.icon
+          | {{ $t('Translate') }}
   suggest-edit-form(:answer='answer' ':question'='question')
+  answer-translation-form(:answer='answer' ':question'='question')
 </template>
 
 <script>
@@ -26,6 +30,7 @@ import { mapState } from 'vuex'
 import VoteAnswerButton from 'components/VoteAnswerButton'
 import ShareButton from 'components/ShareButton'
 import SuggestEditForm from 'components/SuggestEditForm'
+import AnswerTranslationForm from 'components/AnswerTranslationForm'
 
 export default {
   props: ['answer'],
@@ -33,6 +38,7 @@ export default {
     SuggestEditForm,
     ShareButton,
     VoteAnswerButton,
+    AnswerTranslationForm,
   },
   computed: {
     ...mapState([
@@ -40,13 +46,20 @@ export default {
     ])
   },
   methods: {
-    onSuggestEditButtonClick() {
+    openSuggestionForm() {
       if (this.$root.auth()) {
-      $('#answer-' + this.answer.id + ' .suggestion.modal')
-        .modal({ detachable: false })
-        .modal("show")
+        $('#answer-' + this.answer.id + ' .suggestion.modal')
+          .modal({ detachable: false })
+          .modal("show")
       }
-    }
+    },
+    openTranslationForm() {
+      if (this.$root.auth()) {
+        $('#answer-' + this.answer.id + ' .translation.modal')
+          .modal({ detachable: false })
+          .modal("show")
+      }
+    },
   },
   mounted() {
     $('#answer-' + this.answer.id + ' .more').dropdown()

@@ -73,7 +73,7 @@
         <div id="successModal" class="ui basic small modal">
           <div class="ui positive message">
             <div class="description">
-              Sent!
+              @lang('Sent!')
             </div>
           </div>
         </div>

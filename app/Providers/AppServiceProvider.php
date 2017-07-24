@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Dusk\DuskServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -38,7 +37,11 @@ class AppServiceProvider extends ServiceProvider
     function register()
     {
         if ($this->app->environment('local', 'testing')) {
-            $this->app->register(DuskServiceProvider::class);
+            $this->app->register(\Laravel\Dusk\DuskServiceProvider::class);
+        }
+
+        if ($this->app->environment('production')) {
+            $this->app->register(\GrahamCampbell\HTMLMin\HTMLMinServiceProvider::class);
         }
     }
 }

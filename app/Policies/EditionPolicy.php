@@ -11,9 +11,9 @@ class EditionPolicy extends Policy
 {
     function create(User $user, $editable, Language $language)
     {
-        if ($editable->editions()->inLanguage($language)->exists()) {
-            return false;
-        }
+        // if ($editable->editions()->inLanguage($language)->exists()) {
+        //     return false;
+        // }
 
         return true;
     }
