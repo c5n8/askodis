@@ -8,10 +8,11 @@ use App\Slug;
 use App\Tag;
 use App\Traits\Editable;
 use App\Traits\Votable;
+use App\Traits\TranslationRequestable;
 
 class Question extends Model
 {
-    use Editable, Votable;
+    use Editable, Votable, TranslationRequestable;
 
     function slugs()
     {

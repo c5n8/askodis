@@ -15,6 +15,11 @@ Route::group(['middleware' => ['locale', 'activation'], 'namespace' => 'API'], f
         'only'       => ['store'],
     ]);
 
+    Route::resource('questions.translation_requests', QuestionTranslationRequestController::class, [
+        'parameters' => ['question' => 'slug'],
+        'only'       => ['store'],
+    ]);
+
     Route::resource('questions.answers', QuestionAnswerController::class, [
         'parameters' => ['question' => 'slug'],
         'only'       => ['index', 'store', 'update'],

@@ -17,6 +17,9 @@
             .translate.item(@click='onTranslateButtonClick')
               i.translate.icon
               | {{ $t('Translate') }}
+            .request.translation.item(@click='onRequestTranslationButtonClick')
+              i.translate.icon
+              | {{ $t('Request Translation') }}
 
       template(v-if='question.hasAnswerFromCurrentUser && ! isWritingAnswer')
         h4 Your Answer
@@ -45,6 +48,7 @@
           style='margin-top: 2em; margin-bottom: 2em'
         )
   question-translation-form
+  request-question-translation-form
 </template>
 
 <script>
@@ -55,6 +59,7 @@ import ShareButton from 'components/ShareButton'
 import AnswerCard from 'components/AnswerCard'
 import AnswerForm from 'components/AnswerForm'
 import QuestionTranslationForm from 'components/QuestionTranslationForm'
+import RequestQuestionTranslationForm from 'components/RequestQuestionTranslationForm'
 
 export default {
   store,
@@ -64,6 +69,7 @@ export default {
     AskButton,
     AnswerCard,
     QuestionTranslationForm,
+    RequestQuestionTranslationForm,
     AnswerForm
   },
   data() {
@@ -109,6 +115,13 @@ export default {
         $('#questionTranslationForm')
           .modal({ detachable: false })
           .modal('show')
+      }
+    },
+    onRequestTranslationButtonClick() {
+      if (this.$root.auth()) {
+        $('#requestQuestionTranslationForm')
+        .modal({ detachable: false })
+        .modal('show')
       }
     }
   },
