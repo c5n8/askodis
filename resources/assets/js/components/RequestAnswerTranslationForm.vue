@@ -1,5 +1,5 @@
 <template lang='jade'>
-.suggest.translation.ui.small.modal
+.request.translation.ui.small.modal
   .content
     .ui.form
       .field.four.wide
@@ -7,17 +7,9 @@
         select.language.ui.dropdown(name='language' v-model="payload.language")
           template(v-if='isReady')
             option(v-for="language in languages" ":value"="language.code") {{ language.name }}
-      .field
-        p {{ answer.body }}
-        textarea(
-          name='body'
-          rows='2'
-          ':placeholder'='$t("Write answer translation")'
-          v-model='payload.body'
-        )
       button.ui.green.tiny.button(:class='{ disabled: this.isDisabled }' @click='onSubmit')
         i.send.icon
-        | {{ $t('Post Translation') }}
+        | {{ $t('Request Translation') }}
 </template>
 
 <script>
@@ -26,18 +18,18 @@ import http from 'lib/http'
 import _ from 'lodash'
 
 export default {
-  props: ['answer', 'question'],
+  props: ['answer'],
   data() {
     return {
       isDisabled: false,
       payload: {
-        detail: '',
         language: null
       }
     }
   },
   computed: {
     ...mapState([
+      'question',
       'user'
     ]),
     isReady() {
@@ -57,37 +49,27 @@ export default {
       })
     }
   },
-  watch: {
-    question() {
-      for (var i = 0; i < this.question.tags.length; i++) {
-        this.payload.tags.push({
-          id: this.question.tags[i].id,
-          body: ''
-        })
-      }
-    }
-  },
   methods: {
     ...mapActions([
       'getUserLanguages'
     ]),
     onSubmit() {
-      this.disabled = true
+      this.isDisabled = true
 
-      http.post('/api/questions/' + this.question.id + '/answers/' + this.answer.id + '/editions', this.payload)
+      http.post('/api/answers/' + this.answer.id +'/translation_requests/', this.payload)
         .then(response => {
           this.isDisabled = false
-          $('#answer-' + this.answer.id + ' .translation.modal').modal('hide')
+          $('.request.translation.modal').modal('hide')
           $('#successModal').modal('show')
         })
         .catch(error => {
-          this.disabled = false
+          this.isDisabled = false
         })
     }
   },
   updated() {
-    if (this.languages.length > 0) {
-      $('#answer-' + this.answer.id + ' .translation.modal [name=language]').dropdown('set selected', this.languages[0].code)
+    if (this.user.languages.length > 0) {
+      $('#answer-' + this.answer.id + '.request.translation [name=language]').dropdown('set selected', this.user.languages[0].code)
     }
   }
 }

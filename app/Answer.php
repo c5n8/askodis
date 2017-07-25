@@ -6,10 +6,11 @@ use App\Question;
 use App\Traits\Editable;
 use App\Traits\FromUser;
 use App\Traits\Votable;
+use App\Traits\TranslationRequestable;
 
 class Answer extends Model
 {
-    use Editable, FromUser, Votable;
+    use Editable, FromUser, Votable, TranslationRequestable;
 
     protected $visible = [
         'id',

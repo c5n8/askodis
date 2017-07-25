@@ -40,6 +40,10 @@ Route::group(['middleware' => ['locale', 'activation'], 'namespace' => 'API'], f
         'only'       => ['store'],
     ]);
 
+    Route::resource('answers.translation_requests', AnswerTranslationRequestController::class, [
+        'only'       => ['store'],
+    ]);
+
     Route::resource('votes', VoteController::class, [
         'only'       => ['destroy'],
     ]);

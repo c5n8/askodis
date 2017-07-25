@@ -21,8 +21,12 @@
         .translate.item(@click='openTranslationForm')
           i.translate.icon
           | {{ $t('Translate') }}
+        .request.translation.item(@click='openRequestTranslationForm')
+          i.translate.icon
+          | {{ $t('Request Translation') }}
   suggest-edit-form(:answer='answer' ':question'='question')
   answer-translation-form(:answer='answer' ':question'='question')
+  request-answer-translation-form(:answer='answer' ':question'='question')
 </template>
 
 <script>
@@ -31,6 +35,7 @@ import VoteAnswerButton from 'components/VoteAnswerButton'
 import ShareButton from 'components/ShareButton'
 import SuggestEditForm from 'components/SuggestEditForm'
 import AnswerTranslationForm from 'components/AnswerTranslationForm'
+import RequestAnswerTranslationForm from 'components/RequestAnswerTranslationForm'
 
 export default {
   props: ['answer'],
@@ -38,6 +43,7 @@ export default {
     SuggestEditForm,
     ShareButton,
     VoteAnswerButton,
+    RequestAnswerTranslationForm,
     AnswerTranslationForm,
   },
   computed: {
@@ -55,7 +61,14 @@ export default {
     },
     openTranslationForm() {
       if (this.$root.auth()) {
-        $('#answer-' + this.answer.id + ' .translation.modal')
+        $('#answer-' + this.answer.id + ' .suggest.translation.modal')
+          .modal({ detachable: false })
+          .modal("show")
+      }
+    },
+    openRequestTranslationForm() {
+      if (this.$root.auth()) {
+        $('#answer-' + this.answer.id + ' .request.translation.modal')
           .modal({ detachable: false })
           .modal("show")
       }
