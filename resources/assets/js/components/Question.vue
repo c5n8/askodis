@@ -47,6 +47,10 @@
           :class='{ active: isLoadingMoreAnswers }'
           style='margin-top: 2em; margin-bottom: 2em'
         )
+
+      h4 {{ $t('Related questions')}}
+      li(v-for='relatedQuestion in question.relatedQuestions')
+        a(:href='relatedQuestion.url') {{ relatedQuestion.text }}
   question-translation-form
   request-question-translation-form
 </template>

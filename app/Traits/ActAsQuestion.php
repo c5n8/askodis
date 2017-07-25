@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use App\Question;
+
 trait ActAsQuestion
 {
     function getSlugAttribute()
@@ -184,5 +186,34 @@ trait ActAsQuestion
     function getShareUrlAttribute()
     {
         return  urlencode(url($this->slug));
+    }
+
+    function getRelatedQuestionsAttribute($value='')
+    {
+        return Question::where('id', '<>', $this->question->id)
+            ->hasEditionInLanguage($this->language)
+            ->whereHas('tags', function ($query) {
+                $query->whereIn('tag_id', $this->tags->pluck('id'));
+            })
+            ->with([
+                'editions',
+                'tags' => function ($query) {
+                    $query->whereIn('tag_id', $this->tags->pluck('id'));
+                },
+                'slugs' => function ($query) {
+                    $query->inLanguage($this->language);
+                }
+            ])
+            ->paginate(5)
+            ->sortByDesc(function ($question) {
+                return $question->tags->count();
+            })
+            ->transform(function ($question) {
+                return [
+                    'text' => $question->editions->first()->text,
+                    'url' => url($question->slugs->first()->text),
+                ];
+            })
+            ->values();
     }
 }

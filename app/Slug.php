@@ -27,6 +27,7 @@ class Slug extends Model
         'tags',
         'shareUrl',
         'language',
+        'relatedQuestions',
     ];
 
     protected $appends = [
@@ -43,6 +44,7 @@ class Slug extends Model
         'detail',
         'tags',
         'shareUrl',
+        'relatedQuestions',
     ];
 
     function question()
