@@ -196,7 +196,12 @@ trait ActAsQuestion
                 $query->whereIn('tag_id', $this->tags->pluck('id'));
             })
             ->with([
-                'editions',
+                'editions' => function ($query) {
+                    $query
+                        ->inLanguage($this->language)
+                        ->accepted()
+                        ->latest();
+                },
                 'tags' => function ($query) {
                     $query->whereIn('tag_id', $this->tags->pluck('id'));
                 },
