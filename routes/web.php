@@ -17,6 +17,8 @@ Route::group(['middleware' => ['locale', 'activation']], function () {
         'only'       => ['show'],
     ]);
 
+    Route::get('/@{user}', 'UserController@show');
+
     Route::resource('', QuestionController::class, [
         'parameters' => ['' => 'question'],
         'only'       => ['show'],

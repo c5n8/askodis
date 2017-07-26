@@ -6,7 +6,8 @@ const state = {
   hasReadAllNotifications: false,
   unreadNotificationsCount: 0,
   notifications: [],
-  languages: []
+  languages: [],
+  questions: [],
 }
 
 const getters = {
@@ -34,7 +35,10 @@ const mutations = {
   },
   setLanguages(state, payload) {
     state.languages = payload
-  }
+  },
+  concatUserQuestions(state, payload) {
+    state.questions = state.questions.concat(payload)
+  },
 }
 
 const actions = {
@@ -63,6 +67,19 @@ const actions = {
   async getUserLanguages({ commit }) {
     var languages = await http.get('/api/my/languages').then((response) => response.data)
     commit('setLanguages', languages)
+  },
+  async getUserQuestions({ commit }, username) {
+    var questions = await http
+      .get('/api/users/' + username + '/questions')
+      .then(response => response.data)
+
+    commit('concatUserQuestions', questions)
+  },
+  async getOlderUserQuestions({ commit, state }, username) {
+    var questions = await http
+      .get('/api/users/' + username + '/questions?before=' + _.last(state.questions).id)
+      .then(response => response.data)
+    commit('concatQuestions', questions)
   },
 }
 

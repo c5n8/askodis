@@ -76,6 +76,11 @@ class User extends Authenticatable
         return $this->hasOne(AccountActivation::class);
     }
 
+    function answers()
+    {
+        return $this->hasMany(Answer::class);
+    }
+
     function getSettingsAttribute()
     {
         return [

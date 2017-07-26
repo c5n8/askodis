@@ -1,9 +1,11 @@
 <template lang='jade'>
 .ui.raised.fluid.card(':id'='"answer-" + answer.id')
   .content
-    strong {{ answer.user.name }}
+    strong
+      a.userlink(:href='"/@" + answer.user.username') {{ answer.user.name }}
     span {{ ' ' }}
-    span.stat @{{ answer.user.username }}
+    span.stat
+      a.userlink(:href='"/@" + answer.user.username') @{{ answer.user.username }}
     .meta
       a.date(:title='answer.updatedAt | formatDateTime') {{ answer.updatedAt | humanizeDateTime }}
     .description {{ answer.body }}
@@ -79,3 +81,10 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+  .userlink
+    color black
+    &:hover
+      color black
+</style>

@@ -18,6 +18,10 @@ class RouteServiceProvider extends ServiceProvider
                 ->orWhere('text', $value)
                 ->first();
             });
+
+        Route::bind('user', function ($value) {
+            return \App\User::where('username', $value)->first();
+        });
     }
 
     function map()
