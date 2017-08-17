@@ -59,6 +59,7 @@ class ResponseSuggestedEditionTest extends DuskTestCase
             $first
                 ->loginAs($edition->user)
                 ->visit('/')
+                ->waitFor('#notificationMenu')
                 ->assertDontSeeIn('#notificationMenu', '1');
 
             $second

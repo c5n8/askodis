@@ -12,7 +12,7 @@ class SettingsPageTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
-    function testExample()
+    function test_settings_page()
     {
         $this->browse(function (Browser $browser) {
             $browser

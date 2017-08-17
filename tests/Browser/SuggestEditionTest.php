@@ -16,7 +16,6 @@ class SuggestEditionTest extends DuskTestCase
     function test_suggest_edition()
     {
         $this->browse(function ($first, $second) {
-
             $first
                 ->loginAs(factory(User::class)->create())
                 ->visit(new QuestionPage);
@@ -26,6 +25,7 @@ class SuggestEditionTest extends DuskTestCase
             $second
                 ->loginAs($answer->user)
                 ->visit('/')
+                ->waitFor('#notificationMenu')
                 ->assertDontSeeIn('#notificationMenu', '1');
 
             $first
@@ -39,7 +39,8 @@ class SuggestEditionTest extends DuskTestCase
                 ->waitUntilMissing('.suggestion.modal')
                 ->assertSee('Sent!');
 
-            $second->assertSeeIn('#notificationMenu', '1');
+            $second
+                ->assertSeeIn('#notificationMenu', '1');
         });
     }
 }

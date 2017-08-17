@@ -18,6 +18,7 @@ class AskButtonTest extends DuskTestCase
             $browser
                 ->loginAs(factory(User::class)->create())
                 ->visit(new QuestionPage)
+                ->waitForText('No one ask')
                 ->assertSee('No one ask')
 
                 ->press('Ask')

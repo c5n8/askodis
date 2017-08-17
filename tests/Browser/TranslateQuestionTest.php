@@ -24,6 +24,7 @@ class TranslateQuestionTest extends DuskTestCase
             $browser
                 ->loginAs($user)
                 ->visit(new QuestionPage)
+                ->waitFor('#questionMenu .more')
                 ->press('#questionMenu .more')
                 ->click('#questionMenu .more .translate')
                 ->waitFor('#questionTranslationForm')

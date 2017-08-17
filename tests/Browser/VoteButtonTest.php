@@ -19,11 +19,13 @@ class VoteButtonTest extends DuskTestCase
             $first
                 ->loginAs(factory(User::class)->create())
                 ->visit(new QuestionPage)
+                ->waitForText('No vote yet')
                 ->assertSee('No vote yet');
 
             $second
                 ->loginAs(Answer::first()->user)
                 ->visit('/')
+                ->waitFor('#notificationMenu')
                 ->assertDontSeeIn('#notificationMenu', '1');
 
             $first->press('Vote')
