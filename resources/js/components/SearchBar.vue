@@ -1,12 +1,19 @@
 <script setup>
 import algoliaLogo from '../assets/algolia-logo.jpg'
 import { getCurrentInstance, onMounted, reactive } from 'vue'
-import { searchClient } from '@algolia/client-search'
+import * as algolia from '@algolia/client-search'
+
+const vm = getCurrentInstance()
 
 const refs = reactive({
   searchBar: undefined,
-  noResultMessage: undefined,
+  noResultsMessage: undefined,
 })
+
+const searchClient = algolia.searchClient(
+  import.meta.env.VITE_ALGOLIA_APP_ID,
+  import.meta.env.VITE_ALGOLIA_SEARCH_KEY,
+)
 
 onMounted(() => {
   $(refs.searchBar).search({
@@ -14,10 +21,7 @@ onMounted(() => {
 
     apiSettings: {
       responseAsync: async (settings, callback) => {
-        const response = await searchClient(
-          import.meta.env.VITE_ALGOLIA_APP_ID,
-          import.meta.env.VITE_ALGOLIA_SEARCH_KEY,
-        ).searchSingleIndex({
+        const response = await searchClient.searchSingleIndex({
           indexName: 'questions',
           searchParams: {
             query: settings.urlData.query,
@@ -30,7 +34,7 @@ onMounted(() => {
       onResponse: (response) => {
         const results = response.hits.map((hit) => ({
           title: hit.body,
-          url: '/' + hit.slug,
+          url: `/${hit.slug}`,
         }))
 
         return { results }
@@ -38,16 +42,18 @@ onMounted(() => {
     },
 
     templates: {
-      message: () => $(refs.noResultMessage).html(),
+      message: () => $(refs.noResultsMessage).html(),
     },
   })
 })
 
-function openQuestionForm() {
-  if (getCurrentInstance().auth()) {
-    $('#questionForm').modal('show')
-  }
-}
+$(() => {
+  $(document).on('click', '[data-on-click="writeNewQuestion"]', () => {
+    if (vm.proxy.$root.auth()) {
+      $('#questionForm').modal('show')
+    }
+  })
+})
 </script>
 
 <template>
@@ -67,14 +73,14 @@ function openQuestionForm() {
       <img :src="algoliaLogo" style="margin-bottom: -1px" height="12px" />
     </a>
     <div class="results"></div>
-    <div :ref="(el) => (refs.noResultMessage = el)" style="display: none">
+    <div :ref="(el) => (refs.noResultsMessage = el)" style="display: none">
       <div class="message empty">
         <div class="header">{{ $t('No Results') }}</div>
         <div class="description">
           {{ $t('Your search returned no results') }}
         </div>
         <div class="ui hidden divider"></div>
-        <button class="ui tiny basic button" @click="() => openQuestionForm()">
+        <button data-on-click="writeNewQuestion" class="ui tiny basic button">
           <i class="edit icon"></i>{{ $t('Write New Question') }}
         </button>
       </div>
