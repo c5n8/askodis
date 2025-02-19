@@ -1,3 +1,2 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('../modules/semantic-ui/semantic.css');
+@import url('./variables.css');

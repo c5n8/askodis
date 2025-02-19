@@ -2,47 +2,96 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\ResetPassword;
+use App\Traits\CamelCaseJsonAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use CamelCaseJsonAttribute, HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
+    protected $visible = [
+        'name',
+        'username',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            if ($user->locale()->exists()) {
+                return;
+            }
+
+            $locale = Locale::where('code', app()->getLocale())->first();
+
+            if (is_null($locale)) {
+                $locale = Locale::where('code', 'en-US')->first();
+            }
+
+            $user->locale()->associate($locale);
+        });
+
+        static::created(function ($user) {
+            $language = Language::where('code', substr($user->locale->code, 0, 2))->first();
+
+            if (is_null($language)) {
+                $language = Language::where('code', 'en')->first();
+            }
+
+            $user->languages()->attach($language);
+        });
+    }
+
+    public function languages()
+    {
+        return $this->belongsToMany(Language::class)->withTimestamps();
+    }
+
+    public function notifications()
+    {
+        return $this
+            ->morphMany(Notification::class, 'notifiable')
+            ->orderBy('created_at', 'desc');
+    }
+
+    public function locale()
+    {
+        return $this->belongsTo(Locale::class);
+    }
+
+    public function activation()
+    {
+        return $this->hasOne(AccountActivation::class);
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
+    }
+
+    public function getSettingsAttribute()
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'locale' => $this->locale,
+            'languages' => $this->languages,
         ];
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
     }
 }
