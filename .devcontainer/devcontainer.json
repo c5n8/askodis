@@ -18,7 +18,8 @@
         "ryannaddy.laravel-artisan",
         "onecentlin.laravel5-snippets",
         "onecentlin.laravel-blade",
-        "sysoev.language-stylus"
+        "sysoev.language-stylus",
+        "bradlc.vscode-tailwindcss"
       ],
       "settings": {}
     }

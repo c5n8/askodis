@@ -14,16 +14,12 @@ export default new vuex.Store({
   },
   state: {
     languages: [],
-    query: '',
     question: {},
     questions: [],
   },
   mutations: {
     concatLanguages(state, payload) {
       state.languages = state.languages.concat(payload)
-    },
-    setQuery(state, payload) {
-      state.query = payload
     },
     setQuestion(state, payload) {
       state.question = payload
