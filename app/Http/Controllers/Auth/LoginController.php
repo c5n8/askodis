@@ -34,9 +34,7 @@ class LoginController extends Controller implements HasMiddleware
      *
      * @return void
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public static function middleware(): array
     {

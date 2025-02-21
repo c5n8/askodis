@@ -19,7 +19,8 @@
         "onecentlin.laravel5-snippets",
         "onecentlin.laravel-blade",
         "sysoev.language-stylus",
-        "bradlc.vscode-tailwindcss"
+        "bradlc.vscode-tailwindcss",
+        "bmewburn.vscode-intelephense-client"
       ],
       "settings": {}
     }

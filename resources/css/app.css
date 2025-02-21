@@ -1,2 +1,13 @@
-@import url('../modules/semantic-ui/semantic.css');
-@import url('./variables.css');
+@import url('fomantic-ui/dist/semantic.css');
+
+.main.text.container {
+  margin-top: 5em;
+}
+
+.stat {
+  color: #767676;
+}
+
+[v-cloak] {
+  display: none;
+}

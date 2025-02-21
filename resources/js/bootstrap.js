@@ -1,5 +1,5 @@
 import './jquery.js'
-import '../modules/semantic-ui/semantic.js'
+import 'fomantic-ui'
 import './global-components.js'
 import './filters.js'
 import moment from 'moment'
