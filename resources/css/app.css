@@ -1,12 +1,13 @@
-@import 'tailwindcss';
+@import url('fomantic-ui/dist/semantic.css');
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source "../**/*.blade.php";
-@source "../**/*.js";
-@source "../**/*.vue";
+.main.text.container {
+  margin-top: 5em;
+}
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+.stat {
+  color: #767676;
+}
+
+[v-cloak] {
+  display: none;
 }

@@ -1,4 +1,7 @@
-import axios from 'axios';
-window.axios = axios;
+import './jquery.js'
+import 'fomantic-ui'
+import './global-components.js'
+import './filters.js'
+import moment from 'moment'
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+moment.locale(document.documentElement.lang)

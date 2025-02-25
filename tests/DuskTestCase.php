@@ -17,6 +17,10 @@ abstract class DuskTestCase extends BaseTestCase
     #[BeforeClass]
     public static function prepare(): void
     {
+        if (is_file('public/hot')) {
+            dd('You should stop the Vite dev server.');
+        }
+        
         if (! static::runningInSail()) {
             static::startChromeDriver(['--port=9515']);
         }
