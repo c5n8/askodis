@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\LanguageController;
+use App\Http\Controllers\API\MyLanguageController;
 use App\Http\Controllers\API\QuestionController;
 use Illuminate\Support\Facades\Route;
 
@@ -67,9 +68,9 @@ Route::middleware([
         'only'       => ['index'],
     ]);
 
-    // Route::resource('my/languages', MyLanguageController::class, [
-    //     'only'       => ['index'],
-    // ]);
+    Route::resource('my/languages', MyLanguageController::class, [
+        'only'       => ['index'],
+    ]);
 
     // Route::resource('my/notifications', MyNotificationController::class, [
     //     'only'       => ['index', 'show'],
