@@ -1,17 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\API;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Str;
 
-class MyLanguageController extends Controller implements HasMiddleware
+class MyLanguageController extends Controller
 {
-    public static function middleware(): array
+    function __construct()
     {
-        return [
-            new Middleware('auth:api', only: ['store']),
-        ];
+        $this->middleware('auth:api');
     }
 
     function index()
