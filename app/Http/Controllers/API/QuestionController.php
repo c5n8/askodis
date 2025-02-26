@@ -9,15 +9,12 @@ use App\Question;
 use App\Slug;
 use App\Tag;
 use App\Vote;
-use Illuminate\Routing\Controllers\Middleware;
 
 class QuestionController extends Controller
 {
     function __construct()
     {
-        return [
-            new Middleware('auth:api', only: ['store']),
-        ];
+        $this->middleware('auth:api')->only(['store']);
     }
 
     function index()
