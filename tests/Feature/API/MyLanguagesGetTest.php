@@ -4,12 +4,12 @@ namespace Tests\Feature\API;
 
 use App\Language;
 use App\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class MyLanguagesGetTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     function test_my_languages_get()
     {

@@ -6,12 +6,12 @@ use App\Answer;
 use App\Edition;
 use App\Notifications\AnswerEditionCreated;
 use App\Vote;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class MyNotificationsPatchTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     function test_my_notifications_patch()
     {

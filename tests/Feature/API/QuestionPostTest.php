@@ -7,12 +7,12 @@ use App\Language;
 use App\Slug;
 use App\Tag;
 use App\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class QuestionPostTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     function test_question_post()
     {

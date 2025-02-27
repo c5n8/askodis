@@ -8,11 +8,11 @@ use App\User;
 use App\Answer;
 use App\Edition;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class QuestionsGetTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     function test_questions_get()
     {

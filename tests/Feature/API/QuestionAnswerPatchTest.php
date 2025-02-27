@@ -6,11 +6,11 @@ use App\Answer;
 use App\Edition;
 use App\User;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class QuestionAnswerPatchTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     private $slug;
     private $answer;

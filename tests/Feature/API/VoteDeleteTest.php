@@ -5,12 +5,12 @@ namespace Tests\Feature\API;
 use App\Answer;
 use App\User;
 use App\Vote;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class VoteDeleteTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     function test_vote_delete()
     {

@@ -5,12 +5,12 @@ namespace Tests\Feature\API;
 use App\Slug;
 use App\Edition;
 use App\Question;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class QuestionGetTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     function test_question_get()
     {

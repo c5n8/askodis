@@ -7,11 +7,11 @@ use App\Slug;
 use App\Language;
 use App\TranslationRequest;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class QuestionTranslationVotePostTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     function test_question_translation_vote_post()
     {

@@ -5,12 +5,12 @@ namespace Tests\Feature\API;
 use App\Slug;
 use App\User;
 use App\Vote;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class QuestionVotePostTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     function test_question_vote_post()
     {

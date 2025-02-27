@@ -6,12 +6,12 @@ use App\Answer;
 use App\Edition;
 use App\User;
 use App\Vote;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class QuestionAnswerVotePostTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     function test_question_answer_vote_post()
     {

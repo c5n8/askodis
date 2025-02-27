@@ -7,12 +7,12 @@ use App\User;
 use App\Vote;
 use App\Language;
 use App\TranslationRequest;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class QuestionTranslationRequestPostTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     function test_question_translation_request_post()
     {

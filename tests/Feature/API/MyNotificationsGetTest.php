@@ -5,12 +5,12 @@ namespace Tests\Feature\API;
 use App\Answer;
 use App\Edition;
 use App\Notifications\AnswerEditionCreated;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class MyNotificationsGetTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     function test_my_notifications_get()
     {

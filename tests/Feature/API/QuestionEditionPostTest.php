@@ -8,12 +8,12 @@ use App\Slug;
 use App\Language;
 use App\Question;
 use App\Tag;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class QuestionEditionPostTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     function test_question_edition_post()
     {

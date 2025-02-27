@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\API;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Slug;
 use App\Answer;
@@ -10,7 +10,7 @@ use App\Edition;
 
 class QuestionAnswersGetTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     function test_question_answers_get()
     {
