@@ -34,6 +34,7 @@ export default {
     QuestionForm,
   },
   computed: {
+    algoliaLogo: () => algoliaLogo,
     query: {
       get() {
         return this.$store.state.query
