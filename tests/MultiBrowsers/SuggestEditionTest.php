@@ -5,17 +5,17 @@ namespace Tests\Browser;
 use Tests\DuskTestCase;
 use Tests\Browser\Pages\QuestionPage;
 use Laravel\Dusk\Browser;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTruncation;
 use App\User;
 use App\Answer;
 
 class SuggestEditionTest extends DuskTestCase
 {
-    use DatabaseMigrations;
+    use DatabaseTruncation;
 
     function test_suggest_edition()
     {
-        $this->browse(function ($first, $second) {
+        $this->browse(function (Browser $first, Browser $second) {
             $first
                 ->loginAs(factory(User::class)->create())
                 ->visit(new QuestionPage);

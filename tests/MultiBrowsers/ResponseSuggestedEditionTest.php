@@ -4,7 +4,7 @@ namespace Tests\Browser;
 
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTruncation;
 use App\Language;
 use App\Answer;
 use App\Edition;
@@ -13,7 +13,7 @@ use App\User;
 
 class ResponseSuggestedEditionTest extends DuskTestCase
 {
-    use DatabaseMigrations;
+    use DatabaseTruncation;
 
     function test_response_suggested_edition_test()
     {
@@ -55,7 +55,7 @@ class ResponseSuggestedEditionTest extends DuskTestCase
         $edition->language()->associate($language);
         $edition->save();
 
-        $this->browse(function ($first, $second) use ($edition, $answer) {
+        $this->browse(function (Browser $first, Browser $second) use ($edition, $answer) {
             $first
                 ->loginAs($edition->user)
                 ->visit('/')

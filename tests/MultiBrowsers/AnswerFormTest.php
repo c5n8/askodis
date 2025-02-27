@@ -5,18 +5,18 @@ namespace Tests\Browser;
 use App\Edition;
 use App\Question;
 use App\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use Tests\Browser\Pages\QuestionPage;
 
 class AnswerFormTest extends DuskTestCase
 {
-    use DatabaseMigrations;
+    use DatabaseTruncation;
 
     function test_answer_form()
     {
-        $this->browse(function ($first, $second) {
+        $this->browse(function (Browser $first, Browser $second) {
             $input = factory(Edition::class)->make();
 
             $page = new QuestionPage;

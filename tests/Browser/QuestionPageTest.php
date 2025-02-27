@@ -3,14 +3,14 @@
 namespace Tests\Browser;
 
 use App\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\QuestionPage;
 use Tests\DuskTestCase;
 
 class QuestionPageTest extends DuskTestCase
 {
-    use DatabaseMigrations;
+    use DatabaseTruncation;
 
     function test_visit_question_page()
     {

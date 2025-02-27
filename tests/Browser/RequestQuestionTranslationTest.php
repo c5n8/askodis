@@ -5,14 +5,14 @@ namespace Tests\Browser;
 use Tests\DuskTestCase;
 use Tests\Browser\Pages\QuestionPage;
 use Laravel\Dusk\Browser;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTruncation;
 use App\User;
 use App\Language;
 use App\Tag;
 
 class RequestQuestionTranslationTest extends DuskTestCase
 {
-    use DatabaseMigrations;
+    use DatabaseTruncation;
 
     function test_request_question_translation()
     {

@@ -32,7 +32,7 @@
       @yield('title')
     </title>
 
-    <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
+    {{-- <link rel="stylesheet" href="{{ mix('/css/app.css') }}"> --}}
   </head>
   <body>
     <div id="app">
@@ -57,9 +57,9 @@
       @yield('content')
     </div>
 
-    <script src="{{ mix('js/manifest.js') }}"></script>
+    {{-- <script src="{{ mix('js/manifest.js') }}"></script>
     <script src="{{ mix('js/vendor.js') }}"></script>
-    <script src="{{ mix('js/app.js') }}"></script>
+    <script src="{{ mix('js/app.js') }}"></script> --}}
 
     @if (app()->environment() == 'production')
       @include('layouts.analyticstracking')

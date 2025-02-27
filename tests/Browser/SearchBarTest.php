@@ -5,13 +5,13 @@ namespace Tests\Browser;
 use App\Edition;
 use App\Slug;
 use App\Question;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 
 class SearchBarTest extends DuskTestCase
 {
-    use DatabaseMigrations;
+    use DatabaseTruncation;
 
     function test_search_bar()
     {
@@ -27,12 +27,15 @@ class SearchBarTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($question) {
             $browser
                 ->visit('/')
-                ->type('search', $question->body)
-                ->whenAvailable('.results', function ($results) use ($question) {
-                    $results
-                    ->assertSee($question->body)
-                        ->clickLink($question->body)
-                        ->assertPathIs('/'.$question->slug);
+                ->whenAvailable('.ui.search', function (Browser $browser) use ($question) {
+                    $browser
+                        ->type('search', $question->body)
+                        ->whenAvailable('.results', function ($results) use ($question) {
+                            $results
+                                ->assertSee($question->body)
+                                ->clickLink($question->body)
+                                ->assertPathIs('/'.$question->slug);
+                        });
                 });
         });
     }

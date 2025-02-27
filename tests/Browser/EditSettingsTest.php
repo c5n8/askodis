@@ -5,14 +5,14 @@ namespace Tests\Browser;
 use Tests\DuskTestCase;
 use Tests\Browser\Pages\SettingsPage;
 use Laravel\Dusk\Browser;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTruncation;
 use App\Locale;
 use App\Language;
 use App\User;
 
 class EditSettingsTest extends DuskTestCase
 {
-    use DatabaseMigrations;
+    use DatabaseTruncation;
 
     function test_edit_settings()
     {

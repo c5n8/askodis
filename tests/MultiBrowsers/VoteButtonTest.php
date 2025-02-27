@@ -4,18 +4,18 @@ namespace Tests\Browser;
 
 use App\Answer;
 use App\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use Tests\Browser\Pages\QuestionPage;
 
 class VoteButtonTest extends DuskTestCase
 {
-    use DatabaseMigrations;
+    use DatabaseTruncation;
 
     function test_vote_button_test()
     {
-        $this->browse(function ($first, $second) {
+        $this->browse(function (Browser $first, Browser $second) {
             $first
                 ->loginAs(factory(User::class)->create())
                 ->visit(new QuestionPage)
