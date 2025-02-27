@@ -27,7 +27,7 @@ class QuestionTranslationRequestPostTest extends TestCase
             ]);
 
         $response
-            ->assertStatus(200)
+            ->assertStatus(201)
             ->assertJson(TranslationRequest::first()->toArray());
     }
 }

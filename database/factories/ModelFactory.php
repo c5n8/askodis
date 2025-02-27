@@ -88,13 +88,18 @@ $factory->define(Vote::class, function (Generator $faker) {
 });
 
 $factory->define(Slug::class, function (Generator $faker) {
+    $language = factory(Language::class)->create();
+
     return [
         'text' => str_slug($faker->text),
-        'question_id' => function () {
-            return factory(Question::class)->create()->id;
+        'question_id' => function () use ($language) {
+            return factory(Question::class)
+                ->create()
+                ->editions()
+                ->save(factory(Edition::class)->make([
+                    'language_id' => $language->id
+                ]));
         },
-        'language_id' => function () {
-            return factory(Language::class)->create()->id;
-        },
+        'language_id' => $language->id,
     ];
 });

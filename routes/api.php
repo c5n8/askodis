@@ -1,5 +1,23 @@
 <?php
 
+use App\Http\Controllers\API\UserQuestionController;
+use App\Http\Controllers\API\QuestionController;
+use App\Http\Controllers\API\QuestionVoteController;
+use App\Http\Controllers\API\QuestionEditionController;
+use App\Http\Controllers\API\QuestionTranslationRequestController;
+use App\Http\Controllers\API\QuestionAnswerController;
+use App\Http\Controllers\API\QuestionAnswerEditionController;
+use App\Http\Controllers\API\QuestionAnswerVoteController;
+use App\Http\Controllers\API\AnswerTranslationRequestController;
+use App\Http\Controllers\API\VoteController;
+use App\Http\Controllers\API\EditionController;
+use App\Http\Controllers\API\LanguageController;
+use App\Http\Controllers\API\MyLanguageController;
+use App\Http\Controllers\API\MyNotificationController;
+use App\Http\Middleware\CheckAccountActivation;
+use App\Http\Middleware\SetLocale;
+use Illuminate\Support\Facades\Route;
+
 Route::group(['middleware' => ['locale', 'activation'], 'namespace' => 'API'], function () {
     Route::resource('users.questions', UserQuestionController::class, [
         'only'       => ['index'],
@@ -62,10 +80,10 @@ Route::group(['middleware' => ['locale', 'activation'], 'namespace' => 'API'], f
 
     Route::resource('my/languages', MyLanguageController::class, [
         'only'       => ['index'],
-    ]);
+    ])->name('index', 'my-languages.index');
 
     Route::resource('my/notifications', MyNotificationController::class, [
         'only'       => ['index', 'show'],
     ]);
-    Route::patch('my/notifications', 'MyNotificationController@update');
+    Route::patch('my/notifications', [MyNotificationController::class, 'update']);
 });

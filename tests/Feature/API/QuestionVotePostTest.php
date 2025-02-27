@@ -21,7 +21,7 @@ class QuestionVotePostTest extends TestCase
             ->json('POST', '/api/questions/' . $slug->id . '/votes');
 
         $response
-            ->assertStatus(200)
+            ->assertStatus(201)
             ->assertJson(Vote::first()->toArray());
     }
 }

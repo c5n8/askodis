@@ -12,7 +12,7 @@ class CreateAccountActivationsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id')->index();
             $table->string('token');
-            $table->timestamps('created_at');
+            $table->timestamp('created_at');
 
             $table->foreign('user_id')
                   ->references('id')

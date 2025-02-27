@@ -32,7 +32,7 @@ class QuestionAnswerEditionPostTest extends TestCase
         $edition = Edition::latest()->first();
 
         $response
-            ->assertStatus(200)
+            ->assertStatus(201)
             ->assertJson($edition->toArray());
     }
 }

@@ -1,37 +1,46 @@
 {
     "name": "laravel/laravel",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=5.6.4",
-        "algolia/algoliasearch-client-php": "^1.18",
-        "barryvdh/laravel-debugbar": "^2.4",
-        "doctrine/dbal": "^2.5",
-        "graham-campbell/htmlmin": "^4.5",
-        "guzzlehttp/guzzle": "^6.2",
-        "laravel/dusk": "^1.1",
-        "laravel/framework": "5.4.*",
-        "laravel/passport": "^2.0",
-        "laravel/scout": "^3.0",
-        "laravel/tinker": "~1.0",
+        "php": "^8.2",
+        "algolia/algoliasearch-client-php": "^4",
+        "laravel/framework": "^12",
+        "laravel/helpers": "^1.7",
+        "laravel/legacy-factories": "^1.4",
+        "laravel/passport": "^12",
+        "laravel/scout": "^10",
+        "laravel/tinker": "2.10.1",
+        "laravel/ui": "^4.6",
         "pda/pheanstalk": "^3.1",
         "predis/predis": "^1.1",
         "pusher/pusher-php-server": "^2.6",
-        "spatie/laravel-fractal": "^4.0"
+        "spatie/laravel-fractal": "^6"
     },
     "require-dev": {
-        "fzaninotto/faker": "~1.4",
-        "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~5.7"
+        "barryvdh/laravel-debugbar": "^3",
+        "brianium/paratest": "^7.8",
+        "fakerphp/faker": "^1.23",
+        "laravel/dusk": "^8",
+        "laravel/pail": "^1.2.2",
+        "laravel/pint": "^1.13",
+        "laravel/sail": "^1.41",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.6",
+        "phpunit/phpunit": "^11"
     },
     "autoload": {
         "classmap": [
             "database"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
