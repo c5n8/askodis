@@ -34,7 +34,11 @@
       @yield('title')
     </title>
 
-    <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
+    @vite([
+        'resources/assets/css/app.css',
+        // 'resources/assets/sass/app.scss',
+        'resources/assets/js/app.js',
+    ])
   </head>
   <body>
     @if (app()->environment() == 'production')
@@ -81,10 +85,6 @@
         @include('partials._login_modal')
       @endunless
     </div>
-
-    <script src="{{ mix('js/manifest.js') }}"></script>
-    <script src="{{ mix('js/vendor.js') }}"></script>
-    <script src="{{ mix('js/app.js') }}"></script>
 
   </body>
 </html>

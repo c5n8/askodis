@@ -1,4 +1,4 @@
-<template lang='jade'>
+<template lang='pug'>
 a#notificationMenu.item
   i.bell.outline.icon
   span.text {{ $t("Notifications") }}
@@ -8,8 +8,8 @@ a#notificationMenu.item
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
-import store from 'store'
-import socket from 'lib/socket'
+import store from '@/store'
+import socket from '@/lib/socket'
 
 export default {
   store,

@@ -1,4 +1,4 @@
-<template lang='jade'>
+<template lang='pug'>
 .ui.raised.fluid.card(':id'='"answer-" + answer.id')
   .content
     strong
@@ -33,11 +33,11 @@
 
 <script>
 import { mapState } from 'vuex'
-import VoteAnswerButton from 'components/VoteAnswerButton'
-import ShareButton from 'components/ShareButton'
-import SuggestEditForm from 'components/SuggestEditForm'
-import AnswerTranslationForm from 'components/AnswerTranslationForm'
-import RequestAnswerTranslationForm from 'components/RequestAnswerTranslationForm'
+import VoteAnswerButton from './VoteAnswerButton.vue'
+import ShareButton from './ShareButton.vue'
+import SuggestEditForm from './SuggestEditForm.vue'
+import AnswerTranslationForm from './AnswerTranslationForm.vue'
+import RequestAnswerTranslationForm from './RequestAnswerTranslationForm.vue'
 
 export default {
   props: ['answer'],

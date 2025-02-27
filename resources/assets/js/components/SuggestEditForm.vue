@@ -1,4 +1,4 @@
-<template lang='jade'>
+<template lang='pug'>
 .suggestion.ui.small.modal
   .content
     .ui.form
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import http from 'lib/http'
+import http from '@/lib/http'
 
 export default {
   props: ['question', 'answer'],

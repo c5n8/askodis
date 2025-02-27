@@ -1,4 +1,4 @@
-<template lang='jade'>
+<template lang='pug'>
 #questionForm.ui.small.modal
   i.close.icon
   .content
@@ -24,7 +24,7 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
-import http from 'lib/http'
+import http from '@/lib/http'
 
 export default {
   data() {

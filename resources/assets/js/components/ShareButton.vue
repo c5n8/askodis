@@ -1,4 +1,4 @@
-<template lang='jade'>
+<template lang='pug'>
 .share.ui.top.left.pointing.dropdown.tiny.basic.button
   i.icon(:class='{ group: message, share: ! message}' )
   strong {{ message ? message : $t('Share')}}

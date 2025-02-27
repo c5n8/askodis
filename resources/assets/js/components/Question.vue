@@ -1,4 +1,4 @@
-<template lang='jade'>
+<template lang='pug'>
 .ui.main.container(v-show='isReady')
   .ui.centered.grid
     .ten.wide.computer.sixteen.wide.mobile.column
@@ -57,13 +57,13 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import store from 'store'
-import AskButton from 'components/AskButton'
-import ShareButton from 'components/ShareButton'
-import AnswerCard from 'components/AnswerCard'
-import AnswerForm from 'components/AnswerForm'
-import QuestionTranslationForm from 'components/QuestionTranslationForm'
-import RequestQuestionTranslationForm from 'components/RequestQuestionTranslationForm'
+import store from '@/store'
+import AskButton from './AskButton.vue'
+import ShareButton from './ShareButton.vue'
+import AnswerCard from './AnswerCard.vue'
+import AnswerForm from './AnswerForm.vue'
+import QuestionTranslationForm from './QuestionTranslationForm.vue'
+import RequestQuestionTranslationForm from './RequestQuestionTranslationForm.vue'
 
 export default {
   store,

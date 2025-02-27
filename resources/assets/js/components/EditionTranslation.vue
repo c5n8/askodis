@@ -1,4 +1,4 @@
-<template lang='jade'>
+<template lang='pug'>
 .ui.main.container
   .ui.centered.grid
     .ten.wide.computer.sixteen.wide.mobile.column
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import http from 'lib/http'
+import http from '@/lib/http'
 import moment from 'moment'
 
 export default {

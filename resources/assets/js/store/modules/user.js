@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import http from 'lib/http'
+import http from '@/lib/http'
 
 const state = {
   hasReadAllQuestions: false,

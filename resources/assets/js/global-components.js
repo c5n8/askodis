@@ -1,22 +1,30 @@
-import vue from 'vue'
-import NotificationMenu from 'components/NotificationMenu'
-import NotificationPopup from 'components/NotificationPopup'
-import AccountMenu from 'components/AccountMenu'
-import Question from 'components/Question'
-import QuestionList from 'components/QuestionList'
-import UserQuestionList from 'components/UserQuestionList'
-import QuestionForm from 'components/QuestionForm'
-import EditionComparation from 'components/EditionComparation'
-import EditionTranslation from 'components/EditionTranslation'
-import AnswerFormModal from 'components/AnswerFormModal'
+import Vue from 'vue'
 
-vue.component('user-question-list', UserQuestionList)
-vue.component('question-list', QuestionList)
-vue.component('question', Question)
-vue.component('question-form', QuestionForm)
-vue.component('notification-menu', NotificationMenu)
-vue.component('notification-popup', NotificationPopup)
-vue.component('account-menu', AccountMenu)
-vue.component('answer-form-modal', AnswerFormModal)
-vue.component('edition-translation', EditionTranslation)
-vue.component('edition-comparation', EditionComparation)
+Vue.component(
+  'user-question-list',
+  () => import('./components/UserQuestionList.vue'),
+)
+Vue.component('question-list', () => import('./components/QuestionList.vue'))
+Vue.component('question', () => import('./components/Question.vue'))
+Vue.component('question-form', () => import('./components/QuestionForm.vue'))
+Vue.component(
+  'notification-menu',
+  () => import('./components/NotificationMenu.vue'),
+)
+Vue.component(
+  'notification-popup',
+  () => import('./components/NotificationPopup.vue'),
+)
+Vue.component('account-menu', () => import('./components/AccountMenu.vue'))
+Vue.component(
+  'answer-form-modal',
+  () => import('./components/AnswerFormModal.vue'),
+)
+Vue.component(
+  'edition-translation',
+  () => import('./components/EditionTranslation.vue'),
+)
+Vue.component(
+  'edition-comparation',
+  () => import('./components/EditionComparation.vue'),
+)

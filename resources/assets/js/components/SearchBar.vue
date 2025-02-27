@@ -1,11 +1,11 @@
-<template lang='jade'>
+<template lang="pug">
   #searchBar.ui.category.search.item
     .ui.icon.input
       input.prompt(name='search' type='text' ':placeholder'='$t("What is your question?")' v-model='query')
       i.search.link.icon
     small#algoliaMessage.stat powered by
     a(href='https://www.algolia.com' target='_blank')
-      img#algoliaLogo(src='/img/algolia-logo.jpg' height='12px')
+      img#algoliaLogo(:src='algoliaLogo' height='12px')
     .results
     #noResultMessage(style='display: none')
       .message.empty
@@ -20,7 +20,14 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import _ from 'lodash'
-import QuestionForm from 'components/QuestionForm'
+import QuestionForm from './QuestionForm.vue'
+import * as algolia from '@algolia/client-search'
+import algoliaLogo from '../img/algolia-logo.jpg'
+
+const searchClient = algolia.searchClient(
+  import.meta.env.VITE_ALGOLIA_APP_ID,
+  import.meta.env.VITE_ALGOLIA_SEARCH_KEY,
+)
 
 export default {
   components: {
@@ -28,51 +35,37 @@ export default {
   },
   computed: {
     query: {
-      get () {
+      get() {
         return this.$store.state.query
       },
-      set (value) {
+      set(value) {
         this.setQuery(value)
-      }
-    }
+      },
+    },
   },
   methods: {
-    ...mapMutations([
-      'setQuery'
-    ])
+    ...mapMutations(['setQuery']),
   },
   mounted() {
-    var algolia = {
-      id: 'P4U9L9Y88Q',
-      key: 'dee73656ad7ee84bf96bc603738611bc',
-      index: 'questions'
-    }
-
-    var vm = this
-
     $('#searchBar').search({
       minCharacters: 1,
       apiSettings: {
-        method: 'post',
-        url: 'https://' + algolia.id + '-dsn.algolia.net/1/indexes/' + algolia.index + '/query',
-        beforeXHR (xhr) {
-          xhr.setRequestHeader ('X-Algolia-API-Key', algolia.key)
-          xhr.setRequestHeader ('X-Algolia-Application-Id', algolia.id)
-
-          return xhr
-        },
-        beforeSend (settings) {
-          settings.data = JSON.stringify({
-            'params' : 'query=' + encodeURIComponent(settings.urlData.query) + '&hitsPerPage=5'
+        responseAsync: async (settings, callback) => {
+          const response = await searchClient.searchSingleIndex({
+            indexName: 'questions',
+            searchParams: {
+              query: settings.urlData.query,
+            },
           })
 
-          return settings
+          callback(response)
         },
-        onResponse (response) {
-          var results = _.map(response.hits, hit => {
+
+        onResponse(response) {
+          var results = _.map(response.hits, (hit) => {
             return {
               title: hit.body,
-              url: '/' + hit.slug
+              url: '/' + hit.slug,
             }
           })
 
@@ -82,24 +75,24 @@ export default {
       templates: {
         message(type, message) {
           return $('#noResultMessage').html()
-        }
-      }
+        },
+      },
     })
 
-    $(document).on('click', '#writeQuestionButton', e => {
+    $(document).on('click', '#writeQuestionButton', (e) => {
       if (this.$root.auth()) {
         $('#questionForm').modal('show')
       }
     })
-  }
+  },
 }
 </script>
 
-<style lang='stylus' scoped>
-  #algoliaMessage
-    margin-left: 5px
-    min-width: 60px
+<style lang="stylus" scoped>
+#algoliaMessage
+  margin-left: 5px
+  min-width: 60px
 
-  #algoliaLogo
-    margin-bottom: -1px
+#algoliaLogo
+  margin-bottom: -1px
 </style>

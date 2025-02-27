@@ -1,9 +1,9 @@
 import vue from 'vue'
 import vuex from 'vuex'
 import _ from 'lodash'
-import http from 'lib/http'
-import clock from 'store/modules/clock'
-import user from 'store/modules/user'
+import http from '@/lib/http'
+import clock from './modules/clock'
+import user from './modules/user'
 
 vue.use(vuex)
 

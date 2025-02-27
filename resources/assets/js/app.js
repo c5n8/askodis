@@ -1,16 +1,16 @@
-import 'bootstrap'
-import vue from 'vue'
-import store from 'store'
-import http from 'lib/http'
+import './bootstrap'
+import Vue from 'vue'
+import store from './store'
+import http from './lib/http'
 import vueI18n from 'vue-i18n'
 import { mapActions } from 'vuex'
-import SearchBar from 'components/SearchBar'
+import SearchBar from './components/SearchBar.vue'
 
-vue.use(vueI18n)
+Vue.use(vueI18n)
 
-const locale = document.documentElement.lang
+let locale = document.documentElement.lang
 const messages = {
-  'en-US': {}
+  'en-US': {},
 }
 
 if (locale != 'en-US') {
@@ -19,20 +19,18 @@ if (locale != 'en-US') {
 
 const i18n = new vueI18n({
   locale,
-  messages
+  messages,
+  silentTranslationWarn: true,
 })
 
-const app = new vue({
+const app = new Vue({
   store,
   i18n,
   components: {
-    SearchBar
+    SearchBar,
   },
   methods: {
-    ...mapActions([
-      'startClock',
-      'stopClock'
-    ]),
+    ...mapActions(['startClock', 'stopClock']),
     auth() {
       if (document.head.querySelector('meta[name="user-id"]') == null) {
         $('#loginModal').modal('show')
@@ -41,7 +39,7 @@ const app = new vue({
       }
 
       return true
-    }
+    },
   },
   mounted() {
     this.startClock()
@@ -52,61 +50,55 @@ const app = new vue({
 
     var popupSize = {
       width: 780,
-      height: 550
-    };
+      height: 550,
+    }
 
-    $(document).on('click', '.share .item', function(e){
-      var
-        verticalPos = Math.floor(($(window).width() - popupSize.width) / 2),
-        horisontalPos = Math.floor(($(window).height() - popupSize.height) / 2);
+    $(document).on('click', '.share .item', function (e) {
+      var verticalPos = Math.floor(($(window).width() - popupSize.width) / 2),
+        horisontalPos = Math.floor(($(window).height() - popupSize.height) / 2)
 
-      var popup = window.open($(this).prop('href'), 'social',
-        'width='+popupSize.width+',height='+popupSize.height+
-        ',left='+verticalPos+',top='+horisontalPos+
-        ',location=0,menubar=0,toolbar=0,status=0,scrollbars=1,resizable=1');
+      var popup = window.open(
+        $(this).prop('href'),
+        'social',
+        'width=' +
+          popupSize.width +
+          ',height=' +
+          popupSize.height +
+          ',left=' +
+          verticalPos +
+          ',top=' +
+          horisontalPos +
+          ',location=0,menubar=0,toolbar=0,status=0,scrollbars=1,resizable=1',
+      )
 
       if (popup) {
-        popup.focus();
-        e.preventDefault();
+        popup.focus()
+        e.preventDefault()
       }
-    });
+    })
   },
   destroyed() {
     this.stopClock()
-  }
+  },
 })
 
-http
-  .get('/api/languages')
-  .then(response => {
-    store.commit('concatLanguages', response.data)
+http.get('/api/languages').then(async (response) => {
+  const { data: languages } = response
 
-    http
-    .get('/lang/' + locale + '.json')
-    .then(response => {
-      i18n.setLocaleMessage(locale, response.data)
+  store.commit('concatLanguages', languages)
 
-      app.$mount('#app')
+  const translation = await import(`../../lang/${locale}.json`)
+    .then((module) => module.default)
+    .catch(async () => {
+      locale = 'en-US'
+
+      const module = await import(`../../lang/${locale}.json`)
+
+      return module.default
     })
-    .catch(error => {
-      if (error.response.status === 404) {
-        var fallbackLocale = 'en-US'
 
-        http
-        .get('/lang/' + fallbackLocale + '.json')
-        .then(response => {
-          i18n.locale = fallbackLocale
-          i18n.setLocaleMessage(fallbackLocale, response.data)
+  i18n.setLocaleMessage(locale, translation)
+  i18n.locale = locale
 
-          app.$mount('#app')
-        })
-        .catch(error => {
-          app.$mount('#app')
-        })
-
-        return
-      }
-
-      app.$mount('#app')
-    })
-  })
+  app.$mount('#app')
+})

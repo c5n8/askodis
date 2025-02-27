@@ -1,6 +1,6 @@
 import vue from 'vue'
 import moment from 'moment'
-import store from 'store'
+import store from './store'
 
 vue.filter('humanizeDateTime', value => {
   return moment

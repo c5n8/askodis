@@ -1,4 +1,4 @@
-<template lang='jade'>
+<template lang='pug'>
 .translation.ui.small.modal
   .content
     .ui.form
@@ -36,7 +36,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import http from 'lib/http'
+import http from '@/lib/http'
 
 export default {
   props: ['question'],

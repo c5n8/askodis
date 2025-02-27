@@ -1,4 +1,4 @@
-<template lang='jade'>
+<template lang='pug'>
 .ui.fluid.card(':id'='"question-" + question.id')
   .content
     h3
@@ -45,7 +45,7 @@
     .content.answer
       strong {{ question.topAnswer.user.name }}
       span {{ ' ' }}
-      span.stat@{{ question.topAnswer.user.username }}
+      span.stat @{{ question.topAnswer.user.username }}
       .meta
         a.date(:title='question.topAnswer.updatedAt | formatDateTime') {{ question.topAnswer.updatedAt | humanizeDateTime }}
       .description {{ question.topAnswer.body }}
@@ -73,11 +73,11 @@
 </template>
 
 <script>
-import VoteAnswerButton from 'components/VoteAnswerButton'
-import SuggestEditForm from 'components/SuggestEditForm'
-import QuestionTranslationFormModal from 'components/QuestionTranslationFormModal'
-import AskButton from 'components/AskButton'
-import ShareButton from 'components/ShareButton'
+import VoteAnswerButton from './VoteAnswerButton.vue'
+import SuggestEditForm from './SuggestEditForm.vue'
+import QuestionTranslationFormModal from './QuestionTranslationFormModal.vue'
+import AskButton from './AskButton.vue'
+import ShareButton from './ShareButton.vue'
 
 export default {
   props: ['question'],

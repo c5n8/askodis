@@ -1,4 +1,4 @@
-<template lang='jade'>
+<template lang='pug'>
 .ui.main.container
   .ui.centered.grid
     .ten.wide.computer.sixteen.wide.mobile.column
@@ -32,10 +32,9 @@
 </template>
 
 <script>
-import http from 'lib/http'
+import http from '@/lib/http'
 import moment from 'moment'
-
-const JsDiff = require('diff')
+import JsDiff from 'diff'
 
 export default {
   props: [

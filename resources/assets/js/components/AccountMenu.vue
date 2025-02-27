@@ -1,4 +1,4 @@
-<template lang='jade'>
+<template lang='pug'>
 #accountMenu.ui.pointing.dropdown.link.item
   i.user.icon
   span.text {{ $t('Account')}}
@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import http from 'lib/http'
+import http from '@/lib/http'
 
 export default {
   methods: {

@@ -1,4 +1,4 @@
-<template lang='jade'>
+<template lang='pug'>
 .ui.flowing.popup
 
   .stat(
@@ -31,8 +31,8 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import store from 'store'
-import NotificationItem from 'components/NotificationItem'
+import store from '@/store'
+import NotificationItem from './NotificationItem.vue'
 
 export default {
   store,

@@ -1,4 +1,4 @@
-<template lang='jade'>
+<template lang='pug'>
 .suggest.translation.ui.small.modal
   .content
     .ui.form
@@ -22,7 +22,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import http from 'lib/http'
+import http from '@/lib/http'
 import _ from 'lodash'
 
 export default {
