@@ -94,6 +94,11 @@ services:
             - sail
     selenium:
         image: selenium/standalone-chromium
+        environment:
+            # - START_XVFB=false
+            - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+            - SE_NODE_MAX_SESSIONS=5
+            # - JAVA_OPTS=-XX:ActiveProcessorCount=5
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         volumes:
