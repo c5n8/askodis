@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./resources/assets/js/*"]
     }
   },
   "exclude": ["node_modules", "dist"]
