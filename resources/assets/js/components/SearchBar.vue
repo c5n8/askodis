@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapMutations } from 'vuex'
 import _ from 'lodash'
 import QuestionForm from './QuestionForm.vue'
 import * as algolia from '@algolia/client-search'
@@ -74,13 +74,13 @@ export default {
         },
       },
       templates: {
-        message(type, message) {
+        message() {
           return $('#noResultMessage').html()
         },
       },
     })
 
-    $(document).on('click', '#writeQuestionButton', (e) => {
+    $(document).on('click', '#writeQuestionButton', () => {
       if (this.$root.auth()) {
         $('#questionForm').modal('show')
       }

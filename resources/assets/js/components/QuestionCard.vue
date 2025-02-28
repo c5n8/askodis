@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
 .ui.fluid.card(':id'='"question-" + question.id')
   .content
     h3
@@ -86,7 +86,7 @@ export default {
     SuggestEditForm,
     VoteAnswerButton,
     AskButton,
-    ShareButton
+    ShareButton,
   },
   computed: {
     answerButtonText() {
@@ -95,14 +95,14 @@ export default {
       }
 
       return 'Answer'
-    }
+    },
   },
   methods: {
     onAnswerButtonClick() {
       if (this.$root.auth()) {
         $('#question-' + this.question.id + ' .answer.modal')
           .modal({ detachable: false })
-          .modal("show")
+          .modal('show')
       }
     },
     onSuggestEditButtonClick() {
@@ -110,7 +110,7 @@ export default {
         if (this.question.hasAnswer) {
           $('#question-' + this.question.id + ' .suggestion.modal')
             .modal({ detachable: false })
-            .modal("show")
+            .modal('show')
         }
       }
     },
@@ -118,12 +118,12 @@ export default {
       if (this.$root.auth()) {
         $('#question-' + this.question.id + ' .translation.modal')
           .modal({ detachable: false })
-          .modal("show")
+          .modal('show')
       }
-    }
+    },
   },
   mounted() {
     $('#question-' + this.question.id + ' .more').dropdown()
-  }
+  },
 }
 </script>

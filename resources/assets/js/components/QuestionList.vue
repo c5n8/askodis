@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
 .ui.main.container
   .ui.grid
     .three.wide.computer.sixteen.wide.mobile.column
@@ -36,7 +36,7 @@ import _ from 'lodash'
 export default {
   components: {
     ShareButton,
-    QuestionCard
+    QuestionCard,
   },
   data() {
     return {
@@ -44,42 +44,38 @@ export default {
     }
   },
   computed: {
-    ...mapState([
-      'questions',
-      'user'
-    ])
+    ...mapState(['questions', 'user']),
   },
   methods: {
-    ...mapActions([
-      'getQuestions',
-      'getOlderQuestions'
-    ]),
+    ...mapActions(['getQuestions', 'getOlderQuestions']),
   },
   mounted() {
     this.getQuestions()
 
-    $(window).scroll(_.debounce(event => {
-      // if($(window).scrollTop() + $(window).height() == $(document).height())
-      if($(window).scrollTop() + $(window).height() > $(document).height() - 100)
-      {
-        if (this.isLoadingMoreQuestions) {
-          return
-        }
+    $(window).scroll(
+      _.debounce(() => {
+        // if($(window).scrollTop() + $(window).height() == $(document).height())
+        if (
+          $(window).scrollTop() + $(window).height() >
+          $(document).height() - 100
+        ) {
+          if (this.isLoadingMoreQuestions) {
+            return
+          }
 
-        this.isLoadingMoreQuestions = true
+          this.isLoadingMoreQuestions = true
 
-        this
-          .getOlderQuestions()
-          .then(() => {
+          this.getOlderQuestions().then(() => {
             this.isLoadingMoreQuestions = false
           })
-      }
-    }, 150));
-  }
+        }
+      }, 150),
+    )
+  },
 }
 </script>
 
-<style lang='stylus' scoped>
+<style lang="stylus" scoped>
 .main.container
   margin-top: 5em;
 </style>

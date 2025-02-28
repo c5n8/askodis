@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
 #questionForm.ui.small.modal
   i.close.icon
   .content
@@ -34,45 +34,42 @@ export default {
         body: '',
         detail: '',
         tags: [],
-        language: null
-      }
+        language: null,
+      },
     }
   },
   computed: {
-    ...mapState([
-      'query',
-      'user'
-    ]),
-    ...mapGetters([
-      'preferredLanguage'
-    ])
+    ...mapState(['query', 'user']),
+    ...mapGetters(['preferredLanguage']),
   },
   watch: {
     query() {
       this.payload.body = this.query
-    }
+    },
   },
   methods: {
-    ...mapActions([
-      'getUserLanguages'
-    ]),
+    ...mapActions(['getUserLanguages']),
     onSubmit() {
       this.isDisabled = true
 
-      http.post('/api/questions', this.payload)
-        .then(response => {
+      http
+        .post('/api/questions', this.payload)
+        .then((response) => {
           window.location.replace('/' + response.data.slug)
         })
-        .catch(error => {
+        .catch(() => {
           this.isDisabled = false
         })
-    }
+    },
   },
   mounted() {
     this.getUserLanguages().then(() => {
       // TODO: Remove if before production
       if (this.preferredLanguage) {
-        $('#questionForm [name=language]').dropdown('set selected', this.preferredLanguage.code)
+        $('#questionForm [name=language]').dropdown(
+          'set selected',
+          this.preferredLanguage.code,
+        )
       }
     })
 
@@ -88,6 +85,6 @@ export default {
       //   }
       // }
     })
-  }
+  },
 }
 </script>

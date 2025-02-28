@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
 .ui.flowing.popup
 
   .stat(
@@ -37,27 +37,22 @@ import NotificationItem from './NotificationItem.vue'
 export default {
   store,
   components: {
-    NotificationItem
+    NotificationItem,
   },
   data() {
     return {
-      isLoadingMoreNotifications: false
+      isLoadingMoreNotifications: false,
     }
   },
   computed: {
-    ...mapState([
-      'user'
-    ])
+    ...mapState(['user']),
   },
   methods: {
-    ...mapActions([
-      'getOlderNotifications'
-    ]),
+    ...mapActions(['getOlderNotifications']),
     onNotificationListScroll() {
       var list = $('#notificationList')
 
-      if(list.scrollTop() >= (list[0].scrollHeight - list.outerHeight()))
-      {
+      if (list.scrollTop() >= list[0].scrollHeight - list.outerHeight()) {
         if (this.isLoadingMoreNotifications) {
           return
         }
@@ -68,18 +63,16 @@ export default {
 
         this.isLoadingMoreNotifications = true
 
-        this
-          .getOlderNotifications()
-          .then(() => {
-            this.isLoadingMoreNotifications = false
-          })
+        this.getOlderNotifications().then(() => {
+          this.isLoadingMoreNotifications = false
+        })
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style lang='stylus' scoped>
+<style lang="stylus" scoped>
 .popup
   min-width: 360px
   max-width: 360px

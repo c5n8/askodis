@@ -10,13 +10,13 @@ vue.use(vuex)
 export default new vuex.Store({
   modules: {
     clock,
-    user
+    user,
   },
   state: {
     languages: [],
     query: '',
     question: {},
-    questions: []
+    questions: [],
   },
   mutations: {
     concatLanguages(state, payload) {
@@ -39,7 +39,7 @@ export default new vuex.Store({
       votable.voteFromCurrentUser = null
     },
     setAnswerFromCurrentUserBody(state, { question, body }) {
-      if (! question.hasAnswerFromCurrentUser) {
+      if (!question.hasAnswerFromCurrentUser) {
         question.answerFromCurrentUser = {}
       }
 
@@ -49,7 +49,7 @@ export default new vuex.Store({
       question.hasAnswerFromCurrentUser = true
       question.answerFromCurrentUser = answer
 
-      if (question.hasOwnProperty('topAnswer')) {
+      if (Object.prototype.hasOwnProperty.call(question, 'topAnswer')) {
         question.topAnswer = answer
       } else {
         question.answers.push(answer)
@@ -57,13 +57,16 @@ export default new vuex.Store({
 
       question.answersCount++
     },
-    setAnswerFromCurrentUser(state, { question, answer}) {
+    setAnswerFromCurrentUser(state, { question, answer }) {
       question.answerFromCurrentUser = answer
 
-      if (question.hasOwnProperty('topAnswer')) {
+      if (Object.prototype.hasOwnProperty.call(question, 'topAnswer')) {
         question.topAnswer = answer
       } else {
-        var currentUserAnswerIndex = _.findIndex(question.answers, answer => answer.id == answer.id)
+        var currentUserAnswerIndex = _.findIndex(
+          question.answers,
+          (answer) => answer.id == answer.id,
+        )
         question.answers[currentUserAnswerIndex] = answer
       }
     },
@@ -82,19 +85,21 @@ export default new vuex.Store({
     async getQuestion({ commit }, id) {
       var question = await http
         .get('/api/questions/' + id)
-        .then(response => response.data)
+        .then((response) => response.data)
       commit('setQuestion', question)
     },
-    async postQuestionVote({ commit, state }, question) {
+    async postQuestionVote({ commit }, question) {
       var vote = await http
         .post('/api/questions/' + question.id + '/votes')
-        .then(response => response.data)
+        .then((response) => response.data)
       commit('createVote', { votable: question, payload: vote })
     },
     async postQuestionAnswerVote({ commit }, { question, answer }) {
       var vote = await http
-        .post('/api/questions/' + question.id + '/answers/' + answer.id + '/votes')
-        .then(response => response.data)
+        .post(
+          '/api/questions/' + question.id + '/answers/' + answer.id + '/votes',
+        )
+        .then((response) => response.data)
       commit('createVote', { votable: answer, payload: vote })
     },
     async deleteVote({ commit }, votable) {
@@ -103,38 +108,44 @@ export default new vuex.Store({
     },
     async postQuestionAnswer({ commit }, question) {
       var answer = await http
-        .post('/api/questions/' + question.id + '/answers', question.answerFromCurrentUser)
-        .then(response => response.data)
+        .post(
+          '/api/questions/' + question.id + '/answers',
+          question.answerFromCurrentUser,
+        )
+        .then((response) => response.data)
       commit('addAnswerFromCurrentUser', { question: question, answer: answer })
     },
     async patchQuestionAnswer({ commit }, { question, answer }) {
-      var answer = await http
-        .patch('/api/questions/' + question.id + '/answers/' + answer.id, answer)
-        .then(response => response.data)
-      commit('setAnswerFromCurrentUser', { question: question, answer: answer })
+      const result = await http
+        .patch(
+          '/api/questions/' + question.id + '/answers/' + answer.id,
+          answer,
+        )
+        .then((response) => response.data)
+      commit('setAnswerFromCurrentUser', { question: question, answer: result })
     },
-    async getMoreAnswers({ commit, state}) {
+    async getMoreAnswers({ commit, state }) {
       var answers = await http
         .get('/api/questions/' + state.question.id + '/answers', {
           params: {
-            loadedAnswers: _.map(state.question.answers, 'id')
-          }
+            loadedAnswers: _.map(state.question.answers, 'id'),
+          },
         })
-        .then(response => response.data)
+        .then((response) => response.data)
       commit('concatAnswers', answers)
     },
     async getQuestions({ commit }) {
       var questions = await http
         .get('/api/questions')
-        .then(response => response.data)
+        .then((response) => response.data)
 
       commit('concatQuestions', questions)
     },
     async getOlderQuestions({ commit, state }) {
       var questions = await http
         .get('/api/questions?before=' + _.last(state.questions).id)
-        .then(response => response.data)
+        .then((response) => response.data)
       commit('concatQuestions', questions)
     },
-  }
+  },
 })

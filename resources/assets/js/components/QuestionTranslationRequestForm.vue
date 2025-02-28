@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
 #questionTranslationRequestForm.ui.small.modal
   .content
     form.ui.form(@submit.prevent='onSubmit')
@@ -22,15 +22,12 @@ export default {
     return {
       isDisabled: false,
       payload: {
-        language: null
-      }
+        language: null,
+      },
     }
   },
   computed: {
-    ...mapState([
-      'question',
-      'user',
-    ]),
+    ...mapState(['question', 'user']),
     isReady() {
       if (this.user.languages.length == 0) {
         return false
@@ -43,33 +40,38 @@ export default {
       return true
     },
     languages() {
-      return this.$store.state.languages.filter(language => {
+      return this.$store.state.languages.filter((language) => {
         return language.code != this.question.language.code
       })
-    }
+    },
   },
   methods: {
-    ...mapActions([
-      'getUserLanguages'
-    ]),
+    ...mapActions(['getUserLanguages']),
     onSubmit() {
       this.isDisabled = true
 
-      http.post('/api/questions/' + this.question.id + '/translation_requests', this.payload)
-        .then(response => {
+      http
+        .post(
+          '/api/questions/' + this.question.id + '/translation_requests',
+          this.payload,
+        )
+        .then(() => {
           this.isDisabled = false
           $('#questionTranslationRequestForm').modal('hide')
           $('#successModal').modal('show')
         })
-        .catch(error => {
+        .catch(() => {
           this.isDisabled = false
         })
-    }
+    },
   },
   updated() {
     if (this.user.languages.length > 0) {
-      $('#questionTranslationRequestForm [name=language]').dropdown('set selected', this.languages[0].code)
+      $('#questionTranslationRequestForm [name=language]').dropdown(
+        'set selected',
+        this.languages[0].code,
+      )
     }
-  }
+  },
 }
 </script>

@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
 .ui.main.container
   .ui.centered.grid
     .ten.wide.computer.sixteen.wide.mobile.column
@@ -53,7 +53,7 @@ export default {
     return {
       status: this.initStatus,
       isDisabled: false,
-      actionAt: this.updatedAt
+      actionAt: this.updatedAt,
     }
   },
   methods: {
@@ -61,7 +61,7 @@ export default {
       this.isDisabled = true
 
       http
-        .patch('/api/editions/' + this.id, { status: 'accepted'})
+        .patch('/api/editions/' + this.id, { status: 'accepted' })
         .then(() => {
           this.isDisabled = false
           this.status = 'accepted'
@@ -72,13 +72,13 @@ export default {
       this.isDisabled = true
 
       http
-        .patch('/api/editions/' + this.id, { status: 'rejected'})
+        .patch('/api/editions/' + this.id, { status: 'rejected' })
         .then(() => {
           this.isDisabled = false
           this.status = 'rejected'
           this.actionAt = moment()
         })
-    }
+    },
   },
 }
 </script>

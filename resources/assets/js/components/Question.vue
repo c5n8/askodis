@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
 .ui.main.container(v-show='isReady')
   .ui.centered.grid
     .ten.wide.computer.sixteen.wide.mobile.column
@@ -74,19 +74,17 @@ export default {
     AnswerCard,
     QuestionTranslationForm,
     RequestQuestionTranslationForm,
-    AnswerForm
+    AnswerForm,
   },
   data() {
     return {
       isReady: false,
       isWritingAnswer: false,
-      isLoadingMoreAnswers: true
+      isLoadingMoreAnswers: true,
     }
   },
   computed: {
-    ...mapState([
-      'question'
-    ]),
+    ...mapState(['question']),
     answersCountMessage() {
       var message = this.question.answersCount + ' Answers'
 
@@ -102,13 +100,10 @@ export default {
       }
 
       return 'Answer'
-    }
+    },
   },
   methods: {
-    ...mapActions([
-      'getQuestion',
-      'getMoreAnswers'
-    ]),
+    ...mapActions(['getQuestion', 'getMoreAnswers']),
     onAnswerButtonClick() {
       if (this.$root.auth()) {
         this.isWritingAnswer = true
@@ -116,18 +111,16 @@ export default {
     },
     onTranslateButtonClick() {
       if (this.$root.auth()) {
-        $('#questionTranslationForm')
-          .modal({ detachable: false })
-          .modal('show')
+        $('#questionTranslationForm').modal({ detachable: false }).modal('show')
       }
     },
     onRequestTranslationButtonClick() {
       if (this.$root.auth()) {
         $('#requestQuestionTranslationForm')
-        .modal({ detachable: false })
-        .modal('show')
+          .modal({ detachable: false })
+          .modal('show')
       }
-    }
+    },
   },
   watch: {
     isReady() {
@@ -138,30 +131,26 @@ export default {
           once: false,
           observeChanges: true,
           onBottomVisible() {
-            vm
-            .getMoreAnswers()
-            .then(() => {
+            vm.getMoreAnswers().then(() => {
               if (vm.question.answersCount <= vm.question.answers.length) {
                 vm.isLoadingMoreAnswers = false
               }
             })
-          }
+          },
         })
       }
-    }
+    },
   },
   mounted() {
-    this
-      .getQuestion(this.id)
-      .then(() => {
-        if (this.question.answersCount <= this.question.answers.length) {
-          this.isLoadingMoreAnswers = false
-        }
+    this.getQuestion(this.id).then(() => {
+      if (this.question.answersCount <= this.question.answers.length) {
+        this.isLoadingMoreAnswers = false
+      }
 
-        this.isReady = true
-      })
+      this.isReady = true
+    })
 
     $('#questionMenu .more').dropdown()
-  }
+  },
 }
 </script>

@@ -2,7 +2,7 @@ import moment from 'moment'
 
 const state = {
   time: moment(),
-  interval: null
+  interval: null,
 }
 
 const mutations = {
@@ -11,20 +11,23 @@ const mutations = {
   },
   setInterval(state, payload) {
     state.interval = payload
-  }
+  },
 }
 
 const actions = {
   startClock({ commit }) {
-    commit('setInterval', setInterval(() => commit('setTime', moment()), 60 * 1000))
+    commit(
+      'setInterval',
+      setInterval(() => commit('setTime', moment()), 60 * 1000),
+    )
   },
-  stopClock({ commit}) {
+  stopClock({ commit }) {
     commit('setInterval', clearInterval(state.interval))
-  }
+  },
 }
 
 export default {
   state,
   mutations,
-  actions
+  actions,
 }

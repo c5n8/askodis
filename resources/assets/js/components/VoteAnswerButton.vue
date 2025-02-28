@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
   button.ui.tiny.button(
     :class='voteAnswerButtonClass'
     @click='onVoteAnswerButtonClick'
@@ -8,13 +8,13 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   props: ['question', 'answer'],
   data() {
     return {
-      isDisabled: false
+      isDisabled: false,
     }
   },
   computed: {
@@ -23,9 +23,13 @@ export default {
     // ]),
     voteAnswerButtonClass() {
       return {
-        basic: ! this.answer.hasVoteFromCurrentUser,
+        basic: !this.answer.hasVoteFromCurrentUser,
         blue: this.answer.hasVoteFromCurrentUser,
-        disabled: this.isDisabled || (this.question.hasAnswerFromCurrentUser ? this.answer.id == this.question.answerFromCurrentUser.id : false)
+        disabled:
+          this.isDisabled ||
+          (this.question.hasAnswerFromCurrentUser
+            ? this.answer.id == this.question.answerFromCurrentUser.id
+            : false),
       }
     },
     voteAnswerButtonText() {
@@ -34,29 +38,26 @@ export default {
       }
 
       return 'Vote'
-    }
+    },
   },
   methods: {
-    ...mapActions([
-      'postQuestionAnswerVote',
-      'deleteVote'
-    ]),
+    ...mapActions(['postQuestionAnswerVote', 'deleteVote']),
     onVoteAnswerButtonClick() {
       this.isDisabled = true
 
       if (this.answer.hasVoteFromCurrentUser) {
-        this
-          .deleteVote(this.answer)
-          .then(() => this.isDisabled = false)
+        this.deleteVote(this.answer).then(() => (this.isDisabled = false))
 
         return
       }
 
-      this
-        .postQuestionAnswerVote({ question: this.question, answer: this.answer})
-        .then(() => this.isDisabled = false)
-        .catch(() => this.isDisabled = false)
-    }
-  }
+      this.postQuestionAnswerVote({
+        question: this.question,
+        answer: this.answer,
+      })
+        .then(() => (this.isDisabled = false))
+        .catch(() => (this.isDisabled = false))
+    },
+  },
 }
 </script>

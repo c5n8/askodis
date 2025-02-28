@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
   button.ui.tiny.button(
     :class='askButtonClass'
     @click='onAskButtonClick'
@@ -14,15 +14,15 @@ export default {
   props: ['question'],
   data() {
     return {
-      isDisabled: false
+      isDisabled: false,
     }
   },
   computed: {
     askButtonClass() {
       return {
-        basic: ! this.question.hasVoteFromCurrentUser,
+        basic: !this.question.hasVoteFromCurrentUser,
         blue: this.question.hasVoteFromCurrentUser,
-        disabled: this.isDisabled
+        disabled: this.isDisabled,
       }
     },
     askButtonText() {
@@ -34,26 +34,20 @@ export default {
     },
   },
   methods: {
-    ...mapActions([
-      'postQuestionVote',
-      'deleteVote'
-    ]),
+    ...mapActions(['postQuestionVote', 'deleteVote']),
     onAskButtonClick() {
       this.isDisabled = true
 
       if (this.question.hasVoteFromCurrentUser) {
-        this
-          .deleteVote(this.question)
-          .then(() => this.isDisabled = false)
+        this.deleteVote(this.question).then(() => (this.isDisabled = false))
 
         return
       }
 
-      this
-        .postQuestionVote(this.question)
-        .then(() => this.isDisabled = false)
-        .catch(() => this.isDisabled = false)
-    }
-  }
+      this.postQuestionVote(this.question)
+        .then(() => (this.isDisabled = false))
+        .catch(() => (this.isDisabled = false))
+    },
+  },
 }
 </script>

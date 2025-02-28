@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
 #questionTranslationForm.ui.small.modal
   .content
     .ui.form
@@ -43,15 +43,12 @@ export default {
         body: '',
         detail: '',
         tags: [],
-        language: null
-      }
+        language: null,
+      },
     }
   },
   computed: {
-    ...mapState([
-      'question',
-      'user'
-    ]),
+    ...mapState(['question', 'user']),
     isReady() {
       if (this.user.languages.length == 0) {
         return false
@@ -64,41 +61,43 @@ export default {
       return true
     },
     languages() {
-      return this.user.languages.filter(language => {
+      return this.user.languages.filter((language) => {
         return language.code != this.question.language.code
       })
-    }
+    },
   },
   watch: {
     question() {
       for (var i = 0; i < this.question.tags.length; i++) {
         this.payload.tags.push({
           id: this.question.tags[i].id,
-          body: ''
+          body: '',
         })
       }
-    }
+    },
   },
   methods: {
-    ...mapActions([
-      'getUserLanguages'
-    ]),
+    ...mapActions(['getUserLanguages']),
     onSubmit() {
       this.disabled = true
 
-      http.post('/api/questions/' + this.question.id + '/editions', this.payload)
-        .then(response => {
+      http
+        .post('/api/questions/' + this.question.id + '/editions', this.payload)
+        .then((response) => {
           window.location.replace('/' + response.data.slug)
         })
-        .catch(error => {
+        .catch(() => {
           this.disabled = false
         })
-    }
+    },
   },
   updated() {
     if (this.user.languages.length > 0) {
-      $('#questionTranslationForm [name=language]').dropdown('set selected', this.user.languages[0].code)
+      $('#questionTranslationForm [name=language]').dropdown(
+        'set selected',
+        this.user.languages[0].code,
+      )
     }
-  }
+  },
 }
 </script>

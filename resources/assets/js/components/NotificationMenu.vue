@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
 a#notificationMenu.item
   i.bell.outline.icon
   span.text {{ $t("Notifications") }}
@@ -15,20 +15,14 @@ export default {
   store,
   props: ['count'],
   computed: {
-    ...mapState([
-      'user'
-    ])
+    ...mapState(['user']),
   },
   methods: {
     ...mapMutations([
       'setUnreadNotificationsCount',
-      'incrementUnreadNotificationsCount'
+      'incrementUnreadNotificationsCount',
     ]),
-    ...mapActions([
-      'getNotifications',
-      'getNotification',
-      'readNotifications'
-    ]),
+    ...mapActions(['getNotifications', 'getNotification', 'readNotifications']),
   },
   mounted() {
     this.setUnreadNotificationsCount(this.count)
@@ -37,7 +31,7 @@ export default {
 
     socket
       .private('App.User.' + userId.content)
-      .notification(notification => {
+      .notification((notification) => {
         this.incrementUnreadNotificationsCount()
 
         if (this.user.notifications.length > 0) {
@@ -61,8 +55,8 @@ export default {
           vm.setUnreadNotificationsCount(0)
           vm.readNotifications()
         }
-      }
+      },
     })
-  }
+  },
 }
 </script>

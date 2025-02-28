@@ -1,7 +1,6 @@
 import pluginJs from '@eslint/js'
 import pluginVue from 'eslint-plugin-vue'
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
-import { ESLint } from 'eslint'
 
 export default [
   {
@@ -11,17 +10,36 @@ export default [
 
   {
     name: 'app/files-to-ignore',
-    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
+    ignores: [
+      '**/dist/**',
+      '**/dist-ssr/**',
+      '**/coverage/**',
+      'vendor/',
+      'public/build/',
+    ],
   },
 
   {
     name: 'app/jquery-global',
-    globals: {
-      $: 'readonly',
+    languageOptions: {
+      globals: {
+        $: 'readonly',
+      },
     },
   },
 
   pluginJs.configs.recommended,
   ...pluginVue.configs['flat/essential'],
+
+  {
+    name: 'app/overrides',
+    rules: {
+      'vue/multi-word-component-names': 'warn',
+      'vue/no-deprecated-destroyed-lifecycle': 'warn',
+      'vue/no-mutating-props': 'warn',
+      'vue/return-in-computed-property': 'warn',
+    },
+  },
+
   skipFormatting,
 ]

@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
 form#answerForm.ui.form(@submit.prevent='onSubmit')
   .field(:class='{ disabled: this.isDisabled }')
     textarea(
@@ -18,38 +18,34 @@ export default {
   props: ['isWritingAnswer'],
   data() {
     return {
-      isDisabled: false
+      isDisabled: false,
     }
   },
   computed: {
-    ...mapState([
-      'question'
-    ]),
+    ...mapState(['question']),
     body: {
-      get () {
-        if (! this.question.hasAnswerFromCurrentUser) {
+      get() {
+        if (!this.question.hasAnswerFromCurrentUser) {
           return
         }
 
         return this.question.answerFromCurrentUser.body
       },
-      set (value) {
-        this.setAnswerFromCurrentUserBody({ question: this.question, body: value })
-      }
-    }
+      set(value) {
+        this.setAnswerFromCurrentUserBody({
+          question: this.question,
+          body: value,
+        })
+      },
+    },
   },
   methods: {
-    ...mapMutations([
-      'setAnswerFromCurrentUserBody'
-    ]),
-    ...mapActions([
-      'postQuestionAnswer',
-      'patchQuestionAnswer'
-    ]),
+    ...mapMutations(['setAnswerFromCurrentUserBody']),
+    ...mapActions(['postQuestionAnswer', 'patchQuestionAnswer']),
     onSubmit() {
       this.isDisabled = true
 
-      if (! this.question.hasAnswerFromCurrentUser) {
+      if (!this.question.hasAnswerFromCurrentUser) {
         this.postQuestionAnswer(this.question).then(() => {
           this.isDisabled = false
           this.$emit('finishWritingAnswer')
@@ -58,12 +54,14 @@ export default {
         return
       }
 
-      this.patchQuestionAnswer({ question: this.question, answer: this.question.answerFromCurrentUser })
-        .then(() => {
-          this.isDisabled = false
-          this.$emit('finishWritingAnswer')
-        })
-    }
-  }
+      this.patchQuestionAnswer({
+        question: this.question,
+        answer: this.question.answerFromCurrentUser,
+      }).then(() => {
+        this.isDisabled = false
+        this.$emit('finishWritingAnswer')
+      })
+    },
+  },
 }
 </script>

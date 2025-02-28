@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
 .ui.raised.fluid.card(':id'='"answer-" + answer.id')
   .content
     strong
@@ -49,42 +49,40 @@ export default {
     AnswerTranslationForm,
   },
   computed: {
-    ...mapState([
-      'question'
-    ])
+    ...mapState(['question']),
   },
   methods: {
     openSuggestionForm() {
       if (this.$root.auth()) {
         $('#answer-' + this.answer.id + ' .suggestion.modal')
           .modal({ detachable: false })
-          .modal("show")
+          .modal('show')
       }
     },
     openTranslationForm() {
       if (this.$root.auth()) {
         $('#answer-' + this.answer.id + ' .suggest.translation.modal')
           .modal({ detachable: false })
-          .modal("show")
+          .modal('show')
       }
     },
     openRequestTranslationForm() {
       if (this.$root.auth()) {
         $('#answer-' + this.answer.id + ' .request.translation.modal')
           .modal({ detachable: false })
-          .modal("show")
+          .modal('show')
       }
     },
   },
   mounted() {
     $('#answer-' + this.answer.id + ' .more').dropdown()
-  }
+  },
 }
 </script>
 
 <style lang="stylus" scoped>
-  .userlink
+.userlink
+  color black
+  &:hover
     color black
-    &:hover
-      color black
 </style>

@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
 #accountMenu.ui.pointing.dropdown.link.item
   i.user.icon
   span.text {{ $t('Account')}}
@@ -14,10 +14,10 @@ export default {
   methods: {
     onLogoutButtonClick() {
       http.post('/logout').then(() => window.location.replace('/'))
-    }
+    },
   },
   mounted() {
     $('#accountMenu').dropdown()
-  }
+  },
 }
 </script>

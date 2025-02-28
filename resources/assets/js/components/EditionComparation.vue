@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
 .ui.main.container
   .ui.centered.grid
     .ten.wide.computer.sixteen.wide.mobile.column
@@ -37,17 +37,12 @@ import moment from 'moment'
 import JsDiff from 'diff'
 
 export default {
-  props: [
-    'id',
-    'initStatus',
-    'createdAt',
-    'updatedAt'
-  ],
+  props: ['id', 'initStatus', 'createdAt', 'updatedAt'],
   data() {
     return {
       status: this.initStatus,
       isDisabled: false,
-      actionAt: this.updatedAt
+      actionAt: this.updatedAt,
     }
   },
   methods: {
@@ -55,7 +50,7 @@ export default {
       this.isDisabled = true
 
       http
-        .patch('/api/editions/' + this.id, { status: 'accepted'})
+        .patch('/api/editions/' + this.id, { status: 'accepted' })
         .then(() => {
           this.isDisabled = false
           this.status = 'accepted'
@@ -66,25 +61,25 @@ export default {
       this.isDisabled = true
 
       http
-        .patch('/api/editions/' + this.id, { status: 'rejected'})
+        .patch('/api/editions/' + this.id, { status: 'rejected' })
         .then(() => {
           this.isDisabled = false
           this.status = 'rejected'
           this.actionAt = moment()
         })
-    }
+    },
   },
   mounted() {
-    var original  = $('#originalEdit').text()
+    var original = $('#originalEdit').text()
     var suggested = $('#suggestedEdit').text()
-    var color     = ''
-    var span      = null
-    var diff      = JsDiff.diffWords(original, suggested)
-    var display   = document.getElementById('displayDiff')
-    var fragment  = document.createDocumentFragment()
+    var color = ''
+    var span = null
+    var diff = JsDiff.diffWords(original, suggested)
+    var display = document.getElementById('displayDiff')
+    var fragment = document.createDocumentFragment()
 
-    diff.forEach(part => {
-      color = part.added ? '#99ff99': part.removed ? '#ff8888': 'white'
+    diff.forEach((part) => {
+      color = part.added ? '#99ff99' : part.removed ? '#ff8888' : 'white'
       span = document.createElement('span')
       span.style.backgroundColor = color
 
@@ -97,6 +92,6 @@ export default {
     })
 
     display.appendChild(fragment)
-  }
+  },
 }
 </script>

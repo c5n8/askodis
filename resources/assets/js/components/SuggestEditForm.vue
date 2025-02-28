@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
 .suggestion.ui.small.modal
   .content
     .ui.form
@@ -22,24 +22,28 @@ export default {
     return {
       isDisabled: false,
       payload: {
-        body: this.answer.body
-      }
+        body: this.answer.body,
+      },
     }
   },
   methods: {
     onSubmit() {
       this.isDisabled = true
 
-      http.patch('/api/questions/' + this.question.id +'/answers/' + this.answer.id, this.payload)
-        .then(response => {
+      http
+        .patch(
+          '/api/questions/' + this.question.id + '/answers/' + this.answer.id,
+          this.payload,
+        )
+        .then(() => {
           this.isDisabled = false
           $('.suggestion.modal').modal('hide')
           $('#successModal').modal('show')
         })
-        .catch(error => {
+        .catch(() => {
           this.isDisabled = false
         })
-    }
-  }
+    },
+  },
 }
 </script>

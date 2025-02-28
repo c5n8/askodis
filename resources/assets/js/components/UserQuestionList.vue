@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
 .ui.main.container
   .ui.grid
     .three.wide.computer.sixteen.wide.mobile.column
@@ -27,7 +27,7 @@ import _ from 'lodash'
 export default {
   components: {
     ShareButton,
-    QuestionCard
+    QuestionCard,
   },
   props: ['username'],
   data() {
@@ -36,42 +36,38 @@ export default {
     }
   },
   computed: {
-    ...mapState([
-      'questions',
-      'user'
-    ])
+    ...mapState(['questions', 'user']),
   },
   methods: {
-    ...mapActions([
-      'getUserQuestions',
-      'getOlderUserQuestions'
-    ]),
+    ...mapActions(['getUserQuestions', 'getOlderUserQuestions']),
   },
   mounted() {
     this.getUserQuestions(this.username)
 
-    $(window).scroll(_.debounce(event => {
-      // if($(window).scrollTop() + $(window).height() == $(document).height())
-      if($(window).scrollTop() + $(window).height() > $(document).height() - 100)
-      {
-        if (this.isLoadingMoreUserQuestions) {
-          return
-        }
+    $(window).scroll(
+      _.debounce(() => {
+        // if($(window).scrollTop() + $(window).height() == $(document).height())
+        if (
+          $(window).scrollTop() + $(window).height() >
+          $(document).height() - 100
+        ) {
+          if (this.isLoadingMoreUserQuestions) {
+            return
+          }
 
-        this.isLoadingMoreUserQuestions = true
+          this.isLoadingMoreUserQuestions = true
 
-        this
-          .getOlderUserQuestions(this.username)
-          .then(() => {
+          this.getOlderUserQuestions(this.username).then(() => {
             this.isLoadingMoreUserQuestions = false
           })
-      }
-    }, 150));
-  }
+        }
+      }, 150),
+    )
+  },
 }
 </script>
 
-<style lang='stylus' scoped>
+<style lang="stylus" scoped>
 .main.container
   margin-top: 5em;
 </style>

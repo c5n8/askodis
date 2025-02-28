@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
 a.item(':href'='notification.data.url')
   .content
     .description
@@ -33,7 +33,7 @@ export default {
 
           return { cancel: true, red: true }
       }
-    }
-  }
+    },
+  },
 }
 </script>

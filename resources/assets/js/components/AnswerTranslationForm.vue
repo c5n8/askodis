@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
 .suggest.translation.ui.small.modal
   .content
     .ui.form
@@ -32,14 +32,12 @@ export default {
       isDisabled: false,
       payload: {
         detail: '',
-        language: null
-      }
+        language: null,
+      },
     }
   },
   computed: {
-    ...mapState([
-      'user'
-    ]),
+    ...mapState(['user']),
     isReady() {
       if (this.user.languages.length == 0) {
         return false
@@ -52,43 +50,51 @@ export default {
       return true
     },
     languages() {
-      return this.user.languages.filter(language => {
+      return this.user.languages.filter((language) => {
         return language.code != this.question.language.code
       })
-    }
+    },
   },
   watch: {
     question() {
       for (var i = 0; i < this.question.tags.length; i++) {
         this.payload.tags.push({
           id: this.question.tags[i].id,
-          body: ''
+          body: '',
         })
       }
-    }
+    },
   },
   methods: {
-    ...mapActions([
-      'getUserLanguages'
-    ]),
+    ...mapActions(['getUserLanguages']),
     onSubmit() {
       this.disabled = true
 
-      http.post('/api/questions/' + this.question.id + '/answers/' + this.answer.id + '/editions', this.payload)
-        .then(response => {
+      http
+        .post(
+          '/api/questions/' +
+            this.question.id +
+            '/answers/' +
+            this.answer.id +
+            '/editions',
+          this.payload,
+        )
+        .then(() => {
           this.isDisabled = false
           $('#answer-' + this.answer.id + ' .translation.modal').modal('hide')
           $('#successModal').modal('show')
         })
-        .catch(error => {
+        .catch(() => {
           this.disabled = false
         })
-    }
+    },
   },
   updated() {
     if (this.languages.length > 0) {
-      $('#answer-' + this.answer.id + ' .translation.modal [name=language]').dropdown('set selected', this.languages[0].code)
+      $(
+        '#answer-' + this.answer.id + ' .translation.modal [name=language]',
+      ).dropdown('set selected', this.languages[0].code)
     }
-  }
+  },
 }
 </script>
