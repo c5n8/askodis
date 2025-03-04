@@ -3,7 +3,7 @@ import echo from 'laravel-echo'
 
 export default new echo({
   broadcaster: 'pusher',
-  key: '15a9d7c6cf426d9c4b86',
+  key: import.meta.env.VITE_PUSHER_APP_KEY,
   cluster: 'ap1',
   encrypted: true,
 })
