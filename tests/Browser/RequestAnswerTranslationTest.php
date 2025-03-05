@@ -30,6 +30,7 @@ class RequestAnswerTranslationTest extends DuskTestCase
             $browser
                 ->waitFor('#answer-' . $answer->id)
                 ->click('#answer-' . $answer->id . ' .more')
+                ->waitFor('#answer-' . $answer->id . ' .more .request.translation')
                 ->click('#answer-' . $answer->id . ' .more .request.translation')
                 ->whenAvailable('.request.translation.modal', function ($form){
                     $form->press('Request Translation');

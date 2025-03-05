@@ -25,10 +25,12 @@ class VoteButtonTest extends DuskTestCase
             $second
                 ->loginAs(Answer::first()->user)
                 ->visit('/')
+                ->pause(256) // Wait for socket connection
                 ->waitFor('#notificationMenu')
                 ->assertDontSeeIn('#notificationMenu', '1');
 
-            $first->press('Vote')
+            $first
+                ->press('Vote')
                 ->waitForText('Voted')
                 ->assertSee('1 Vote');
 

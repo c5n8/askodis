@@ -27,6 +27,7 @@ class SearchBarTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($question) {
             $browser
                 ->visit('/')
+                ->pause(128) // Wait for algolia syncing
                 ->whenAvailable('.ui.search', function (Browser $browser) use ($question) {
                     $browser
                         ->type('search', $question->body)

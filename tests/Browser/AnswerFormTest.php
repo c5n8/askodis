@@ -24,6 +24,7 @@ class AnswerFormTest extends DuskTestCase
             $second
                 ->loginAs(factory(User::class)->create())
                 ->visit($page)
+                ->pause(256)
                 ->waitFor('#notificationMenu')
                 ->assertDontSeeIn('#notificationMenu', '1')
                 ->press('Ask');

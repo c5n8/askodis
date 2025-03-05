@@ -35,13 +35,13 @@ class QuestionFormTest extends DuskTestCase
             $browser
                 ->loginAs($user)
                 ->visit('/')
-                ->pause(1000)
+                ->pause(128)
                 ->type('search', 'Gibberish')
                 ->waitFor('.results')
                 ->press('Write New Question')
                 ->waitFor('#questionForm')
                 ->keys('#questionForm [name="body"]', ' question?')
-                ->pause(500)
+                ->pause(128)
                 ->keys('#questionForm [name="detail"]', 'Here is the detail');
 
                 $tags = ['tag 1', 'tag 2', 'tag 3'];
@@ -49,7 +49,7 @@ class QuestionFormTest extends DuskTestCase
                 foreach ($tags as $tag) {
                     $browser
                         ->keys('#questionForm .tags .search', $tag)
-                        ->pause(500)
+                        ->pause(128)
                         ->keys('#questionForm .tags .search', '{enter}');
                 }
 
