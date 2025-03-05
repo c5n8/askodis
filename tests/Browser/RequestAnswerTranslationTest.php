@@ -32,9 +32,7 @@ class RequestAnswerTranslationTest extends DuskTestCase
                 ->click('#answer-' . $answer->id . ' .more')
                 ->click('#answer-' . $answer->id . ' .more .request.translation')
                 ->whenAvailable('.request.translation.modal', function ($form){
-                    $form
-                        ->select('language')
-                        ->press('Request Translation');
+                    $form->press('Request Translation');
                 })
                 ->waitUntilMissing('.request.translation.modal')
                 ->assertSee('Sent!');
